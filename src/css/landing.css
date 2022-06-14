@@ -1,0 +1,15 @@
+/* 
+    Just reverse display order of the second div on small screens
+    to alternate text and images 
+*/
+@media screen and (max-width : 576px) {
+    
+    .landing-container > div:nth-child(2){
+        display: flex;
+        flex-flow: column-reverse wrap;
+    }
+
+    .text-section {
+        text-align: center;
+    }
+}
