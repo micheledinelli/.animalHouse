@@ -1,0 +1,24 @@
+* {
+    user-select: none;
+}
+
+/* .nav-container-unvisible {
+    position: absolute;
+    top: -50px !important;
+    transition: top 0.3s;
+} 
+
+.nav-container-visible {
+    position: absolute;
+    top: 0 !important;
+    transition: top 0.3s;
+}  */
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.btn {
+    width: 150px !important;
+}
