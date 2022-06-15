@@ -25,7 +25,7 @@ const Landing = () => {
             <div className="landing-container container my-5">
                 <div className="row mt-5">
                     <div className="col-sm-8">
-                        <img className="img-fluid" src={GameImage}></img>
+                        <img className="img-fluid" src={GameImage} alt="gameImage"></img>
                     </div>
                     <div className="col-sm-4 align-self-center text-section">
                         <p className="display-4 text-secondary lh-1">Discover our games!</p>
@@ -44,12 +44,12 @@ const Landing = () => {
                         </Link>
                     </div>
                     <div className="col-sm-8">
-                        <img className="img-fluid img-swap-on-bp" src={FrontOffice}></img>
+                        <img className="img-fluid img-swap-on-bp" src={FrontOffice} alt="frontOffice"></img>
                     </div>
                 </div>
                 <div className="row mt-5">
                     <div className="col-sm-8">
-                        <img className="img-fluid" src={BackOffice}></img>
+                        <img className="img-fluid" src={BackOffice} alt="backOffice"></img>
                     </div>
                     <div className="col-sm-4 align-self-center text-section">
                         <p className="display-4 text-secondary lh-1">Manage the application thanks to the back office.</p>

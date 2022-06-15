@@ -17,7 +17,7 @@ const ErrorPage = () => {
     }, [seconds]);
 
     useEffect(() => {
-        if(seconds == 0) {
+        if(seconds === 0) {
             return () => { navigate('/'); }
         }
     })
@@ -33,7 +33,7 @@ const ErrorPage = () => {
 
     return(
         <div style={errorStyle} className="erorr-container">
-            <img style={imgStyle} src={error} className="img-fluid"></img>   
+            <img style={imgStyle} src={error} className="img-fluid" alt="error"></img>   
             <h1 className="display-4">Page not found</h1>
             <p className="lead">You'll be redirected to root page in {seconds} seconds</p>
         </div>

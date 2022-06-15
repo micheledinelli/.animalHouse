@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
@@ -13,10 +12,10 @@ const SignUp = () => {
         <div className="container mt-2 text-center">
             <h1 className="display-4">Sign Up!</h1>
             <div className="row container">
-                <div className="col-sm-6">
+                <div className="col-lg-6">
                     <img src={registerImage} className="img-fluid" alt="loginImage"></img>
                 </div>
-                <div className="col-sm-6 align-self-center p-5">
+                <div className="col-lg-6 align-self-center p-5">
                     <form className="text-center">
                         <div className="d-flex justify-content-around">
                             <div className="form-floating mb-3">
@@ -40,9 +39,7 @@ const SignUp = () => {
                     </form>
                     <div className="container text-center mt-3">
                         <p className="text-center">or</p>
-                        <Link to={'/signIn'}>
-                            <a className="btn btn-outline-primary mx-2">Sign In</a>
-                        </Link>
+                        <a className="btn btn-outline-primary mx-2" href="/signIn">Sign In</a>
                     </div>
                 </div>
             </div>
