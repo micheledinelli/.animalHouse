@@ -9,7 +9,7 @@ import "../css/navbar.css"
 const Navbar = () => {
     
     return(
-        <nav className="navbar sticky-top navbar-expand-lg navbar-light">
+        <nav className="navbar sticky-top navbar-expand-lg bg-dark">
             <div className="container">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggledDiv" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span>
@@ -20,13 +20,13 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="toggledDiv">
                     <ul className="navbar-nav d-flex ms-auto">
                         <li className="nav-item mx-3">
-                            <a className="btn btn-outline-dark fs-5" aria-current="page" href="/gamePage">Our games</a>
+                            <a className="btn btn-outline-primary fs-5 bg-light" aria-current="page" href="/gamePage">Our games</a>
                         </li>
                         <li className="nav-item mx-3">
-                            <a className="btn btn-outline-dark fs-5" aria-current="page" href="/">Front Office</a>
+                            <a className="btn btn-outline-primary fs-5 bg-light" aria-current="page" href="/">Front Office</a>
                         </li>
                         <li className="nav-item mx-3">
-                            <a className="btn btn-outline-dark fs-5" aria-current="page" href="#">Back Office</a>
+                            <a className="btn btn-outline-primary fs-5 bg-light" aria-current="page" href="#">Back Office</a>
                         </li>
                     </ul>
                 </div>

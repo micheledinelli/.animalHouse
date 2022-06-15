@@ -2,7 +2,7 @@
     user-select: none;
 }
 
-/* .nav-container-unvisible {
+/*.nav-container-unvisible {
     position: absolute;
     top: -50px !important;
     transition: top 0.3s;
@@ -12,7 +12,7 @@
     position: absolute;
     top: 0 !important;
     transition: top 0.3s;
-}  */
+}*/
 
 .navbar-brand {
     font-size: 2rem;
