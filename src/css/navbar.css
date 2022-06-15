@@ -2,17 +2,9 @@
     user-select: none;
 }
 
-/* .nav-container-unvisible {
-    position: absolute;
-    top: -50px !important;
-    transition: top 0.3s;
-} 
-
-.nav-container-visible {
-    position: absolute;
-    top: 0 !important;
-    transition: top 0.3s;
-}  */
+.navbar {
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+}
 
 .navbar-brand {
     font-size: 2rem;

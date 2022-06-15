@@ -1,7 +1,4 @@
-/* 
-    Just reverse display order of the second div on small screens
-    to alternate text and images 
-*/
+/* Just reverse display order of the second div on small screens */
 @media screen and (max-width : 576px) {
     
     .landing-container > div:nth-child(2){
