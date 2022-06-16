@@ -18,7 +18,7 @@ Fork / clone this repo.
 
 Given the following project structure
 
-![Project Structure](src\assets\project-structure.png "Project Structure")
+![Project Structure](https://github.com/micheledinelli/AnimalHouse/blob/main/src/assets/project-structure.png)
 
 Open a terminal and install the dependencies of the src code with
 
@@ -47,9 +47,7 @@ and start the react app with
 ## CONTACTS
 
 <youssefawni.hanna@studio.unibo.it>
-
 <michele.dinelli5@studio.unibo.it>
-
 <filippo.brajucha@studio.unibo.it>
 
 
