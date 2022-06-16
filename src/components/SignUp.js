@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import axios from  "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
@@ -12,7 +12,7 @@ const SignUp = () => {
 
     const navigate = useNavigate();
 
-    const [myerror, setError] = React.useState();
+    const [serverMessage, setServerMessage] = React.useState();
 
     const [data, setData] = React.useState({
         name: "",
@@ -30,24 +30,29 @@ const SignUp = () => {
         try {
             const url = "http://localhost:8080/api/users";
             const {data: res} = await axios.post(url, data);
-            console.log(res.message);
+            setServerMessage(res.message);
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setError(error.response.data.message);
+                setServerMessage(error.response.data.message);
             }
         }
     }
 
     return(
         <div className="container mt-2 text-center">
-            <h1 className="display-4">Sign Up!</h1>
-            <div className="row container">
-                <div className="col-lg-6">
-                    <img src={registerImage} className="img-fluid" alt="loginImage"></img>
-                    {
-                        myerror && <span className="text-primary">{myerror}</span>
-                    }
+            <div className="title d-flex justify-content-center border ">
+                <div className="align-self-center">
+                    <Link to={'/'} className="align-self-center flex-grow-1">
+                        <button className="btn btn-primary text-white">
+                            Home
+                        </button>
+                    </Link>
                 </div>
+                <div className="flex-grow-1">
+                    <h1 className="display-4 flex-grow-2">Sign Up!</h1>
+                </div>
+            </div>
+            <div className="row container">
                 <div className="col-lg-6 align-self-center p-5">
                     <form className="text-center" onSubmit={handleSubmit}>
                         <div className="d-flex justify-content-around">
@@ -106,6 +111,12 @@ const SignUp = () => {
                         <p className="text-center">or</p>
                         <a className="btn btn-outline-primary mx-2" href="/signIn">Sign In</a>
                     </div>
+                </div>
+                <div className="col-lg-6">
+                    <img src={registerImage} className="img-fluid" alt="loginImage"></img>
+                    {
+                        serverMessage && <span className="text-primary">{serverMessage}</span>
+                    }
                 </div>
             </div>
         </div>
