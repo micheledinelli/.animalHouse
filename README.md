@@ -18,7 +18,7 @@ Fork / clone this repo.
 
 Given the following project structure
 
-![Project Structure](src\assets\project-structure.png "Project Structure")
+![Project Structure]("src\assets\project-structure.png "Project Structure")
 
 Open a terminal and install the dependencies of the src code with
 
