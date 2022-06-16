@@ -22,7 +22,7 @@ Given the following project structure
 
 Open a terminal and install the dependencies of the src code with
 
-> `npm install`.
+`npm install`.
 
 Instead the dependencies of the backend have to be installed inside the directory of the backend. So change directory with 
 
