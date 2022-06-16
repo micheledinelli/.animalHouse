@@ -40,18 +40,7 @@ const SignUp = () => {
 
     return(
         <div className="container mt-2 text-center">
-            <div className="title d-flex justify-content-center border ">
-                <div className="align-self-center">
-                    <Link to={'/'} className="align-self-center flex-grow-1">
-                        <button className="btn btn-primary text-white">
-                            Home
-                        </button>
-                    </Link>
-                </div>
-                <div className="flex-grow-1">
-                    <h1 className="display-4 flex-grow-2">Sign Up!</h1>
-                </div>
-            </div>
+            <h1 className="display-4">Sign Up!</h1>
             <div className="row container">
                 <div className="col-lg-6 align-self-center p-5">
                     <form className="text-center" onSubmit={handleSubmit}>
