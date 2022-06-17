@@ -22,27 +22,27 @@ Given the following project structure
 
 Open a terminal and install the dependencies of the src code with
 
-> `npm install`.
+`npm install`.
 
 Instead the dependencies of the backend have to be installed inside the directory of the backend. So change directory with 
 
->`cd src/backend` 
+`cd src/backend` 
 
 and type again 
 
->`npm install`
+`npm install`
 
 Now you can run the server using
 
-> `node .\server.js`
+`node .\server.js`
 
 Once the server is running just go back to the root directory of the project 
 
-> `cd..`
+`cd..`
 
 and start the react app with
 
-> `npm start`
+`npm start`
 
 ## CONTACTS
 
