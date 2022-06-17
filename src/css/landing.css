@@ -1,7 +1,7 @@
 /* Just reverse display order of the second div on small screens */
 @media screen and (max-width : 576px) {
     
-    .landing-container > div:nth-child(2){
+    #to-reverse-mobile {
         display: flex;
         flex-flow: column-reverse wrap;
     }
