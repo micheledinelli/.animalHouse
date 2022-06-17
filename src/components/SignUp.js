@@ -1,6 +1,6 @@
 import React from "react";
 import axios from  "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";

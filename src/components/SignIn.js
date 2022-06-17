@@ -1,13 +1,24 @@
 import React from "react";
 import axios from  "axios";
 
+// Auth manager
+import Auth from '../Auth';
+
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
 import loginImage from '../assets/undraw_Login_re_4vu2.png';
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+    
+    const location = useLocation();
+    const originPath = location.state?.from || '/';
+    const navigate = useNavigate();
+
+    let auth = Auth.getInstance();
+    let isAuth = auth.isAuthenticated();
 
     const [data, setData] = React.useState({
         email: "",
@@ -27,6 +38,10 @@ const SignIn = () => {
             const url = "http://localhost:8080/api/auth";
             const {data: res} = await axios.post(url, data);
             setServerMessage(res.message);
+            
+            auth.login(data.email);
+            navigate(originPath, {replace: true});
+            
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
                 setServerMessage(error.response.data.message);
@@ -36,7 +51,7 @@ const SignIn = () => {
 
     return(
         <div className="container mt-2 text-center">
-            <h1 className="display-4">Sign In !</h1>
+            <h1 className="display-4">Sign In!</h1>
             <div className="row container">
                 <div className="col-lg-6">
                     <img src={loginImage} className="img-fluid" alt="loginImage"></img>

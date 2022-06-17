@@ -6,7 +6,7 @@ router.get('/', async(req, res) => {
 
         const scores = await Score.find();
 
-        if(scores) {
+        if(scores && scores.length > 0) {
             res.send(scores);
         } else {
             res.status(200).send({message: "No scores available"});
@@ -15,6 +15,6 @@ router.get('/', async(req, res) => {
     } catch (error) {
         res.status(500).send({message: "Internal server error"});
     }
-})
+});
 
 module.exports = router; 

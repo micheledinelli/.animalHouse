@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // Components
 import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Footer from "./Footer"
 
 // Assets
 import GameImage from '../assets/undraw_game_day_ucx9.png';
@@ -15,6 +15,9 @@ import BackOffice from '../assets/undraw_learning_sketching_nd4f.png';
 import '../scss/style.scss';
 import '../css/landing.css';
 
+// UI animation
+import { Fade } from "react-awesome-reveal";
+
 const Landing = () => {
 
     return(
@@ -23,6 +26,7 @@ const Landing = () => {
             <Navbar />
 
             <div className="landing-container container my-5">
+                <Fade delay={400}>
                 <div className="row mt-5">
                     <div className="col-sm-8">
                         <img className="img-fluid" src={GameImage} alt="gameImage"></img>
@@ -35,7 +39,7 @@ const Landing = () => {
                         </Link>
                     </div>
                 </div>
-                <div className="row mt-5">
+                <div className="row mt-5" id="to-reverse-mobile">
                     <div className="col-sm-4 align-self-center text-section text-swap-on-bp">
                         <p className="display-4 text-secondary lh-1">Get access to our products and services!</p>
                         <p className="display-4 text-secondary lh-1">All through the front office.</p>
@@ -59,6 +63,7 @@ const Landing = () => {
                         </Link>
                     </div>
                 </div>
+                </Fade>
             </div>
 
             <Footer />
