@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Auth manager
 import Auth from '../Auth';
 
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
@@ -41,9 +41,12 @@ const Navbar = () => {
                         <li className="nav-item mx-3">
                             <a className="btn nav-btn btn-outline-dark fs-5" aria-current="page" href="/backOffice">Back Office</a>
                         </li>
-                        {
+                        {   
+                            window.localStorage.getItem("authenticator") &&
                             <li className="nav-item mx-3">
-                                <button className="btn btn-outline-primary fs-5" aria-current="page" href="/"> { Auth.getInstance().userEmail }</button>
+                                <Link to="/user">
+                                    <button className="btn btn-outline-primary fs-5"> { Auth.getInstance().userEmail }</button>
+                                </Link>
                             </li>
                         }
                     </ul>
