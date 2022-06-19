@@ -1,15 +1,16 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import ProtectedRoute from "./components/ProtectedRoute.js"; 
 import ErrorPage from "./components/ErrorPage.js";
 import Landing from "./components/Landing.js";
-import GamePage from "./components/GamePage.js";
 import SignIn from "./components/SignIn.js";
 import SignUp from "./components/SignUp.js";
-import Test from "./components/Test.js";
 import User from "./components/User.js";
-import BackOffice from "./components/BackOffice.js";
+
+import Game from "./components/game/Game.js";
+import BackOffice from "./components/back-office/BackOffice.js";
+import FrontOffice from "./components/front-office/FrontOffice";
 
 function App() {
 
@@ -20,8 +21,8 @@ function App() {
         <BrowserRouter>
             <Routes>
                 { /* Protected route: authentication required */}
-                <Route path="/test" element={<ProtectedRoute />}>
-                    <Route path="/test" element={<Test/>}></Route>
+                <Route path="/frontOffice" element={<ProtectedRoute />}>
+                    <Route path="/frontOffice" element={<FrontOffice/>}></Route>
                 </Route>
 
                 { /* Protected route: authentication + authorization */}
@@ -31,7 +32,7 @@ function App() {
 
                 
                 { /* Free access */}
-                <Route path="/gamePage" exact element={<GamePage />}></Route>
+                <Route path="/gamePage" exact element={<Game />}></Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
                 <Route path="/user" element={<User />}></Route>
