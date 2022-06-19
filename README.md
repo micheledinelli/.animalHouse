@@ -47,7 +47,9 @@ and start the react app with
 ## CONTACTS
 
 <youssefawni.hanna@studio.unibo.it>
+
 <michele.dinelli5@studio.unibo.it>
+
 <filippo.brajucha@studio.unibo.it>
 
 
