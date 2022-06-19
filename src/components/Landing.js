@@ -35,7 +35,7 @@ const Landing = () => {
                         <p className="display-4 text-secondary lh-1">Discover our games!</p>
                         <p className="display-4 text-secondary lh-1">Ton of new animals waiting for you!</p>
                         <Link to={'/gamePage'}>
-                            <button className="mt-3 btn btn-primary text-white">Explore games</button>
+                            <button className="mt-3 btn btn-lg btn-primary text-white">Explore games</button>
                         </Link>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ const Landing = () => {
                         <p className="display-4 text-secondary lh-1">Get access to our products and services!</p>
                         <p className="display-4 text-secondary lh-1">All through the front office.</p>
                         <Link to={'/signIn'}>
-                            <button className="mt-3 btn btn-primary text-white">Front Office</button>
+                            <button className="mt-3 btn btn-lg btn-primary text-white">Front Office</button>
                         </Link>
                     </div>
                     <div className="col-sm-8">
@@ -59,7 +59,7 @@ const Landing = () => {
                         <p className="display-4 text-secondary lh-1">Manage the application thanks to the back office.</p>
                         <p className="display-4 text-secondary lh-1">For admins only.</p>
                         <Link to={'/backOffice'}>
-                            <button className="mt-3 btn btn-primary text-white">Back office</button>
+                            <button className="mt-3 btn btn-lg btn-primary text-white">Back office</button>
                         </Link>
                     </div>
                 </div>

@@ -4,17 +4,16 @@ import axios from  "axios";
 // Auth manager
 import Auth from '../Auth';
 
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
-import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
 import loginImage from '../assets/undraw_Login_re_4vu2.png';
+
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
     
     const location = useLocation();
-    const originPath = location.state?.from || '/';
+    const targetPath = location.state?.from || '/';
     const navigate = useNavigate();
 
     let auth = Auth.getInstance();
@@ -37,10 +36,14 @@ const SignIn = () => {
         try {
             const url = "http://localhost:8080/api/auth";
             const {data: res} = await axios.post(url, data);
-            setServerMessage(res.message);
             
-            auth.login(data.email);
-            navigate(originPath, {replace: true});
+            setServerMessage(res.message);
+
+            // Pass the email and the role to the login method
+            // The role comes from the server
+            auth.login(data.email, res.role);
+
+            navigate(targetPath, {replace: true});
             
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
@@ -55,14 +58,14 @@ const SignIn = () => {
             <div className="row container">
                 <div className="col-lg-6">
                     <img src={loginImage} className="img-fluid" alt="loginImage"></img>
-                    { serverMessage &&
-                        <div className="text-primary">
-                            { serverMessage }
-                        </div>
-                    }
                 </div>
                 <div className="col-lg-6 align-self-center p-5">
                     <form className="text-center" onSubmit={handleSubmit}>
+                        { serverMessage &&
+                            <p className="text-primary">
+                                { serverMessage }
+                            </p>
+                        }
                         <div className="form-floating mb-3">
                             <input 
                                 type="email" 
@@ -85,12 +88,12 @@ const SignIn = () => {
                             />
                             <label htmlFor="floatingPassword">Password</label>
                         </div>
-                        <button type="submit" className="btn btn-outline-secondary mt-3">Submit</button>                            
+                        <button type="submit" className="btn btn-lg btn-outline-secondary mt-3">Submit</button>                            
                     </form>
                     <div className="container text-center mt-3">
                         <p className="text-center">or</p>
-                        <a className="btn btn-outline-primary mx-2" href="/signUp">Sign Up</a>
-                        <a className="mx-2 text-black" href="#">Recover password</a>
+                        <a className="btn btn-lg btn-outline-primary mx-2" href="/signUp">Sign Up</a>
+                        <a className="mx-2 text-black" href="">Recover password</a>
                     </div>
                 </div>
             </div>

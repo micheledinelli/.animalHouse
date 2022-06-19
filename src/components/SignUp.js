@@ -2,15 +2,16 @@ import React from "react";
 import axios from  "axios";
 import { useNavigate } from "react-router-dom";
 
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import Auth from '../Auth';
+
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
-import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
 import registerImage from '../assets/undraw_welcome_cats_thqn.png';
 
 const SignUp = () => {
 
     const navigate = useNavigate();
+    const auth = Auth.getInstance();
 
     const [serverMessage, setServerMessage] = React.useState();
 
@@ -31,6 +32,13 @@ const SignUp = () => {
             const url = "http://localhost:8080/api/users";
             const {data: res} = await axios.post(url, data);
             setServerMessage(res.message);
+
+            auth.login(data.email, res.role);
+
+            setTimeout(() => {
+                navigate("/", {replace: true});
+            }, 1000);
+
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
                 setServerMessage(error.response.data.message);
@@ -94,17 +102,17 @@ const SignUp = () => {
                             />
                             <label htmlFor="password">Password</label>
                         </div>
-                        <button type="submit" className="btn btn-outline-secondary mt-3">Submit</button>                            
+                        <button type="submit" className="btn btn-lg btn-outline-secondary mt-3">Submit</button>                            
                     </form>
                     <div className="container text-center mt-3">
                         <p className="text-center">or</p>
-                        <a className="btn btn-outline-primary mx-2" href="/signIn">Sign In</a>
+                        <a className="btn btn-lg btn-outline-primary mx-2" href="/signIn">Sign In</a>
                     </div>
                 </div>
                 <div className="col-lg-6">
                     <img src={registerImage} className="img-fluid" alt="loginImage"></img>
                     {
-                        serverMessage && <span className="text-primary">{serverMessage}</span>
+                        serverMessage && <p className="text-primary lead">{serverMessage}</p>
                     }
                 </div>
             </div>

@@ -3,7 +3,7 @@ const {User} = require('../models/user');
 const joi = require('joi');
 const bcrypt = require('bcrypt');
 
-router.post('/', async(req,res) => {
+router.post('/', async (req,res) => {
     try {
         // const {error} = validate(req.body);
         error = false;
@@ -13,20 +13,23 @@ router.post('/', async(req,res) => {
         }
 
         const user = await User.findOne( {email: req.body.email});
+        
         if(!user) {
             return res.status(401).send({message: 'invalid email or password'});
         }
 
-         const validPassword = await bcrypt.compare(
+        const validPassword = await bcrypt.compare(
             req.body.password, user.password
-         );
+        );
 
-         if(!validPassword) {
+        if(!validPassword) {
             return res.status(401).send({message: "invalid email or password"});
-         }
+        }
 
-         const token = user.generateAuthToken();
-         res.status(200).send({data: token, message: "logged"});
+        const role = user.role || 1000;
+
+        const token = user.generateAuthToken();
+        res.status(200).send({data: token, role: role, message: "logged"});
 
     } catch (error) {
         res.status(500).send({error: "internal server error"});

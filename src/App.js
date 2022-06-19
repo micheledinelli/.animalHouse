@@ -8,6 +8,8 @@ import GamePage from "./components/GamePage.js";
 import SignIn from "./components/SignIn.js";
 import SignUp from "./components/SignUp.js";
 import Test from "./components/Test.js";
+import User from "./components/User.js";
+import BackOffice from "./components/BackOffice.js";
 
 function App() {
 
@@ -17,16 +19,24 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                { /* Protected routes */}
+                { /* Protected route: authentication required */}
                 <Route path="/test" element={<ProtectedRoute />}>
                     <Route path="/test" element={<Test/>}></Route>
                 </Route>
+
+                { /* Protected route: authentication + authorization */}
+                <Route path="/backOffice" element={<ProtectedRoute />}>
+                        <Route path="/backOffice" element={<BackOffice />}></Route>
+                </Route>
+
                 
                 { /* Free access */}
                 <Route path="/gamePage" exact element={<GamePage />}></Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
-                <Route path="/" element={<Landing />}></Route>
+                <Route path="/user" element={<User />}></Route>
+                <Route path="/" exact element={<Landing />}></Route>
+                
                 {/* catch unhandled routes */}
                 <Route path="*" element={<ErrorPage />}></Route>
             </Routes>
