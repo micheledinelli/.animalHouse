@@ -25,7 +25,8 @@ const User  = () => {
 
     const [data, setData] = useState({
         email: auth.userEmail,
-        password: ""
+        password: "",
+        newPassword: ""
     });
 
     const [serverMessage, setServerMessage] = useState(); 
@@ -40,7 +41,7 @@ const User  = () => {
         try {
             const url = "http://localhost:8080/api/changepw";
             const {data: res} = await axios.post(url, data);
-            console.log(res);
+            setServerMessage(res.message);
 
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
@@ -71,6 +72,12 @@ const User  = () => {
                     <a className="btn btn-lg btn-outline-primary mb-3" href="/">Go back</a>
                 </div>
                 <div className="col-lg-6 d-flex flex-column justify-content-center">
+                    {
+                        serverMessage && 
+                            <p className="text-primary text-center">
+                                { serverMessage }
+                            </p>
+                    }
                     <button onClick={logout} className="btn btn-lg btn-outline-secondary my-3 text-danger">Logout</button>
                     <button 
                         className="btn btn-lg btn-outline-secondary my-3"
@@ -107,6 +114,7 @@ const User  = () => {
                     </div>
                 </div>
             </div>
+            
             {/* Change password modal */}
             <div className="modal fade" id="change-password-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -120,17 +128,29 @@ const User  = () => {
                                 <div className="form-floating mb-3">
                                     <input 
                                         type="password" 
+                                        name="password"
                                         className="form-control" 
-                                        name="password" 
-                                        placeholder="Password"
+                                        onChange={handleChange}
+                                        placeholder="password"
                                         required
-                                        onChange={handleChange} 
                                     />
-                                    <label htmlFor="floatingPassword">new password</label>
+                                    <label htmlFor="password">password</label>
+                                </div>
+                                <div className="form-floating mb-3">
+                                    <input 
+                                        type="password" 
+                                        name="newPassword"
+                                        className="form-control" 
+                                        onChange={handleChange}
+                                        placeholder="new password"
+                                        required
+                                    />
+                                    <label htmlFor="newPassword">new password</label>
                                 </div>
                                 <button 
                                     type="submit" 
-                                    className="btn btn-outline-secondary" 
+                                    className="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal" 
                                 >
                                     Change Password
                                 </button>
