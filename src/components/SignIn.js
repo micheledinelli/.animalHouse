@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from  "axios";
 
 // Auth manager
 import Auth from '../Auth';
 
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
 import loginImage from '../assets/undraw_Login_re_4vu2.png';
 
@@ -17,7 +18,6 @@ const SignIn = () => {
     const navigate = useNavigate();
 
     let auth = Auth.getInstance();
-    let isAuth = auth.isAuthenticated();
 
     const [data, setData] = React.useState({
         email: "",
@@ -49,6 +49,26 @@ const SignIn = () => {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
                 setServerMessage(error.response.data.message);
             }
+        }
+    }
+
+    const [emailToRecover, setEmailToRecover] = useState({
+        etr: ""
+    });
+
+    const handleRecoverEmail = ({currentTarget: input}) => {
+        setEmailToRecover({...emailToRecover, [input.name]: input.value});
+    }
+
+    const recoverPassword = async (e) => {
+        e.preventDefault();
+
+        try {
+            const url = "http://localhost:8080/api/recoverpw";
+            const res = await axios.post(url, emailToRecover);
+            console.log(res);
+        } catch (error) {
+            
         }
     }
 
@@ -92,8 +112,51 @@ const SignIn = () => {
                     </form>
                     <div className="container text-center mt-3">
                         <p className="text-center">or</p>
-                        <a className="btn btn-lg btn-outline-primary mx-2" href="/signUp">Sign Up</a>
-                        <a className="mx-2 text-black" href="">Recover password</a>
+                        <a 
+                            className="btn btn-lg btn-outline-primary mx-2" 
+                            href="/signUp">
+                                Sign Up
+                        </a>
+                        <a 
+                            className="mx-2 text-black" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#recover-password-modal"
+                            href="">
+                                Recover password
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            {/* Recover password modal */}
+            <div className="modal fade" id="recover-password-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Recover Password</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form onSubmit={recoverPassword} className="text-center">
+                                <div className="form-floating mb-3">
+                                    <input 
+                                        type="email" 
+                                        className="form-control" 
+                                        name="etr" 
+                                        placeholder="email"
+                                        onChange={handleRecoverEmail}
+                                        required 
+                                    />
+                                    <label htmlFor="etr">your email</label>
+                                </div>
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-outline-secondary" 
+                                >
+                                    Send email
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
