@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import ProtectedRoute from "./components/ProtectedRoute.js"; 
@@ -22,7 +22,7 @@ function App() {
             <Routes>
                 { /* Protected route: authentication required */}
                 <Route path="/frontOffice" element={<ProtectedRoute />}>
-                    <Route path="/frontOffice" element={<BackOffice />}></Route>
+                    <Route path="/frontOffice" element={<FrontOffice />}></Route>
                 </Route>
 
                 { /* Protected route: authentication + authorization */}

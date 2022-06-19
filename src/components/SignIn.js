@@ -52,9 +52,7 @@ const SignIn = () => {
         }
     }
 
-    const [emailToRecover, setEmailToRecover] = useState({
-        etr: ""
-    });
+    const [emailToRecover, setEmailToRecover] = useState({etr: ""});
 
     const handleRecoverEmail = ({currentTarget: input}) => {
         setEmailToRecover({...emailToRecover, [input.name]: input.value});
@@ -66,9 +64,12 @@ const SignIn = () => {
         try {
             const url = "http://localhost:8080/api/recoverpw";
             const res = await axios.post(url, emailToRecover);
-            console.log(res);
+            setServerMessage(res.data.message);
+
         } catch (error) {
-            
+            if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+                setServerMessage(error.response.data.message);
+            }
         }
     }
 
@@ -121,7 +122,7 @@ const SignIn = () => {
                             className="mx-2 text-black" 
                             data-bs-toggle="modal" 
                             data-bs-target="#recover-password-modal"
-                            href="">
+                            href="#">
                                 Recover password
                         </a>
                     </div>
@@ -151,7 +152,8 @@ const SignIn = () => {
                                 </div>
                                 <button 
                                     type="submit" 
-                                    className="btn btn-outline-secondary" 
+                                    className="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Send email
                                 </button>

@@ -1,5 +1,9 @@
 const nodemailer = require('nodemailer');
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
+const {User} = require('../models/user');
+
+// To 
 
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -12,24 +16,44 @@ const transporter = nodemailer.createTransport({
 router.post('/', async (req, res) => {
     try {
         
+        const user = await User.findOne({email: req.body.etr});
+       
+        if(!user) {
+            return res.status(401).send({message: 'invalid email or password'});
+        }
+
+        const salt = await bcrypt.genSalt(Number(process.env.SALT));
+        const hashPassword = await bcrypt.hash("default", salt);
+
+        const filter = {email: req.body.etr};
+        const update = {password: hashPassword};
+
+        const doc = await User.updateOne(filter, update);
+        
+        if(doc.modifiedCount != 1) {
+            return res.status(400).send({message: 'an error occured'});
+        }
+
         const emailToRecover = req.body.etr;
         
         const options = {
             from: "project.sayonara@outlook.it",
-            to: "dinellimichele00@gmail.com",
+            to: emailToRecover,
             subject: 'Recover Password Animal House',
-            text: 'This is an email sent for debug purpose',
-            html: '<p>wonderful</p><br><h1>hello</h1>'
+            text: '',
+            html: 
+                    `<h3>Password reset</h3>
+                        <p>You can access with the following password: <b>default</b></p>
+                        <p>We suggest you to change this temporary password as soon as possible</p>` 
         }
 
-        // transporter.sendMail(options, (err, info) => {
-        //     if(err) {
-        //         console.log(err);
-        //         return;
-        //     } else {
-        //         res.status(200).send({message: "email sent"});
-        //     }
-        // });
+        transporter.sendMail(options, (err, info) => {
+            if(err) {
+                return res.status(400).send({message: "error sending the email, do you have an account?"});
+            } else {
+                return res.status(200).send({message: "email sent"});
+            }
+        });
 
     } catch (error) {
         res.status(500).send({error: "internal server error"});
