@@ -43,7 +43,7 @@ const Landing = () => {
                     <div className="col-sm-4 align-self-center text-section text-swap-on-bp">
                         <p className="display-4 text-secondary lh-1">Get access to our products and services!</p>
                         <p className="display-4 text-secondary lh-1">All through the front office.</p>
-                        <Link to={'/signIn'}>
+                        <Link to={'/frontOffice'}>
                             <button className="mt-3 btn btn-lg btn-primary text-white">Front Office</button>
                         </Link>
                     </div>

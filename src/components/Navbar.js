@@ -34,12 +34,17 @@ const Navbar = () => {
                             <a 
                                 className="btn nav-btn btn-outline-dark fs-5" 
                                 aria-current="page" 
-                                href='/test'>
+                                href='/frontOffice'>
                                     Front Office
                             </a>
                         </li>
                         <li className="nav-item mx-3">
-                            <a className="btn nav-btn btn-outline-dark fs-5" aria-current="page" href="/backOffice">Back Office</a>
+                            <a 
+                                className="btn nav-btn btn-outline-dark fs-5" 
+                                aria-current="page" 
+                                href="/backOffice">
+                                Back Office
+                            </a>
                         </li>
                         {   
                             window.localStorage.getItem("authenticator") &&
