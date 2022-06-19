@@ -22,15 +22,14 @@ function App() {
             <Routes>
                 { /* Protected route: authentication required */}
                 <Route path="/frontOffice" element={<ProtectedRoute />}>
-                    <Route path="/frontOffice" element={<FrontOffice/>}></Route>
+                    <Route path="/frontOffice" element={<BackOffice />}></Route>
                 </Route>
 
                 { /* Protected route: authentication + authorization */}
                 <Route path="/backOffice" element={<ProtectedRoute />}>
-                        <Route path="/backOffice" element={<BackOffice />}></Route>
+                    <Route path="/backOffice" element={<BackOffice />}></Route>
                 </Route>
 
-                
                 { /* Free access */}
                 <Route path="/gamePage" exact element={<Game />}></Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
