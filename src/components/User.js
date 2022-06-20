@@ -5,6 +5,8 @@ import axios from "axios";
 import Auth from '../Auth';
 
 import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Assets
 import UserImage from '../assets/undraw_Personal_info_re_ur1n.png';
@@ -29,8 +31,6 @@ const User  = () => {
         newPassword: ""
     });
 
-    const [serverMessage, setServerMessage] = useState(); 
-
     const handleChange = ({currentTarget: input}) => {
         setData({...data, [input.name]: input.value});
     }
@@ -41,11 +41,11 @@ const User  = () => {
         try {
             const url = "http://localhost:8080/api/changepw";
             const {data: res} = await axios.post(url, data);
-            setServerMessage(res.message);
+            toast.success(res.message);
 
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setServerMessage(error.response.data.message);
+                toast.error(error.response.data.message);
             }
         }
     }
@@ -56,7 +56,7 @@ const User  = () => {
     }
 
     return(
-        <div className="container-fluid">  
+        <div className="container-fluid">
             <div className="title text-center">
                 {
                     window.localStorage.getItem("authenticator") &&
@@ -68,16 +68,11 @@ const User  = () => {
 
             <div className="row">
                 <div className="col-lg-6 text-center">
+                    <ToastContainer />  
                     <img className="img-fluid" src={UserImage}></img>
                     <a className="btn btn-lg btn-outline-primary mb-3" href="/">Go back</a>
                 </div>
                 <div className="col-lg-6 d-flex flex-column justify-content-center">
-                    {
-                        serverMessage && 
-                            <p className="text-primary text-center">
-                                { serverMessage }
-                            </p>
-                    }
                     <button onClick={logout} className="btn btn-lg btn-outline-secondary my-3 text-danger">Logout</button>
                     <button 
                         className="btn btn-lg btn-outline-secondary my-3"
@@ -98,7 +93,7 @@ const User  = () => {
             
             {/* Info modal */}
             <div className="modal fade" id="info-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-scrollable">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Info</h5>

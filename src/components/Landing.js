@@ -24,7 +24,6 @@ const Landing = () => {
         <div>
 
             <Navbar />
-
             <div className="landing-container container my-5">
                 <Fade delay={400}>
                 <div className="row mt-5">
