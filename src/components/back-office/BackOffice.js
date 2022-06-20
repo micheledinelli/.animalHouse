@@ -15,8 +15,8 @@ const BackOffice = () => {
             <h1 className="display-3 text-center">Welcome to <b>BackOffice</b></h1>
             <div className="row mt-5 mx-3">
                 <div className="col-lg-6">
-                    <Link to="/">
-                    <img src={People} className="img-fluid zoom"></img>
+                    <Link to="/backOffice/personalData">
+                        <img src={People} className="img-fluid zoom"></img>
                     </Link>
                     <Slide direction="left" delay={600}>
                         <p className="display-5 text-center">Personal data</p>

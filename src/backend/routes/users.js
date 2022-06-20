@@ -25,4 +25,19 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.get("/", async (req, res) => {
+    try {
+        const user = User.find({}, (err, docs) => {
+            if(!err) { 
+                res.status(200).send(docs);
+            } else {
+                res.status(200).send({message: 'no data available'})
+            }
+        });
+
+    } catch (error) {
+        res.status(500).send({message: "Internal server error"})
+    }
+})
+
 module.exports = router; 
