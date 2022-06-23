@@ -50,7 +50,7 @@ const Navbar = () => {
                             window.localStorage.getItem("authenticator") &&
                             <li className="nav-item mx-3">
                                 <Link to="/user">
-                                    <button className="btn btn-outline-primary fs-5"> { Auth.getInstance().userEmail }</button>
+                                    <button className="btn btn-outline-primary fs-5 user-btn-nav"> { Auth.getInstance().userEmail }</button>
                                 </Link>
                             </li>
                         }

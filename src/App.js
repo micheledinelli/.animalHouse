@@ -11,6 +11,7 @@ import User from "./components/User.js";
 import Game from "./components/game/Game.js";
 import BackOffice from "./components/back-office/BackOffice.js";
 import FrontOffice from "./components/front-office/FrontOffice";
+import PersonalData from "./components/back-office/PersonalData.js";
 
 function App() {
 
@@ -27,7 +28,10 @@ function App() {
 
                 { /* Protected route: authentication + authorization */}
                 <Route path="/backOffice" element={<ProtectedRoute />}>
-                    <Route path="/backOffice" element={<BackOffice />}></Route>
+                    <Route path="/backOffice">
+                        <Route index={true} element={<BackOffice />}></Route>
+                        <Route path="personalData" element={<PersonalData />}></Route>
+                    </Route>
                 </Route>
 
                 { /* Free access */}

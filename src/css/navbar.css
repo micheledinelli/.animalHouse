@@ -10,3 +10,9 @@
 .nav-btn {
     width: 150px !important;
 }
+
+@media screen and (max-width: 576px){
+    .user-btn-nav {
+        margin-top: 20px;
+    }
+}
