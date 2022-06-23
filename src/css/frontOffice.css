@@ -102,6 +102,7 @@
 {
     color: white;
 }
+
 .navigation ul li:hover a::before
 {
      content: '';
