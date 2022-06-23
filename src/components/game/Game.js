@@ -1,8 +1,17 @@
+// React
 import React from "react";
+
+// Components
+import GameNavbar from "./GameNavbar";
+import AnimalNews from "./AnimalNews";
+
 
 const GamePage = () => {
     return(
-        <div>hello im game page</div>
+        <div>
+            <GameNavbar />
+            <AnimalNews />
+        </div>
     )
 }
 
