@@ -9,7 +9,7 @@ import { Fade } from "react-awesome-reveal";
 import "../../css/back-office.css";
 import 'react-toastify/dist/ReactToastify.css';
 
-import NavbarBackOffice from "./NavbarBackOffice";
+import NavbarBackOffice from "./NavbarBackOffice.js";
 
 const PersonalData = () => {
 
@@ -55,7 +55,6 @@ const PersonalData = () => {
      * more sophisticated search
      */
     const lookUpTable = () => {
-        
         const regexp = new RegExp('.*' + search + '.*');
         let matches = 0;
         let indexesOfMatches = [];
@@ -108,7 +107,7 @@ const PersonalData = () => {
                 window.location.href = window.location.href;
             }
 
-            document.getElementById("options-div").appendChild(button);
+            document.getElementById("options-div")?.appendChild(button);
         }
 
         for(let i = 0; i < data.length; i++) {
@@ -117,14 +116,11 @@ const PersonalData = () => {
                 let tdName = document.createElement("td");
                 let tdSurname = document.createElement("td");
                 let tdEmail = document.createElement("td");
-                let tdId = document.createElement("td");
 
-                tdId.innerHTML = data[i]["_id"];
                 tdName.innerHTML = data[i]["name"];
                 tdSurname.innerHTML = data[i]["surname"];
                 tdEmail.innerHTML = data[i]["email"];
 
-                tr.appendChild(tdId);
                 tr.appendChild(tdName);
                 tr.appendChild(tdSurname);
                 tr.appendChild(tdEmail);
@@ -135,37 +131,47 @@ const PersonalData = () => {
     }
 
     return(
-        <div className="container">
+        <div>
             <NavbarBackOffice />
             <ToastContainer />
             <div className="container mt-5">
-                <form className="d-flex" role="search" onSubmit={handleSearch}>
+                <form className="" role="search" onSubmit={handleSearch}>
                     <input
                         className="form-control me-2" 
                         type="search" 
-                        placeholder="ctrl + space" 
+                        placeholder="ctrl + space to search" 
                         onChange={handleChange}
                         id="search-btn"
                     />
-                    <button className="btn btn-outline-secondary" type="submit">Search</button>
-                    <button 
-                        onClick={handleShowMore}
-                        id="show-more-btn"
-                        className="btn btn-outline-primary">
-                        Show more
-                    </button>
+                    <div className="mt-3 d-flex justify-content-center">
+                        <button 
+                            className="mx-2 btn btn-outline-success" 
+                            type="submit">
+                                Search
+                        </button>
+                        <a 
+                            onClick={handleShowMore}
+                            id="show-more-btn"
+                            className="mx-2 btn btn-outline-secondary">
+                            More
+                        </a> 
+                        <a 
+                            className="mx-2 btn btn-outline-danger"
+                            onClick={(e) => window.location.href = window.location.href }>
+                                Restore
+                        </a>
+                    </div>
                 </form>
             </div>  
-
-            <div className="container mt-5">
-                <table className="table table-bordered table-hover text-center">
+            <div className="table-responsive mt-5 container">
+                <table className="table text-center table-bordered table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Surname</th>
                             <th scope="col">Email</th>
                         </tr>
-                    </thead>    
+                    </thead> 
                     <tbody>
                         {
                             data &&
