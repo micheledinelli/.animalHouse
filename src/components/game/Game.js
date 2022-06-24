@@ -4,6 +4,8 @@ import React from "react";
 // Components
 import GameNavbar from "./GameNavbar";
 import AnimalNews from "./AnimalNews";
+import AnimalGames from "./AnimalGames";
+import Footer from "../Footer.js" 
 
 
 const GamePage = () => {
@@ -11,6 +13,8 @@ const GamePage = () => {
         <div>
             <GameNavbar />
             <AnimalNews />
+            <AnimalGames />
+            <Footer />
         </div>
     )
 }

@@ -62,7 +62,6 @@ function showNews(rawData){
 function formatDate(rawDate){
     let dataMillisec = Date.parse(rawDate);
     let dataFormattata = new Date(dataMillisec).toUTCString();
-    console.log(dataFormattata);
 
     return(
         dataFormattata
