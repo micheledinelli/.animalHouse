@@ -40,6 +40,24 @@ router.post("/:id", async (req, res) => {
     }
 });
 
+router.delete("/:id", async (req, res) => {
+    try {
+        User.findByIdAndDelete(req.params.id, function (err, docs) {
+            if(err) {
+                res.status(400).send({message: "error deleting"})
+                console.log(err);
+            } else {
+                res.status(200).send({message: "User deleted"});
+                console.log("Deleted : ", docs);
+            }
+        });
+       
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message: "Internal server error"});
+    }
+});
+
 router.get("/", async (req, res) => {
     try {
         const user = User.find({}, (err, docs) => {
