@@ -27,7 +27,7 @@ const GameNavbar = () =>{
                 </a>
                 <div className="collapse navbar-collapse" id="toggledDiv">
                     <ul className="navbar-nav">
-                        <li class="nav-item mx-4">
+                        <li className="nav-item mx-4">
                             <a 
                                 className="nav-link active fs-4" 
                                 aria-current="page" 
@@ -35,7 +35,7 @@ const GameNavbar = () =>{
                                 Notizie
                             </a>
                         </li>
-                        <li class="nav-item mx-4">
+                        <li className="nav-item mx-4">
                             <a 
                                 className="nav-link active fs-4" 
                                 aria-current="page" 
