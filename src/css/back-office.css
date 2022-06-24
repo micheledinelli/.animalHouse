@@ -5,3 +5,19 @@
 .zoom {
     transition: 0.5s all ease-in-out;
 }
+
+.col-side-bar-single-user {
+    padding: 0;
+}
+
+.side-bar-single-user {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 576px) {
+    .side-bar-single-user {
+        height: auto;
+    }
+}

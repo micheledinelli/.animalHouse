@@ -122,7 +122,7 @@ const PersonalData = () => {
 
                 anchor.classList.add("btn");
                 anchor.classList.add("btn-outline-primary");
-                anchor.href = `personalData/${data[i]["_id"]}`;
+                anchor.href = `/backOffice/personalData/${data[i]["_id"]}`;
                 anchor.innerHTML = `open info`;
                 
                 tdName.innerHTML = data[i]["name"];
@@ -193,7 +193,7 @@ const PersonalData = () => {
                                         <td>{e.email}</td>
                                         <td>
                                             <a 
-                                                href={`personalData/${e._id}`} 
+                                                href={`/backOffice/personalData/${e._id}`} 
                                                 className="btn btn-outline-primary"
                                             >
                                                 <i className="bi bi-person-circle"></i>
