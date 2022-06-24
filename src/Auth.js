@@ -44,6 +44,7 @@ export default class Auth {
         window.localStorage.removeItem("authenticator");
         window.localStorage.removeItem("user_email");
         window.localStorage.removeItem("authenticated");
+        window.localStorage.removeItem("user_role");
     }
 
     isAuthenticated() { return this.authenticated; }

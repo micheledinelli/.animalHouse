@@ -60,7 +60,7 @@ const User  = () => {
             <div className="title text-center">
                 {
                     window.localStorage.getItem("authenticator") &&
-                        <h1 className="display-5 mt-3">
+                        <h1 className="display-5 mt-3 text-black">
                             { auth.userEmail }
                         </h1>
                 }
