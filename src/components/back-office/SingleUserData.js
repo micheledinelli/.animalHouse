@@ -45,7 +45,7 @@ const SingleUserData = () => {
                             <p className="lead">name: <b>{userData.name}</b></p>
                             <p className="lead">surname: <b>{userData.surname}</b></p>
                             <p className="lead">email: <b>{userData.email}</b></p>
-                            <p className="lead">role: <b>{userData.role}</b></p>
+                            <p className="lead">role: <b>{userData?.role || 1000}</b></p>
                         </div>
                     </div>
                 </div>
