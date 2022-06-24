@@ -25,6 +25,21 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.post("/:id", async (req, res) => {
+    try {
+        if(req.body.id) {
+            const userId = req.body.id;
+            const user = await User.findOne({_id: userId});
+            res.status(200).send(user);
+        } else {
+            res.status(400).send({message: "Error"});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message: "Internal server error"});
+    }
+});
+
 router.get("/", async (req, res) => {
     try {
         const user = User.find({}, (err, docs) => {

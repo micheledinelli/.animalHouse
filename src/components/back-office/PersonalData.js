@@ -116,14 +116,24 @@ const PersonalData = () => {
                 let tdName = document.createElement("td");
                 let tdSurname = document.createElement("td");
                 let tdEmail = document.createElement("td");
+                let tdInfo = document.createElement("td");
+                
+                let anchor = document.createElement("a");
 
+                anchor.classList.add("btn");
+                anchor.classList.add("btn-outline-primary");
+                anchor.href = `personalData/${data[i]["_id"]}`;
+                anchor.innerHTML = `open info`;
+                
                 tdName.innerHTML = data[i]["name"];
                 tdSurname.innerHTML = data[i]["surname"];
                 tdEmail.innerHTML = data[i]["email"];
+                tdInfo.appendChild(anchor);
 
                 tr.appendChild(tdName);
                 tr.appendChild(tdSurname);
                 tr.appendChild(tdEmail);
+                tr.appendChild(tdInfo);
 
                 tbody.appendChild(tr);
             }
@@ -170,6 +180,7 @@ const PersonalData = () => {
                             <th scope="col">Name</th>
                             <th scope="col">Surname</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Personal page</th>
                         </tr>
                     </thead> 
                     <tbody>
@@ -180,6 +191,14 @@ const PersonalData = () => {
                                         <td>{e.name}</td>
                                         <td>{e.surname}</td>
                                         <td>{e.email}</td>
+                                        <td>
+                                            <a 
+                                                href={`personalData/${e._id}`} 
+                                                className="btn btn-outline-primary"
+                                            >
+                                                <i className="bi bi-person-circle"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 ))
                         }
