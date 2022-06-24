@@ -29,17 +29,17 @@ const GameNavbar = () =>{
                     <ul className="navbar-nav">
                         <li class="nav-item mx-4">
                             <a 
-                                class="nav-link active fs-4" 
+                                className="nav-link active fs-4" 
                                 aria-current="page" 
-                                href="/">
+                                href="./gamePage#News">
                                 Notizie
                             </a>
                         </li>
                         <li class="nav-item mx-4">
                             <a 
-                                class="nav-link active fs-4" 
+                                className="nav-link active fs-4" 
                                 aria-current="page" 
-                                href="/">
+                                href="./gamePage#Games">
                                 Giochi
                             </a>
                         </li>
