@@ -4,7 +4,7 @@ import Auth from "../../Auth";
 
 const NavbarBackOffice = () => {
     return(
-        <nav className="navbar sticky-top navbar-expand-lg bg-primary">
+        <nav className="navbar navbar-expand-lg bg-primary">
             <div className="container">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggledDiv" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span>

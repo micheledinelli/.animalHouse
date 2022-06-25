@@ -12,7 +12,12 @@ const SingleUserData = () => {
         surname: "",
         email: "",
         role: "",
-    })
+    });
+
+    const [securityPhrase, setSecurityPhrase] = useState({
+        resetPhrase: "",
+        deletePhrase: ""
+    });
 
     const getUserById = async () => {
         const response = await axios.post(`http://localhost:8080/api/users/${userId}`, {id: userId});
@@ -25,10 +30,48 @@ const SingleUserData = () => {
     
     }, []);
 
-    const deleteUser = async (e) => {
+    const handleChangeSecurityPhrase = ({target: input}) => {
+        setSecurityPhrase({...securityPhrase, [input.name]: input.value});
+    }
+    
+    const handleSubmitResetPassword = async (e) => {
         e.preventDefault();
-        const response = await axios.delete(`http://localhost:8080/api/users/${userId}`);
-        toast(response.data.message);
+        
+        try {
+            if( securityPhrase.resetPhrase === "reset123") {
+                const url = "http://localhost:8080/api/recoverpw";
+                const res = await axios.post(url, {etr: userData.email});
+                toast.success(res.data.message); 
+                console.log("im here");
+            } else {
+                toast.error("incorrect security phrase")
+            }
+        } catch (error) {
+            if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Conncetion refused");
+            }
+        }
+    }
+
+    const handleSubmitDeletUser = async (e) => {
+        e.preventDefault();
+        try {
+            if(securityPhrase.deletePhrase === "delete456") {
+                console.log("im here");
+                const response = await axios.delete(`http://localhost:8080/api/users/${userId}`);
+                toast.error(response.data.message);
+            } else {
+                toast.error("incorrect security phrase")
+            }
+        } catch (error) {
+            if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Conncetion refused");
+            }
+        }
     }
 
     const copyToClipBoard = () => {
@@ -68,7 +111,9 @@ const SingleUserData = () => {
                                     </li>
                                     <li className="nav-item mx-3 my-3">
                                         <a 
-                                            className="btn nav-btn btn-outline-light fs-5" 
+                                            className="btn nav-btn btn-outline-light fs-5"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#reset-password-modal" 
                                             href="">
                                             Reset pw
                                         </a>
@@ -76,7 +121,8 @@ const SingleUserData = () => {
                                     <li className="nav-item mx-3 my-3">
                                         <a 
                                             className="btn nav-btn btn-outline-light fs-5"
-                                            onClick={deleteUser} 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#delete-password-modal"
                                             href="">
                                             Delete
                                         </a>
@@ -114,6 +160,74 @@ const SingleUserData = () => {
                 </div>
                 <div className="col-lg-5">
                     <h1>Preferences and points</h1>
+                </div>
+            </div>
+            {/* Reset pw modal */}
+            <div className="modal fade" id="reset-password-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Reset password</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form className="text-center" onSubmit={handleSubmitResetPassword}>
+                                <p>Type <b>reset123</b> to reset user password</p>
+                                <div className="form-floating mb-3">
+                                    <input 
+                                        type="text" 
+                                        name="resetPhrase"
+                                        className="form-control" 
+                                        placeholder="security phrase"
+                                        onChange={handleChangeSecurityPhrase}
+                                        required
+                                    />
+                                    <label htmlFor="newPassword">security phrase</label>
+                                </div>
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal" 
+                                >
+                                    Reset password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Delete user modal */}
+            <div className="modal fade" id="delete-password-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Delete User</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form className="text-center" onSubmit={handleSubmitDeletUser}>
+                                <p>Type <b>delete456</b> to delete user: {userData._id}</p>
+                                <div className="form-floating mb-3">
+                                    <input 
+                                        type="text" 
+                                        name="deletePhrase"
+                                        className="form-control" 
+                                        placeholder="security phrase"
+                                        onChange={handleChangeSecurityPhrase}
+                                        required
+                                    />
+                                    <label htmlFor="newPassword">security phrase</label>
+                                </div>
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-outline-secondary"
+                                    // data-bs-dismiss="modal" 
+                                >
+                                    Delete user
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
