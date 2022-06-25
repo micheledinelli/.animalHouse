@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
-import { Fade } from "react-awesome-reveal";
 
 import "../../css/back-office.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 import NavbarBackOffice from "./NavbarBackOffice.js";
+import { useLocation } from "react-router-dom";
 
 const PersonalData = () => {
+
+    const location = useLocation();
 
     const [data, setData] = useState(null);
     const [currentDataShown, setCurrentDataShown] = useState(3);
@@ -24,6 +26,12 @@ const PersonalData = () => {
                 document.querySelector("#search-btn").focus();
             }
         });
+        
+        // Coming from a delete operation so notify the admin
+        if(location.state?.deleted) {
+            toast.success("user deleted");
+            window.history.replaceState({}, document.title);
+        }
 
     }, []);
 
