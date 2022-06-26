@@ -26,7 +26,6 @@ const Landing = () => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log(location);
         if(location.state?.error) {
             toast.error(location.state.error);
             window.history.replaceState({}, document.title);

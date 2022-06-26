@@ -27,14 +27,6 @@ const NavbarBackOffice = () => {
                                 <i className="bi bi-house"></i>
                             </a>
                         </li>
-                        {   
-                            window.localStorage.getItem("authenticator") &&
-                            <li className="nav-item mx-3">
-                                <Link to="/user">
-                                    <button className="btn btn-outline-light fs-5 user-btn-nav"> { Auth.getInstance().userEmail }</button>
-                                </Link>
-                            </li>
-                        }
                     </ul>
                 </div>
             </div>

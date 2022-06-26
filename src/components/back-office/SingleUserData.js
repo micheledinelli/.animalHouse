@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { Exception } from "sass";
 
 const SingleUserData = () => {
-    
+
     const userId = useParams().id;
-    
+
     const [userData, setUserData] = useState({
         id: "",
         name: "",
@@ -22,30 +23,33 @@ const SingleUserData = () => {
 
     const [deleted, setDeleted] = useState(false);
 
+    const [jsonEdited, setJsonEdited] = useState('');
+
     const getUserById = async () => {
-        const response = await axios.post(`http://localhost:8080/api/users/${userId}`, {id: userId});
+        const response = await axios.get(`http://localhost:8080/api/users/${userId}`);
         setUserData(response.data);
-    } 
+    }
 
     useEffect(() => {
-        
+
         getUserById();
-    
-    }, []);
+        setJsonEdited(JSON.stringify(userData, 
+            ['name', 'surname', '_id', 'role', 'email'], 2));
+
+    }, [userData._id]);
 
     const handleChangeSecurityPhrase = ({target: input}) => {
         setSecurityPhrase({...securityPhrase, [input.name]: input.value});
     }
-    
+
     const handleSubmitResetPassword = async (e) => {
         e.preventDefault();
-        
+
         try {
             if( securityPhrase.resetPhrase === "reset123") {
                 const url = "http://localhost:8080/api/recoverpw";
                 const res = await axios.post(url, {etr: userData.email});
-                toast.success(res.data.message); 
-                console.log("im here");
+                toast.success(res.data.message);
             } else {
                 toast.error("incorrect security phrase")
             }
@@ -58,7 +62,7 @@ const SingleUserData = () => {
         }
     }
 
-    const handleSubmitDeletUser = async (e) => {
+    const handleSubmitDeleteUser = async (e) => {
         e.preventDefault();
         try {
             if(securityPhrase.deletePhrase === "delete456") {
@@ -73,6 +77,24 @@ const SingleUserData = () => {
                 toast.error(error.response.data.message);
             } else {
                 toast.error("Conncetion refused");
+            }
+        }
+    }
+
+    const handleSumbitEditedJson = async (e) => {
+        e.preventDefault();
+        try {
+            // This will throw an exception handled by the catch
+            let body = JSON.parse(jsonEdited);
+                
+            const response = await axios.post(`http://localhost:8080/api/users/${userId}`, body);
+            toast.success(response.data.message);
+        
+        } catch (error) {
+            if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error(error);
             }
         }
     }
@@ -93,9 +115,9 @@ const SingleUserData = () => {
     }
 
     if(deleted) {
-   
-        return <Navigate to="/backOffice/personalData" replace state={{deleted: deleted}}/>   
-   
+
+        return <Navigate to="/backOffice/personalData" replace state={{deleted: deleted}}/>
+
     } else {
         return(
             <div className="container-fluid">
@@ -109,30 +131,39 @@ const SingleUserData = () => {
                                         <i className="bi bi-three-dots text-white"></i>
                                     </span>
                                 </button>
-                    
+
                                 <div className="collapse navbar-collapse" id="toggledDiv">
                                     <ul className="navbar-nav d-flex flex-column">
                                         <li className="nav-item mx-3 my-3">
-                                            <a className="btn btn-outline-light fs-5 nav-btn" href="./">    
-                                                <i className="bi bi-arrow-left-circle"></i>                   
+                                            <a className="btn btn-outline-light fs-5 nav-btn" href="./">
+                                                <i className="bi bi-arrow-left-circle"></i>
                                             </a>
                                         </li>
                                         <li className="nav-item mx-3 my-3">
-                                            <a 
+                                            <a
                                                 className="btn nav-btn btn-outline-light fs-5"
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#reset-password-modal" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#reset-password-modal"
                                                 href="">
                                                 Reset pw
                                             </a>
                                         </li>
                                         <li className="nav-item mx-3 my-3">
-                                            <a 
+                                            <a
                                                 className="btn nav-btn btn-outline-light fs-5"
-                                                data-bs-toggle="modal" 
+                                                data-bs-toggle="modal"
                                                 data-bs-target="#delete-password-modal"
                                                 href="">
                                                 Delete
+                                            </a>
+                                        </li>
+                                        <li className="nav-item mx-3 my-3">
+                                            <a
+                                                className="btn nav-btn btn-outline-light fs-5"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#edit-json-modal"
+                                                href="">
+                                                Edit as JSON
                                             </a>
                                         </li>
                                     </ul>
@@ -141,15 +172,15 @@ const SingleUserData = () => {
                         </nav>
                     </div>
                     <div className="col-lg-5 d-flex align-items-center justify-content-center">
-    
+
                         <div className="card shadow-sm position-relative">
                             <div className="position-absolute top-0 start-100 translate-middle">
-                                <button 
-                                    onClick={copyToClipBoard} 
-                                    className="btn btn-light" 
+                                <button
+                                    onClick={copyToClipBoard}
+                                    className="btn btn-light"
                                     style={{fontSize:"1.8rem"}}
-                                    data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" 
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom"
                                     title="Copy as Json"
                                 >
                                         <i className="bi bi-clipboard" id="copy-to-clipboard-icon"></i>
@@ -182,20 +213,20 @@ const SingleUserData = () => {
                                 <form className="text-center" onSubmit={handleSubmitResetPassword}>
                                     <p>Type <b>reset123</b> to reset user password</p>
                                     <div className="form-floating mb-3">
-                                        <input 
-                                            type="text" 
+                                        <input
+                                            type="text"
                                             name="resetPhrase"
-                                            className="form-control" 
+                                            className="form-control"
                                             placeholder="security phrase"
                                             onChange={handleChangeSecurityPhrase}
                                             required
                                         />
                                         <label htmlFor="newPassword">security phrase</label>
                                     </div>
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className="btn btn-outline-secondary"
-                                        data-bs-dismiss="modal" 
+                                        data-bs-dismiss="modal"
                                     >
                                         Reset password
                                     </button>
@@ -213,26 +244,62 @@ const SingleUserData = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form className="text-center" onSubmit={handleSubmitDeletUser}>
+                                <form className="text-center" onSubmit={handleSubmitDeleteUser}>
                                     <p>Type <b>delete456</b> to delete user: {userData._id}</p>
                                     <div className="form-floating mb-3">
-                                        <input 
-                                            type="text" 
+                                        <input
+                                            type="text"
                                             name="deletePhrase"
-                                            className="form-control" 
+                                            className="form-control"
                                             placeholder="security phrase"
                                             onChange={handleChangeSecurityPhrase}
                                             autoComplete="off"
                                             required
                                         />
-                                        <label htmlFor="newPassword">security phrase</label>
+                                        <label htmlFor="deletePhrase">security phrase</label>
                                     </div>
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className="btn btn-outline-secondary"
-                                        data-bs-dismiss="modal" 
+                                        data-bs-dismiss="modal"
                                     >
                                         Delete user
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Edit as JSON modal */}
+                <div className="modal fade" id="edit-json-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Edit as JSON</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <form className="text-center" onSubmit={handleSumbitEditedJson}>
+                                    <div className="form-floating mb-3">
+                                        <textarea
+                                            type="text"
+                                            name="json-edit"
+                                            className="form-control"
+                                            placeholder="edit"
+                                            autoComplete="off"
+                                            style={{height: "200px", fontSize: "1.5rem"}}
+                                            spellCheck="false"
+                                            value={ jsonEdited }
+                                            onChange={ e => setJsonEdited(e.target.value) }
+                                        />
+                                        <label htmlFor="json-edit">Edit</label>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-outline-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Submit
                                     </button>
                                 </form>
                             </div>
