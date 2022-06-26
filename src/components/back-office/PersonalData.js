@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
-import { Fade } from "react-awesome-reveal";
 
 import "../../css/back-office.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 import NavbarBackOffice from "./NavbarBackOffice.js";
+import { useLocation } from "react-router-dom";
 
 const PersonalData = () => {
+
+    const location = useLocation();
 
     const [data, setData] = useState(null);
     const [currentDataShown, setCurrentDataShown] = useState(3);
@@ -24,6 +26,12 @@ const PersonalData = () => {
                 document.querySelector("#search-btn").focus();
             }
         });
+        
+        // Coming from a delete operation so notify the admin
+        if(location.state?.deleted) {
+            toast.success("user deleted");
+            window.history.replaceState({}, document.title);
+        }
 
     }, []);
 
@@ -49,13 +57,18 @@ const PersonalData = () => {
         }
     }
 
+    const handelViewAll = (e) => {
+        e.preventDefault();
+        setCurrentDataShown(data.length);
+    }
+
     /**
      * Really simple search with regexp
      * eventually updating it to perform
      * more sophisticated search
      */
     const lookUpTable = () => {
-        const regexp = new RegExp('.*' + search + '.*');
+        const regexp = new RegExp('.*' + search + '.*', 'i');
         let matches = 0;
         let indexesOfMatches = [];
 
@@ -82,8 +95,12 @@ const PersonalData = () => {
         }
 
         matches > 0 ? 
-            toast.success(<NotificationOfMatches />) : 
-            toast.error("No matches found")
+            toast.info(<NotificationOfMatches />, {
+                position: toast.POSITION.BOTTOM_CENTER
+            }) : 
+            toast.error("No matches found", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
     }
 
     const showMatches = (indexesOfMatches) => {
@@ -93,6 +110,9 @@ const PersonalData = () => {
 
         const showMoreBtn = document.getElementById("show-more-btn");
         if(showMoreBtn) { showMoreBtn.remove() }
+
+        const viewAllBtn = document.getElementById("view-all-btn");
+        if(viewAllBtn) { viewAllBtn.remove() }
 
         const restoreBtn = document.getElementById("restore-btn");
         if(!restoreBtn) {
@@ -144,7 +164,7 @@ const PersonalData = () => {
         <div>
             <NavbarBackOffice />
             <ToastContainer />
-            <div className="container mt-5">
+            <div className="container mt-5" id="form-container-p-data">
                 <form className="" role="search" onSubmit={handleSearch}>
                     <input
                         className="form-control me-2" 
@@ -152,6 +172,7 @@ const PersonalData = () => {
                         placeholder="ctrl + space to search" 
                         onChange={handleChange}
                         id="search-btn"
+                        autoComplete="off"
                     />
                     <div className="mt-3 d-flex justify-content-center">
                         <button 
@@ -166,6 +187,12 @@ const PersonalData = () => {
                             More
                         </a> 
                         <a 
+                            onClick={handelViewAll}
+                            id="view-all-btn"
+                            className="mx-2 btn btn-outline-secondary">
+                            View all
+                        </a> 
+                        <a 
                             className="mx-2 btn btn-outline-danger"
                             onClick={(e) => window.location.href = window.location.href }>
                                 Restore
@@ -174,7 +201,7 @@ const PersonalData = () => {
                 </form>
             </div>  
             <div className="table-responsive mt-5 container">
-                <table className="table text-center table-bordered table-hover">
+                <table className="table text-center table-bordered table-striped align-middle border-secondary">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
@@ -195,12 +222,22 @@ const PersonalData = () => {
                                             <a 
                                                 href={`/backOffice/personalData/${e._id}`} 
                                                 className="btn btn-outline-primary"
-                                            >
+                                            > 
                                                 <i className="bi bi-person-circle"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 ))
+                        }
+                        {
+                            
+                            currentDataShown < data?.length && <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            
                         }
                     </tbody>
                 </table>
