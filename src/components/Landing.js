@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // Components
 import Navbar from "./Navbar";
-import Footer from "./Footer"
+import Footer from "./Footer";
 
 // Assets
 import GameImage from '../assets/undraw_game_day_ucx9.png';
