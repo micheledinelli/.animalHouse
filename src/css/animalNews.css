@@ -2,24 +2,24 @@
     padding-left: 10vw;
 }
 
-.card{
+#newsCard{
     width: 80vw;
     margin: 10px;
     display: grid;
     border: 2px solid black;
 }
 
-.card-body{
+#newsBody{
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-.img-class{
+#newsImgDiv{
     grid-column-start: 3;
     grid-column-end: 4;
 }
 
-img{
+#newsImg{
     width: 100%;
     height: 100%;
     padding: 4px;

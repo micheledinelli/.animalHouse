@@ -1,4 +1,14 @@
 #Games{
     width: 90vw;
-    margin-left: 5vw;
+    margin-left: 10vw;
+    margin-top: 10vw;
+}
+
+#ytCardLogo{
+    width: 50%;
+    height: auto;
+}
+
+#GamesCardGroup{
+    padding: 5vw;
 }

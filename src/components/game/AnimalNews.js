@@ -7,8 +7,8 @@ const AnimalNews = () => {
     let newsArray = connect();
 
     let cardList = newsArray.map((element) =>
-    <div className="card" key={element.url}>
-        <div className="card-body">
+    <div className="card" key={element.url} id="newsCard">
+        <div className="card-body" id="newsBody">
             <h5 className="card-title">{element.title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{formatDate(element.publishedAt)}</h6>
             <p className="card-text">{element.content}</p>
@@ -18,9 +18,10 @@ const AnimalNews = () => {
                     Read full article
             </a>
         </div>
-        <div className="img-class">
+        <div className="img-class" id="newsImgDiv">
             <img 
                 src={element.urlToImage} 
+                id="newsImg"
                 className="card-img-right rounded float-end" 
                 alt="...">
             </img>
@@ -29,10 +30,10 @@ const AnimalNews = () => {
 
     return(
         <div id="News">
-            <form className="d-flex" role="search">
+            {/* <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
                 <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </form> */}
             <h1>Animal News</h1>
             {cardList}
         </div>
