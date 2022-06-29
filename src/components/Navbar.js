@@ -19,7 +19,7 @@ const Navbar = () => {
                         <i className="bi bi-three-dots"></i>
                     </span>
                 </button>
-                <a className="navbar-brand text-secondary" href="#">animalHouse.</a>
+                <a className="navbar-brand text-secondary" href="/">animalHouse.</a>
                 <div className="collapse navbar-collapse" id="toggledDiv">
                     <ul className="navbar-nav d-flex ms-auto">
                         <li className="nav-item mx-3">

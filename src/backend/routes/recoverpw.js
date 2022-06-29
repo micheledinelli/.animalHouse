@@ -2,8 +2,7 @@ const nodemailer = require('nodemailer');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const {User} = require('../models/user');
-
-// To 
+const randpw = require('../scripts/randomizepw');
 
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -17,13 +16,18 @@ router.post('/', async (req, res) => {
     try {
         
         const user = await User.findOne({email: req.body.etr});
-       
         if(!user) {
             return res.status(401).send({message: 'invalid email or password'});
         }
 
+        // var random_token = await randpw.getRandPw();
+        var random_token = "";
+        for(let i = 0; i < 7; i++) {
+            random_token += Math.round(Math.random());
+        }
+
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
-        const hashPassword = await bcrypt.hash("default", salt);
+        const hashPassword = await bcrypt.hash(random_token, salt);
 
         const filter = {email: req.body.etr};
         const update = {password: hashPassword};
@@ -43,7 +47,7 @@ router.post('/', async (req, res) => {
             text: '',
             html: 
                     `<h3>Password reset</h3>
-                        <p>You can access with the following password: <b>default</b></p>
+                        <p>You can access with the following password: <b>${random_token}</b></p>
                         <p>We suggest you to change this temporary password as soon as possible</p>` 
         }
 
