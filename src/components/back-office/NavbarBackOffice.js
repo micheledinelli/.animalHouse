@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Auth from "../../Auth";
 
 const NavbarBackOffice = () => {
+
+    const handleFindById = () => {
+        console.log(document.getElementsByTagName("table")[0]);
+    }
+
     return(
         <nav className="navbar navbar-expand-lg bg-primary">
             <div className="container">
@@ -18,7 +21,9 @@ const NavbarBackOffice = () => {
                         <li className="nav-item mx-3">
                             <a 
                                 className="btn nav-btn btn-outline-light fs-5" 
-                                href="/findById">
+                                href="#"
+                                onClick={handleFindById}    
+                            >
                                 findById
                             </a>
                         </li>

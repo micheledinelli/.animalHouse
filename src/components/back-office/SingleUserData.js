@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { Exception } from "sass";
 
 const SingleUserData = () => {
 
@@ -164,6 +163,7 @@ const SingleUserData = () => {
                                                 data-bs-target="#edit-json-modal"
                                                 href="">
                                                 Edit as JSON
+                                                (beta)
                                             </a>
                                         </li>
                                     </ul>
@@ -172,9 +172,8 @@ const SingleUserData = () => {
                         </nav>
                     </div>
                     <div className="col-lg-5 d-flex align-items-center justify-content-center">
-
                         <div className="card shadow-sm position-relative">
-                            <div className="position-absolute top-0 start-100 translate-middle">
+                            <div className="position-absolute top-0 start-100 translate-middle shadow-lg">
                                 <button
                                     onClick={copyToClipBoard}
                                     className="btn btn-light"
@@ -187,8 +186,7 @@ const SingleUserData = () => {
                                 </button>
                             </div>
                             <div className="card-body">
-                                <p className="card-title display-2">{userData.name}</p>
-                                <p className="display-6">Info</p>
+                                <p className="card-title display-2 my-4">{userData.name}</p>
                                 <p className="lead">id: <b>{userData._id}</b></p>
                                 <p className="lead">name: <b>{userData.name}</b></p>
                                 <p className="lead">surname: <b>{userData.surname}</b></p>
@@ -279,20 +277,24 @@ const SingleUserData = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
+                                <p className="lead">Available operations</p>
+                                <ul className="navbar-nav my-3">
+                                    <li>Add role property</li>
+                                    <li>Modify existing properties</li>
+                                </ul>
+
                                 <form className="text-center" onSubmit={handleSumbitEditedJson}>
                                     <div className="form-floating mb-3">
                                         <textarea
                                             type="text"
                                             name="json-edit"
                                             className="form-control"
-                                            placeholder="edit"
                                             autoComplete="off"
                                             style={{height: "200px", fontSize: "1.5rem"}}
                                             spellCheck="false"
                                             value={ jsonEdited }
                                             onChange={ e => setJsonEdited(e.target.value) }
                                         />
-                                        <label htmlFor="json-edit">Edit</label>
                                     </div>
                                     <button
                                         type="submit"

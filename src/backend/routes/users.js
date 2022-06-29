@@ -49,11 +49,11 @@ router.post("/:id", async (req, res) => {
         
         const updatedDoc = await new User({ ...req.body, password: curDoc.password })
         const doc = await User.updateOne(filter, updatedDoc);
-
+        
         if(doc.modifiedCount > 0) {
             res.status(200).send({message: "Document modified"});
         } else {
-            res.status(400).send({message: "Something went wron"});
+            res.status(400).send({message: "Something went wrong"});
         }
         
     } catch (error) {

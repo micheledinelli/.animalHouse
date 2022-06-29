@@ -16,14 +16,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.5",
-    "util": "^0.12.4",
-    "web-vitals": "^2.1.4",
-    "webpack": "^5.73.0"
-  },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
