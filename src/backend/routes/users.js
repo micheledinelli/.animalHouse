@@ -6,6 +6,7 @@ router.post('/', async(req, res) => {
     try {
         //const {error} = validate(req.body);
         error = false;
+
         if( error) {
             return res.status(400).send( {message: error.details[0].message} );
         }
@@ -25,10 +26,10 @@ router.post('/', async(req, res) => {
     }
 })
 
-router.post("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
-        if(req.body.id) {
-            const userId = req.body.id;
+        if(req.params.id) {
+            const userId = req.params.id;
             const user = await User.findOne({_id: userId});
             res.status(200).send(user);
         } else {
@@ -39,6 +40,27 @@ router.post("/:id", async (req, res) => {
         res.status(500).send({message: "Internal server error"});
     }
 });
+
+router.post("/:id", async (req, res) => {
+    try {
+        
+        const filter = {_id: req.params.id};
+        const curDoc = await User.findOne(filter);
+        
+        const updatedDoc = await new User({ ...req.body, password: curDoc.password })
+        const doc = await User.updateOne(filter, updatedDoc);
+        
+        if(doc.modifiedCount > 0) {
+            res.status(200).send({message: "Document modified"});
+        } else {
+            res.status(400).send({message: "Something went wrong"});
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message: "Internal server error"});
+    }
+})
 
 router.delete("/:id", async (req, res) => {
     try {

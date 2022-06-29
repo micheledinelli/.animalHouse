@@ -2,15 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // Auth manager
-import Auth from '../Auth';
+import Auth from '../../Auth';
 
-import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
-import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+import "../../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
-import '../scss/style.scss';
-import "../css/navbar.css";
+import '../../scss/style.scss';
+import "../../css/navbar.css";
 
-const Navbar = () => {
+const GameNavbar = () =>{
+
     return(
         <nav className="navbar sticky-top navbar-expand-lg bg-white navbar-light">
             <div className="container">
@@ -19,31 +20,37 @@ const Navbar = () => {
                         <i className="bi bi-three-dots"></i>
                     </span>
                 </button>
-                <a className="navbar-brand text-secondary" href="/">animalHouse.</a>
+                <a 
+                    className="navbar-brand text-secondary" 
+                    href="/">
+                    animalHouse.
+                </a>
                 <div className="collapse navbar-collapse" id="toggledDiv">
+                    <ul className="navbar-nav">
+                        <li class="nav-item mx-4">
+                            <a 
+                                className="nav-link active fs-4" 
+                                aria-current="page" 
+                                href="./gamePage#News">
+                                Notizie
+                            </a>
+                        </li>
+                        <li class="nav-item mx-4">
+                            <a 
+                                className="nav-link active fs-4" 
+                                aria-current="page" 
+                                href="./gamePage#Games">
+                                Giochi
+                            </a>
+                        </li>
+                    </ul>
                     <ul className="navbar-nav d-flex ms-auto">
                         <li className="nav-item mx-3">
                             <a 
-                                className="btn nav-btn btn-outline-dark fs-5" 
+                                className="btn nav-btn btn-warning fs-5" 
                                 aria-current="page" 
-                                href="/gamePage">
-                                    Our games
-                            </a>
-                        </li>
-                        <li className="nav-item mx-3">
-                            <a 
-                                className="btn nav-btn btn-outline-dark fs-5" 
-                                aria-current="page" 
-                                href='/frontOffice'>
-                                    Front Office
-                            </a>
-                        </li>
-                        <li className="nav-item mx-3">
-                            <a 
-                                className="btn nav-btn btn-outline-dark fs-5" 
-                                aria-current="page" 
-                                href="/backOffice">
-                                Back Office
+                                href="/frontOffice">
+                                Front Office
                             </a>
                         </li>
                         {   
@@ -61,4 +68,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar;
+export default GameNavbar;

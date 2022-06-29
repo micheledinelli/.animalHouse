@@ -1,10 +1,11 @@
 // React
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 // Components
 import Navbar from "./Navbar";
-import Footer from "./Footer"
+import Footer from "./Footer";
 
 // Assets
 import GameImage from '../assets/undraw_game_day_ucx9.png';
@@ -18,12 +19,24 @@ import '../css/landing.css';
 // UI animation
 import { Fade } from "react-awesome-reveal";
 
+import { toast, ToastContainer } from "react-toastify";
+
 const Landing = () => {
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if(location.state?.error) {
+            toast.error(location.state.error);
+            window.history.replaceState({}, document.title);
+        }
+    })
 
     return(
         <div>
 
             <Navbar />
+            <ToastContainer />
             <div className="landing-container container my-5">
                 <Fade delay={400}>
                 <div className="row mt-5">
