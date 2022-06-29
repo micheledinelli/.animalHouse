@@ -14,6 +14,7 @@ import FrontOffice from "./components/front-office/FrontOffice";
 import PersonalData from "./components/back-office/PersonalData.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
+import Hangman from "./components/game/Hangman.js";
 
 function App() {
 
@@ -41,8 +42,9 @@ function App() {
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
                 <Route path="/user" element={<User />}></Route>
-                <Route path="/" exact element={<Landing />}></Route>
                 <Route path="/youtubeVideos" element={<Youtube />}></Route>
+                <Route path="/hangman" element={<Hangman />}></Route>
+                <Route path="/" exact element={<Landing />}></Route>
                 
                 {/* catch unhandled routes */}
                 <Route path="*" element={<ErrorPage />}></Route>

@@ -12,3 +12,7 @@
 #GamesCardGroup{
     padding: 5vw;
 }
+
+::-webkit-input-placeholder, input {
+    text-align: center;
+}
