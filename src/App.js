@@ -14,6 +14,7 @@ import FrontOffice from "./components/front-office/FrontOffice";
 import PersonalData from "./components/back-office/PersonalData.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
+import MemoryGame from "./components/game/memoryGame.js";
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/user" element={<User />}></Route>
                 <Route path="/" exact element={<Landing />}></Route>
                 <Route path="/youtubeVideos" element={<Youtube />}></Route>
+                <Route path="/memory" element={<MemoryGame />}></Route>
                 
                 {/* catch unhandled routes */}
                 <Route path="*" element={<ErrorPage />}></Route>
