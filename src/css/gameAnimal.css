@@ -16,3 +16,12 @@
 ::-webkit-input-placeholder, input {
     text-align: center;
 }
+
+input[type="text"] {
+    width: 50px !important;
+}
+
+#hangman-state {
+    height: 100%;
+    object-fit: contain;
+}
