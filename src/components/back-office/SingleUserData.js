@@ -29,12 +29,21 @@ const SingleUserData = () => {
         setUserData(response.data);
     }
 
+    const getUserScore = async () => {
+        const response = await axios.get(`http://localhost:8080/api/scores/`, {
+            params: {
+                userId: userData.email 
+            }
+        });
+        console.log(response.data);
+    }
+
     useEffect(() => {
 
         getUserById();
         setJsonEdited(JSON.stringify(userData, 
             ['name', 'surname', '_id', 'role', 'email'], 2));
-
+        getUserScore();
     }, [userData._id]);
 
     const handleChangeSecurityPhrase = ({target: input}) => {

@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 const connection = require('./db');
 const userRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
@@ -30,14 +32,15 @@ app.listen(port, () => {
 });
 
 
-var fs = require('fs');
-var path = require('path');
+// Waiting for a valid api for animal dictionary
+
 var animals = [];
-// Reading the file here to simulate some delay...
 fs.readFile(path.join(__dirname, '') + '/animal-dictionary.txt', function(err, data) {
+    
     if(err) throw err;
        animals = data.toString().split("\n");
- });
+
+});
 
 app.get("/api/animals/rand", (req, res) => {
     try {
