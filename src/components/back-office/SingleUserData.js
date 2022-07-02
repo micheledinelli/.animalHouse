@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -7,13 +8,15 @@ const SingleUserData = () => {
 
     const userId = useParams().id;
 
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useStateWithCallback({
         id: "",
         name: "",
         surname: "",
         email: "",
-        role: "",
+        role: "", 
     });
+
+    const [scoreData, setScoreData] = useState([]);
 
     const [securityPhrase, setSecurityPhrase] = useState({
         resetPhrase: "",
@@ -26,16 +29,26 @@ const SingleUserData = () => {
 
     const getUserById = async () => {
         const response = await axios.get(`http://localhost:8080/api/users/${userId}`);
-        setUserData(response.data);
-    }
-
-    const getUserScore = async () => {
-        const response = await axios.get(`http://localhost:8080/api/scores/`, {
-            params: {
-                userId: userData.email 
-            }
+        
+        setUserData(response.data, async (prevValue, newValue) => {
+            
+            try {
+                const scoreResponse = await axios.get(`http://localhost:8080/api/scores/`, {
+                    params: {
+                        userId: newValue.email
+                    }
+                });
+            
+                setScoreData(scoreResponse.data);
+            
+            } catch (error) {
+                if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+                    toast.error(error.response.data.message);
+                } else {
+                    toast.error("Conncetion refused");
+                }
+            }   
         });
-        console.log(response.data);
     }
 
     useEffect(() => {
@@ -43,7 +56,6 @@ const SingleUserData = () => {
         getUserById();
         setJsonEdited(JSON.stringify(userData, 
             ['name', 'surname', '_id', 'role', 'email'], 2));
-        getUserScore();
     }, [userData._id]);
 
     const handleChangeSecurityPhrase = ({target: input}) => {
@@ -204,8 +216,55 @@ const SingleUserData = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-5">
-                        <h1>Preferences and points</h1>
+                    <div className="col-lg-5 text-center">
+                        <div className="container row">
+                            <div className="col-lg-12">
+                                <div>
+                                    <h1>Highscores</h1>
+                                    <ul className="list-group mt-3">
+                                        {   
+                                            scoreData &&    
+                                                scoreData
+                                                    .sort((a,b) => b.points - a.points )
+                                                    .filter((elem) => elem.gameName == 'hangman')
+                                                    .slice(0, 1)
+                                                    .map((e) => (
+                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
+                                                            {e.gameName}
+                                                            <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
+                                                        </li>
+                                                    ))
+                                        }
+                                        {
+                                            scoreData &&
+                                                scoreData
+                                                    .sort((a, b) => b.poins - a.points)
+                                                    .filter((elem) => elem.gameName == 'memory')
+                                                    .slice(0, 1)
+                                                    .map((e) => (
+                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
+                                                            {e.gameName}
+                                                            <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
+                                                        </li>
+                                                    ))
+                                        }
+                                        {
+                                            scoreData &&
+                                                scoreData
+                                                    .sort((a, b) => b.poins - a.points)
+                                                    .filter((elem) => elem.gameName == 'otherGame')
+                                                    .slice(0, 1)
+                                                    .map((e) => (
+                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
+                                                            {e.gameName}
+                                                            <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
+                                                        </li>
+                                                    ))
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {/* Reset pw modal */}

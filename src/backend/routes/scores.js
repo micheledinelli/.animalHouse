@@ -4,7 +4,6 @@ const { Score } = require('../models/score');
 router.get('/', async(req, res) => {
     try {
         const scores = await Score.find({userId: req.query.userId});
-
         if(scores && scores.length > 0) {
             res.send(scores);
         } else {

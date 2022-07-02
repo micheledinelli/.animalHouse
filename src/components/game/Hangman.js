@@ -27,7 +27,6 @@ const Hangman = () => {
 
     useEffect(() => {
         if(randomWord) {
-            console.log(randomWord);
             const rootDiv = document.getElementById("guess-word-div");
             let vowels = ["A", "E", "I", "O", "U", "a", "e", "i", "o", "u"];
             for(let i = 0; i < randomWord.length; i++) {
@@ -173,7 +172,7 @@ const Hangman = () => {
         if(window.localStorage.getItem("authenticator") || guestUsername != '') {
             let userIdentifier = window.localStorage.getItem("user_email") || guestUsername;
             let body = {
-                userId: userIdentifier,
+                userId: userIdentifier + " (guest)",
                 points: points,
                 gameName: 'hangman'
             }
