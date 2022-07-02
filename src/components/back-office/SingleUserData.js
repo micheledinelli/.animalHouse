@@ -16,7 +16,7 @@ const SingleUserData = () => {
         role: "", 
     });
 
-    const [scoreData, setScoreData] = useState([]);
+    const [scoreData, setScoreData] = useState();
 
     const [securityPhrase, setSecurityPhrase] = useState({
         resetPhrase: "",
@@ -38,10 +38,12 @@ const SingleUserData = () => {
                         userId: newValue.email
                     }
                 });
-            
-                setScoreData(scoreResponse.data);
-            
-            } catch (error) {
+                
+                if(scoreResponse.status == 200){ 
+                    setScoreData(scoreResponse.data); 
+                }
+
+            } catch(error) {
                 if(error.response && error.response.status >= 400 && error.response.status <= 500) {
                     toast.error(error.response.data.message);
                 } else {
@@ -221,7 +223,7 @@ const SingleUserData = () => {
                             <div className="col-lg-12">
                                 <div>
                                     <h1>Highscores</h1>
-                                    <ul className="list-group mt-3">
+                                    <ul className="list-group mt-3 mb-3">
                                         {   
                                             scoreData &&    
                                                 scoreData
@@ -235,7 +237,7 @@ const SingleUserData = () => {
                                                         </li>
                                                     ))
                                         }
-                                        {
+                                        {/* {
                                             scoreData &&
                                                 scoreData
                                                     .sort((a, b) => b.poins - a.points)
@@ -260,8 +262,9 @@ const SingleUserData = () => {
                                                             <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
                                                         </li>
                                                     ))
-                                        }
+                                        } */}
                                     </ul>
+                                    <h1>Preferences</h1>
                                 </div>
                             </div>
                         </div>

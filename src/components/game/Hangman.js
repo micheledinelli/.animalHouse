@@ -170,9 +170,9 @@ const Hangman = () => {
 
     const postStats = async (points) => {
         if(window.localStorage.getItem("authenticator") || guestUsername != '') {
-            let userIdentifier = window.localStorage.getItem("user_email") || guestUsername;
+            let userIdentifier = window.localStorage.getItem("user_email") || guestUsername + " (guest)";
             let body = {
-                userId: userIdentifier + " (guest)",
+                userId: userIdentifier,
                 points: points,
                 gameName: 'hangman'
             }

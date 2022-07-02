@@ -104,13 +104,8 @@
 {
     color: white;
 }
-<<<<<<< HEAD
-
-.navigation ul li:hover a::before
-=======
 .navigation ul li:hover a::before,
 .navigation ul li.hovered a::before
->>>>>>> frontOfficePino
 {
      content: '';
      position: absolute;
