@@ -12,3 +12,49 @@
 #GamesCardGroup{
     padding: 5vw;
 }
+
+.input-hangman {
+    width: 50px !important;
+    text-align: center;
+}
+
+#hangman-state {
+    height: 300px;
+    object-fit: contain;
+}
+
+.keyboard-container {
+    width: 50vw;
+}
+
+#guess-word-div {
+    margin-top: 3rem;
+}
+
+@media screen and (max-width: 576px) {
+    #hangman-state {
+        height: 20vh;
+        object-fit: contain;
+    }
+
+    #guess-word-div {
+        margin: 3rem 0 0 0;
+        width: 100%;
+    }
+
+    #guess-word-div input {
+        height: 2rem;
+        width: 2rem;
+        font-size: small;
+    }
+
+    .keyboard-container {
+        width: 100%;
+    }
+
+    .letter-button, .input-hangman {
+        height: 2rem;
+        width: 2rem;
+        font-size: small;
+    }
+}

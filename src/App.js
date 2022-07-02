@@ -12,9 +12,11 @@ import Game from "./components/game/Game.js";
 import BackOffice from "./components/back-office/BackOffice.js";
 import FrontOffice from "./components/front-office/FrontOffice";
 import PersonalData from "./components/back-office/PersonalData.js";
+import SingleUserData from "./components/back-office/SingleUserData.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
 import MemoryGame from "./components/game/memoryGame.js";
+import Hangman from "./components/game/Hangman.js";
 
 function App() {
 
@@ -34,17 +36,21 @@ function App() {
                     <Route path="/backOffice">
                         <Route index={true} element={<BackOffice />}></Route>
                         <Route path="personalData" element={<PersonalData />}></Route>
+                        <Route path="personalData/:id" element={<SingleUserData />}></Route>
                     </Route>
                 </Route>
 
                 { /* Free access */}
-                <Route path="/gamePage" exact element={<Game />}></Route>
+                <Route path="/gamePage">
+                    <Route index={true} element={<Game />}></Route>
+                    <Route path="hangman" element={<Hangman />}></Route>
+                </Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
                 <Route path="/user" element={<User />}></Route>
-                <Route path="/" exact element={<Landing />}></Route>
                 <Route path="/youtubeVideos" element={<Youtube />}></Route>
                 <Route path="/memory" element={<MemoryGame />}></Route>
+                <Route path="/" exact element={<Landing />}></Route>
                 
                 {/* catch unhandled routes */}
                 <Route path="*" element={<ErrorPage />}></Route>

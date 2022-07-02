@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
-import { Fade } from "react-awesome-reveal";
 
 import "../../css/back-office.css";
 import 'react-toastify/dist/ReactToastify.css';
 
-import NavbarBackOffice from "./NavbarBackOffice";
+import NavbarBackOffice from "./NavbarBackOffice.js";
+import { useLocation } from "react-router-dom";
 
 const PersonalData = () => {
+
+    const location = useLocation();
 
     const [data, setData] = useState(null);
     const [currentDataShown, setCurrentDataShown] = useState(3);
@@ -24,6 +26,12 @@ const PersonalData = () => {
                 document.querySelector("#search-btn").focus();
             }
         });
+        
+        // Coming from a delete operation so notify the admin
+        if(location.state?.deleted) {
+            toast.success("user deleted");
+            window.history.replaceState({}, document.title);
+        }
 
     }, []);
 
@@ -49,14 +57,18 @@ const PersonalData = () => {
         }
     }
 
+    const handelViewAll = (e) => {
+        e.preventDefault();
+        setCurrentDataShown(data.length);
+    }
+
     /**
      * Really simple search with regexp
      * eventually updating it to perform
      * more sophisticated search
      */
     const lookUpTable = () => {
-        
-        const regexp = new RegExp('.*' + search + '.*');
+        const regexp = new RegExp('.*' + search + '.*', 'i');
         let matches = 0;
         let indexesOfMatches = [];
 
@@ -83,8 +95,12 @@ const PersonalData = () => {
         }
 
         matches > 0 ? 
-            toast.success(<NotificationOfMatches />) : 
-            toast.error("No matches found")
+            toast.info(<NotificationOfMatches />, {
+                position: toast.POSITION.BOTTOM_CENTER
+            }) : 
+            toast.error("No matches found", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
     }
 
     const showMatches = (indexesOfMatches) => {
@@ -94,6 +110,9 @@ const PersonalData = () => {
 
         const showMoreBtn = document.getElementById("show-more-btn");
         if(showMoreBtn) { showMoreBtn.remove() }
+
+        const viewAllBtn = document.getElementById("view-all-btn");
+        if(viewAllBtn) { viewAllBtn.remove() }
 
         const restoreBtn = document.getElementById("restore-btn");
         if(!restoreBtn) {
@@ -108,7 +127,7 @@ const PersonalData = () => {
                 window.location.href = window.location.href;
             }
 
-            document.getElementById("options-div").appendChild(button);
+            document.getElementById("options-div")?.appendChild(button);
         }
 
         for(let i = 0; i < data.length; i++) {
@@ -117,17 +136,24 @@ const PersonalData = () => {
                 let tdName = document.createElement("td");
                 let tdSurname = document.createElement("td");
                 let tdEmail = document.createElement("td");
-                let tdId = document.createElement("td");
+                let tdInfo = document.createElement("td");
+                
+                let anchor = document.createElement("a");
 
-                tdId.innerHTML = data[i]["_id"];
+                anchor.classList.add("btn");
+                anchor.classList.add("btn-outline-primary");
+                anchor.href = `/backOffice/personalData/${data[i]["_id"]}`;
+                anchor.innerHTML = `open info`;
+                
                 tdName.innerHTML = data[i]["name"];
                 tdSurname.innerHTML = data[i]["surname"];
                 tdEmail.innerHTML = data[i]["email"];
+                tdInfo.appendChild(anchor);
 
-                tr.appendChild(tdId);
                 tr.appendChild(tdName);
                 tr.appendChild(tdSurname);
                 tr.appendChild(tdEmail);
+                tr.appendChild(tdInfo);
 
                 tbody.appendChild(tr);
             }
@@ -135,37 +161,55 @@ const PersonalData = () => {
     }
 
     return(
-        <div className="container">
+        <div>
             <NavbarBackOffice />
             <ToastContainer />
-            <div className="container mt-5">
-                <form className="d-flex" role="search" onSubmit={handleSearch}>
+            <div className="container mt-5" id="form-container-p-data">
+                <form className="" role="search" onSubmit={handleSearch}>
                     <input
                         className="form-control me-2" 
                         type="search" 
-                        placeholder="ctrl + space" 
+                        placeholder="ctrl + space to search" 
                         onChange={handleChange}
                         id="search-btn"
+                        autoComplete="off"
                     />
-                    <button className="btn btn-outline-secondary" type="submit">Search</button>
-                    <button 
-                        onClick={handleShowMore}
-                        id="show-more-btn"
-                        className="btn btn-outline-primary">
-                        Show more
-                    </button>
+                    <div className="mt-3 d-flex justify-content-center">
+                        <button 
+                            className="mx-2 btn btn-outline-success" 
+                            type="submit">
+                                Search
+                        </button>
+                        <a 
+                            onClick={handleShowMore}
+                            id="show-more-btn"
+                            className="mx-2 btn btn-outline-secondary">
+                            More
+                        </a> 
+                        <a 
+                            onClick={handelViewAll}
+                            id="view-all-btn"
+                            className="mx-2 btn btn-outline-secondary">
+                            View all
+                        </a> 
+                        <a 
+                            className="mx-2 btn btn-outline-danger"
+                            onClick={(e) => window.location.href = window.location.href }>
+                                Restore
+                        </a>
+                    </div>
                 </form>
             </div>  
-
-            <div className="container mt-5">
-                <table className="table table-bordered table-hover text-center">
+            <div className="table-responsive mt-5 container">
+                <table className="table text-center table-bordered table-striped align-middle border-secondary">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Surname</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Personal page</th>
                         </tr>
-                    </thead>    
+                    </thead> 
                     <tbody>
                         {
                             data &&
@@ -174,8 +218,26 @@ const PersonalData = () => {
                                         <td>{e.name}</td>
                                         <td>{e.surname}</td>
                                         <td>{e.email}</td>
+                                        <td>
+                                            <a 
+                                                href={`/backOffice/personalData/${e._id}`} 
+                                                className="btn btn-outline-primary"
+                                            > 
+                                                <i className="bi bi-person-circle"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 ))
+                        }
+                        {
+                            
+                            currentDataShown < data?.length && <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            
                         }
                     </tbody>
                 </table>

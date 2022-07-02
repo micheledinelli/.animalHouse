@@ -80,7 +80,7 @@ function impiccato(){
                     <h5 className="card-title">Impiccato</h5>
                     <p className="card-text">Indovina la parola...</p>
                     <a 
-                        href="/impiccato" 
+                        href="/gamePage/hangman" 
                         className="btn btn-outline-primary fs-5">
                         Open
                     </a>
