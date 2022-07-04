@@ -56,7 +56,7 @@ function quiz(){
                     <h5 className="card-title">Quiz</h5>
                     <p className="card-text">Trivia animal quiz</p>
                     <a 
-                        href="/quiz" 
+                        href="/gamePage/quiz" 
                         className="btn btn-outline-primary fs-5">
                         Open
                     </a>

@@ -15,7 +15,9 @@ import PersonalData from "./components/back-office/PersonalData.js";
 import SingleUserData from "./components/back-office/SingleUserData.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
+import MemoryGame from "./components/game/memoryGame.js";
 import Hangman from "./components/game/Hangman.js";
+import Quiz from "./components/game/Quiz.js";
 
 function App() {
 
@@ -43,11 +45,13 @@ function App() {
                 <Route path="/gamePage">
                     <Route index={true} element={<Game />}></Route>
                     <Route path="hangman" element={<Hangman />}></Route>
+                    <Route path="quiz" element={<Quiz />}></Route>
                 </Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
                 <Route path="/user" element={<User />}></Route>
                 <Route path="/youtubeVideos" element={<Youtube />}></Route>
+                <Route path="/memory" element={<MemoryGame />}></Route>
                 <Route path="/" exact element={<Landing />}></Route>
                 
                 {/* catch unhandled routes */}
