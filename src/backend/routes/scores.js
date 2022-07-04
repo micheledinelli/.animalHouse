@@ -15,6 +15,50 @@ router.get('/', async(req, res) => {
     }
 });
 
+router.get('/hangman', async (req, res) => {
+    try{
+        console.log("Im here");
+
+        const scores = await Score.find({gameName: "hangman"}).sort({points: "asc"});
+        if(scores && scores.length > 0) {
+            res.send(scores);
+        } else {
+            res.status(400).send({message: "No scores available"});
+        }
+
+    } catch (error) {
+        res.status(500).send({message: "Internal server error"});
+    }
+})
+
+router.get('/quiz', async (req, res) => {
+    try{
+        const scores = await Score.find({gameName: "quiz"}).sort({points: "asc"});
+        if(scores && scores.length > 0) {
+            res.send(scores);
+        } else {
+            res.status(400).send({message: "No scores available"});
+        }
+
+    } catch (error) {
+        res.status(500).send({message: "Internal server error"});
+    }
+})
+
+router.get('/memory', async (req, res) => {
+    try{
+        const scores = await Score.find({gameName: "memory"}).sort({points: "asc"});
+        if(scores && scores.length > 0) {
+            res.send(scores);
+        } else {
+            res.status(400).send({message: "No scores available"});
+        }
+
+    } catch (error) {
+        res.status(500).send({message: "Internal server error"});
+    }
+})
+
 router.get('/:id', async(req, res) => {
     try {
         if(req.params.id) {
@@ -30,48 +74,6 @@ router.get('/:id', async(req, res) => {
         res.status(500).send({message: "Internal server error"});
     }
 });
-
-router.get('/hangman', async (req, res) => {
-    try{
-        const scores = await Score.find({gameName: "hangman"}).sort({points: "asc"});
-        if(scores && scores.length > 0) {
-            res.send(scores);
-        } else {
-            res.status(200).send({message: "No scores available"});
-        }
-
-    } catch (error) {
-        res.status(500).send({message: "Internal server error"});
-    }
-})
-
-router.get('/quiz', async (req, res) => {
-    try{
-        const scores = await Score.find({gameName: "quiz"}).sort({points: "asc"});
-        if(scores && scores.length > 0) {
-            res.send(scores);
-        } else {
-            res.status(200).send({message: "No scores available"});
-        }
-
-    } catch (error) {
-        res.status(500).send({message: "Internal server error"});
-    }
-})
-
-router.get('/memory', async (req, res) => {
-    try{
-        const scores = await Score.find({gameName: "memory"}).sort({points: "asc"});
-        if(scores && scores.length > 0) {
-            res.send(scores);
-        } else {
-            res.status(200).send({message: "No scores available"});
-        }
-
-    } catch (error) {
-        res.status(500).send({message: "Internal server error"});
-    }
-})
 
 router.post ('/', async (req, res) => {
     const filter = {userId: req.body.userId, gameName: req.body.gameName}
