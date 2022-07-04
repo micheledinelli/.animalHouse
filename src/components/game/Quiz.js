@@ -6,6 +6,7 @@ import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 const Quiz = () => {
 
     const [animals, setAnimals] = useState([]);
+    const [guestUsername, setGuestUsername] = useState('');
     const [loading, setLoading] = useState(true);
 
     const answerMap = {
@@ -42,7 +43,7 @@ const Quiz = () => {
         "latin_name": 
             ["Geoemyda spengleri", "Varanus ornatus", "Vicugna pacos", 
             "Trichechus manatus latirostris", "Fratercula corniculata",
-            "Crotalus horridus", "Otidiphaps nobilis aruensis"
+            "Crotalus horridus", "Otidiphaps nobilis aruensis", "Choloepus didactylus"
             ],
         "animal_type": ["Mammal", "Bird"] ,
         "weight_max": [50, 12.2, 18, 120, 0.6, 3, 31, 1]  ,
@@ -50,7 +51,7 @@ const Quiz = () => {
         "active_time": ["Diurnal", "Nocturnal", "Both"] , 
         "length_max": [50, 12.2, 18, 120, 0.6, 3, 31, 1] ,
         "length_min": [0.1, 0.01, 0.05, 0.5, 3, 15, 7, 29] ,
-        "diet": ["Grass", "Small animals, such as insects and frogs, and eggs"] ,
+        "diet": ["Grass", "Small animals, such as insects and frogs, and eggs", "Mosquito larva"] ,
         "lifespan": [1, 2, 5, 10, 15, 20, 27, 30, 50, 75] ,
         "geo_range": ["Southern Moluccas, Indonesia", "Bali, Indonesia", "South America"] ,
         "habitat": ["Savannah", "Grasslands and rainforest", "Mountain and forest"] ,
@@ -58,7 +59,7 @@ const Quiz = () => {
 
     const loadingCounter = useRef(0);
     const numberOfQuestions = 8;
-    const answerCounter = useRef(1);
+    var answerCounter = 1;
 
     useEffect(() => {
         
@@ -89,16 +90,13 @@ const Quiz = () => {
         let question = questionList[attribute];
         let answer = animal[attribute];
 
-        answerMap[answerCounter.current] = answer;
-        answerCounter.current += 1;
+        answerMap[answerCounter] = answer;
+        answerCounter += 1;
         return {question: question, answer: answer, questionType: attribute}; 
     }
 
     const generateRandomAlt = (questionType) => {
         let rand = Math.round(Math.random() * ( alternatives[questionType].length - 1));
-        if(!alternatives[questionType][rand]) {
-            console.log(alternatives[questionType], rand);
-        }
         return alternatives[questionType][rand];
     }
 
@@ -111,15 +109,38 @@ const Quiz = () => {
         for(const [name,value] of data) {
             
             // Correct Answer
-            if(answerMap[name] === value) { 
-                correctAnswers += 10;
+            if(answerMap[name] === value) {
+                correctAnswers += 1;
             } else {
                 errors += 1;
             }
         }
 
         let points = ( correctAnswers * 15 ) - ( errors * 5 );
-        console.log(points);
+        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! you earned " + points);
+        postStats(points);
+        reset();
+    }
+
+    const postStats = async (points) => {
+        if(window.localStorage.getItem("authenticator") || guestUsername != '') {
+            let userIdentifier = window.localStorage.getItem("user_email") || guestUsername + " (guest)";
+            let body = {
+                userId: userIdentifier,
+                points: points,
+                gameName: 'quiz'
+            }
+            try {
+                const response = await axios.post("http://localhost:8080/api/scores", body);
+                toast.success(response.data.message); 
+            } catch (error) {
+                toast.error(error.data.message);
+            }
+        }
+    }
+
+    const handleGuestUserChange = ({target: input}) => {
+        setGuestUsername(input.value);
     }
 
     const imageLoaded = () => {
@@ -127,6 +148,35 @@ const Quiz = () => {
         if (loadingCounter.current >= numberOfQuestions) {
             setLoading(false);
         }
+    }
+
+    const reset = () => {
+        const rootDiv = document.querySelector(".root-div-quiz");
+        rootDiv.classList.add("text-center");
+        rootDiv.innerHTML = '';
+
+        let playAgainBtn = document.createElement("button");
+        playAgainBtn.classList.add("btn");
+        playAgainBtn.classList.add("btn-light");
+        playAgainBtn.classList.add("btn-lg");
+        playAgainBtn.classList.add("mx-3");
+        playAgainBtn.classList.add("my-3");
+        playAgainBtn.onclick = () => {
+            window.location.href = window.location.href;
+        }
+        playAgainBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+
+        let goBackBtn = document.createElement("a");
+        goBackBtn.classList.add("btn");
+        goBackBtn.classList.add("btn-light");
+        goBackBtn.classList.add("btn-lg");
+        goBackBtn.classList.add("mx-3");
+        goBackBtn.classList.add("my-3");
+        goBackBtn.href = "/gamePage";
+        goBackBtn.innerHTML = '<i class="bi bi-house"></i>';
+
+        rootDiv.appendChild(playAgainBtn);
+        rootDiv.appendChild(goBackBtn);
     }
 
     const imageStyle = {
@@ -153,46 +203,102 @@ const Quiz = () => {
             answerPostion = 3;
         }
 
-        return(
-            <> 
-                <div className="form-check mb-2">
-                    <input 
-                        className="form-check-input" 
-                        type="radio" 
-                        name={`${props.index}`} 
-                        id={`inlineRadio1-${props.index}`} 
-                        value={answerPostion == 1 ? props.answer : generateRandomAlt(props.questionType)} 
-                    />
-                    <label className="form-check-label" htmlFor={`inlineRadio1-${props.index}`}>
-                        {answerPostion == 1 ? props.answer : generateRandomAlt(props.questionType)} 
-                    </label>
-                </div>
-                <div className="form-check mb-2">
-                    <input 
-                        className="form-check-input" 
-                        type="radio" 
-                        name={`${props.index}`} 
-                        id={`inlineRadio2-${props.index}`} 
-                        value={answerPostion == 2 ? props.answer : generateRandomAlt(props.questionType)} 
-                    />
-                    <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
-                        {answerPostion == 2 ? props.answer : generateRandomAlt(props.questionType)}  
-                    </label>
-                </div>
-                <div className="form-check mb-2">
-                    <input 
-                        className="form-check-input" 
-                        type="radio" 
-                        name={`${props.index}`} 
-                        id={`inlineRadio3-${props.index}`} 
-                        value={answerPostion == 3 ? props.answer : generateRandomAlt(props.questionType)}  
-                    />
-                    <label className="form-check-label"htmlFor={`inlineRadio3-${props.index}`}>
-                        {answerPostion == 3 ? props.answer : generateRandomAlt(props.questionType)} 
-                    </label>
-                </div>
-            </>
-        )
+        if(props.questionType == "active_time") {
+            let alt = "";
+            if(props.answer == "Diurnal") {
+                alt = "Nocturnal"
+            } else {
+                alt = "Diurnal"
+            }
+            
+            return(
+                <>
+                    <div className="form-check mb-2">
+                        <input 
+                            className="form-check-input" 
+                            type="radio" 
+                            name={`${props.index}`} 
+                            id={`inlineRadio1-${props.index}`} 
+                            value={props.answer} 
+                        />
+                        <label className="form-check-label" htmlFor={`inlineRadio1-${props.index}`}>
+                            {props.answer} 
+                        </label>
+                    </div>
+                    <div className="form-check mb-2">
+                        <input 
+                            className="form-check-input" 
+                            type="radio" 
+                            name={`${props.index}`} 
+                            id={`inlineRadio2-${props.index}`} 
+                            value={alt} 
+                        />
+                        <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
+                            {alt}  
+                        </label>
+                    </div>
+                    <div className="form-check mb-2">
+                        <input 
+                            className="form-check-input" 
+                            type="radio" 
+                            name={`${props.index}`} 
+                            id={`inlineRadio3-${props.index}`} 
+                            value={"Both"} 
+                        />
+                        <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
+                            {"Both"}  
+                        </label>
+                    </div>
+                </>
+            )
+
+        } else {
+            
+            let alt1 = generateRandomAlt(props.questionType);
+            let alt2 = generateRandomAlt(props.questionType);
+            let alt3 = generateRandomAlt(props.questionType);
+            
+            return(
+                <> 
+                    <div className="form-check mb-2">
+                        <input 
+                            className="form-check-input" 
+                            type="radio" 
+                            name={`${props.index}`} 
+                            id={`inlineRadio1-${props.index}`} 
+                            value={answerPostion == 1 ? props.answer : alt1} 
+                        />
+                        <label className="form-check-label" htmlFor={`inlineRadio1-${props.index}`}>
+                            {answerPostion == 1 ? props.answer : alt1} 
+                        </label>
+                    </div>
+                    <div className="form-check mb-2">
+                        <input 
+                            className="form-check-input" 
+                            type="radio" 
+                            name={`${props.index}`} 
+                            id={`inlineRadio2-${props.index}`} 
+                            value={answerPostion == 2 ? props.answer : alt2} 
+                        />
+                        <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
+                            {answerPostion == 2 ? props.answer : alt2}  
+                        </label>
+                    </div>
+                    <div className="form-check mb-2">
+                        <input 
+                            className="form-check-input" 
+                            type="radio" 
+                            name={`${props.index}`} 
+                            id={`inlineRadio3-${props.index}`} 
+                            value={answerPostion == 3 ? props.answer : alt3}  
+                        />
+                        <label className="form-check-label"htmlFor={`inlineRadio3-${props.index}`}>
+                            {answerPostion == 3 ? props.answer : alt3} 
+                        </label>
+                    </div>
+                </>
+            )
+        }
     }
 
     const QuestionCard = (props) => {
@@ -237,34 +343,81 @@ const Quiz = () => {
     }
 
     return(
-        <div className="container-fluid bg-secondary 100vh">
+        <div className="container-fluid bg-secondary position-relative">
             <ToastContainer />
             <p className="display-4 text-center text-white">It's time to sQUIZ your brain!</p>
-            <form onSubmit={handleSubmit} style={{padding:"0"}}>
-                <div className="row mt-5">
-                        {
-                            animals && 
-                                animals.map((animal, i) => (
-                                    <div className="col-lg-6" key={animal.image_link}>
-                                        <QuestionCard 
-                                            image_link={animal.image_link} 
-                                            questionAnswer={generateRandomQuestion( animal )}
-                                            index={i + 1}
-                                        />
-                                    </div>
-                                ))
-                        }
-
-
+            {
+                !window.localStorage.getItem("authenticator") 
+                    && guestUsername == ''
+                    &&
+                        <button 
+                            className="position-absolute mt-3 me-3 top-0 end-0 btn btn-light"
+                            data-bs-toggle="modal"
+                            data-bs-target="#guestInfoModal"
+                        >
+                            add info
+                        </button>
+            }
+            <div className="root-div-quiz">
+                <form onSubmit={handleSubmit} style={{padding:"0"}} >
+                    <div className="row mt-5">
+                            {
+                                animals && 
+                                    animals.map((animal, i) => (
+                                        <div className="col-lg-6" key={animal.image_link}>
+                                            <QuestionCard 
+                                                image_link={animal.image_link} 
+                                                questionAnswer={generateRandomQuestion( animal )}
+                                                index={i + 1}
+                                            />
+                                        </div>
+                                    ))
+                            }
+                    </div>
+                    <div className="text-center my-3">
+                        <button className="btn btn-success btn-lg">Submit</button>
+                    </div>
+                </form>
+                <div className="text-center text-white mt-5">
+                    <p className="lead">Animal data supplied by
+                        <a href="https://zoo-animal-api.herokuapp.com/"> https://zoo-animal-api.herokuapp.com/</a>
+                    </p>
                 </div>
-                <div className="text-center my-3">
-                    <button className="btn btn-success btn-lg">Submit</button>
+                {/* Guest user modal */}
+                <div className="modal fade" id="guestInfoModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Guest info</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body text-center">
+                                <p>Help us to save your performance: choose a username</p>
+                                <p>or</p>
+                                <p><a href="/signIn">sign in</a></p>
+                                <div className="form-floating mb-3">
+                                    <input
+                                        type="text"
+                                        name="guestUsername"
+                                        className="form-control"
+                                        placeholder="(guest)"
+                                        autoComplete="off"
+                                        onChange={handleGuestUserChange}
+                                        required
+                                    />
+                                    <label htmlFor="guestUsername">(guest)</label>
+                                </div>
+                                <button
+                                    className="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal"
+                                    onClick={(e) => {e.preventDefault(); toast.success("your guest username is: " + guestUsername)}}
+                                >
+                                    confirm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
-            <div className="text-center text-white mt-5">
-                <p className="lead">Animal data supplied by
-                    <a href="https://zoo-animal-api.herokuapp.com/"> https://zoo-animal-api.herokuapp.com/</a>
-                </p>
             </div>
         </div>
     );

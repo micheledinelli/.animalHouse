@@ -229,36 +229,36 @@ const SingleUserData = () => {
                                                     .map((e) => (
                                                         <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
                                                             {e.gameName}
-                                                            <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
+                                                            <span className="badge bg-primary rounded-pill">{e.points} pts </span>
                                                         </li>
                                                     ))
                                         }
-                                        {/* {
-                                            scoreData &&
+                                        {   
+                                            scoreData &&    
                                                 scoreData
-                                                    .sort((a, b) => b.poins - a.points)
+                                                    .sort((a,b) => b.points - a.points )
+                                                    .filter((elem) => elem.gameName == 'quiz')
+                                                    .slice(0, 1)
+                                                    .map((e) => (
+                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
+                                                            {e.gameName}
+                                                            <span className="badge bg-primary rounded-pill">{e.points} pts</span>
+                                                        </li>
+                                                    ))
+                                        }
+                                        {   
+                                            scoreData &&    
+                                                scoreData
+                                                    .sort((a,b) => b.points - a.points )
                                                     .filter((elem) => elem.gameName == 'memory')
                                                     .slice(0, 1)
                                                     .map((e) => (
                                                         <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
                                                             {e.gameName}
-                                                            <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
+                                                            <span className="badge bg-primary rounded-pill">{e.points} pts</span>
                                                         </li>
                                                     ))
                                         }
-                                        {
-                                            scoreData &&
-                                                scoreData
-                                                    .sort((a, b) => b.poins - a.points)
-                                                    .filter((elem) => elem.gameName == 'otherGame')
-                                                    .slice(0, 1)
-                                                    .map((e) => (
-                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
-                                                            {e.gameName}
-                                                            <span className="badge bg-primary rounded-pill">{e.points} / 100</span>
-                                                        </li>
-                                                    ))
-                                        } */}
                                     </ul>
                                     <h1>Preferences</h1>
                                 </div>
