@@ -22,5 +22,5 @@
 .animal-news-img {
     width: 20rem;
     height: 100%;
-    padding: 4px;
+    object-fit: cover;
 }
