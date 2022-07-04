@@ -177,3 +177,225 @@
     width: 100px;
 }
 
+.cardBox
+{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 30px;
+
+}
+
+.cardBox .card
+{
+    position: relative; 
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 7px 25px black;
+
+}
+.cardBox .card .numbers
+{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.5em;
+    color: #6C63FF;
+}
+.cardBox .card .email
+{
+    position: relative;
+    font-weight: 500;
+    font-size: 1.0em;
+    color: #6C63FF;
+}
+
+.cardBox .card .cardName
+{
+    color: black;
+    font-size: 1.1em;
+    margin-top: 5px;
+}
+.cardBox .card .iconBox
+{
+    font-size: 3.5em;
+    color: black;
+}
+
+.cardBox .card:hover
+{
+    background-color: #6C63FF;
+}
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBox,
+.cardBox .card:hover .email
+{
+    color: white;
+}
+.details
+{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
+    margin-top: 10px;
+}
+.details .standings
+{
+    position: relative;
+    display: grid;
+    min-height: white;
+    padding: 20px;
+    box-shadow: 0 7px 25px black;
+    border-radius: 20px;
+}
+
+.cardHeader
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cardHeader h2 
+{
+     font-weight: 600;
+     color: #6C63FF;
+}
+.btn
+{
+    position: relative;
+    padding: 5px 10px;
+    background: #6C63FF;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+}
+.details .table
+{
+    width: 100%;
+    border-collapse:collapse;
+    margin-top: 10px;
+}
+.details table thead td
+{
+    font-weight: 600;
+}
+.details .standings table tr
+{
+    color: black;
+    /* border-bottom: 1px solid black; */
+}
+.details .standings table tr:last-child
+{
+    border-bottom: none;
+}
+.details .standings table tbody tr:hover
+{
+    background: #6C63FF;
+    color: white;
+}
+.details .standings table tr td
+{
+    padding: 10px;
+}
+.details .standings table tr td:last-child
+{
+    text-align: end;
+}
+.details .standings table tr td:nth-child(2)
+{
+    text-align: center;
+}
+.details .standings table tr td:nth-child(3)
+{
+    text-align: center;
+}
+
+ .recentOnline
+ {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 7px 25px black;
+    border-radius: 20px;
+ } 
+
+.status.online
+{
+    padding: 2px 4px;
+    background: green;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.status.offline
+{
+    padding: 2px 4px;
+    background: red;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.recentOnline table tr:hover
+{
+    background: #6C63FF;
+    color: white;
+}
+
+/* .titlePage
+{
+    text-align: center;
+    color: #6C63FF;
+} */
+
+
+
+.titleLeaderBoard
+{
+    font-size: 7vw;
+    position: relative;
+    color:white;
+    -webkit-text-stroke: 0.3vw white;
+    text-align: center; 
+}
+
+.titleLeaderBoard::before
+{
+    
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: #6C63FF;
+    -webkit-text-stroke: 0vw #6C63FF;
+    border-right: 2px solid white;
+    overflow: hidden;
+    animation: animate 10s linear infinite;
+}
+
+@keyframes animate 
+{
+    0%,10%,100%
+    {
+        width: 0%;
+    }
+    70%, 90%
+    {
+        width: 100%;  
+    }
+}
