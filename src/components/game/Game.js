@@ -12,8 +12,8 @@ const GamePage = () => {
     return(
         <div>
             <GameNavbar />
-            <AnimalNews />
             <AnimalGames />
+            <AnimalNews />
             <Footer />
         </div>
     )
