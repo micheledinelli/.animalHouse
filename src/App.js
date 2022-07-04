@@ -17,6 +17,7 @@ import SingleUserData from "./components/back-office/SingleUserData.js";
 import Youtube from "./components/game/youtubeVideos.js";
 import MemoryGame from "./components/game/memoryGame.js";
 import Hangman from "./components/game/Hangman.js";
+import Quiz from "./components/game/Quiz.js";
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/gamePage">
                     <Route index={true} element={<Game />}></Route>
                     <Route path="hangman" element={<Hangman />}></Route>
+                    <Route path="quiz" element={<Quiz />}></Route>
                 </Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>

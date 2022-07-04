@@ -141,28 +141,28 @@ const Hangman = () => {
 
     const reset = () => {
         const rootDiv = document.getElementById("right-div");
-                rootDiv.innerHTML = '';
+        rootDiv.innerHTML = '';
 
-                let playAgainBtn = document.createElement("button");
-                playAgainBtn.classList.add("btn");
-                playAgainBtn.classList.add("btn-outline-secondary");
-                playAgainBtn.classList.add("btn-lg");
-                playAgainBtn.classList.add("my-3");
-                playAgainBtn.onclick = () => {
-                    window.location.href = window.location.href;
-                }
-                playAgainBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+        let playAgainBtn = document.createElement("button");
+        playAgainBtn.classList.add("btn");
+        playAgainBtn.classList.add("btn-outline-secondary");
+        playAgainBtn.classList.add("btn-lg");
+        playAgainBtn.classList.add("my-3");
+        playAgainBtn.onclick = () => {
+            window.location.href = window.location.href;
+        }
+        playAgainBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
 
-                let goBackBtn = document.createElement("a");
-                goBackBtn.classList.add("btn");
-                goBackBtn.classList.add("btn-outline-secondary");
-                goBackBtn.classList.add("btn-lg");
-                goBackBtn.classList.add("my-3");
-                goBackBtn.href = "/gamePage";
-                goBackBtn.innerHTML = '<i class="bi bi-house"></i>';
+        let goBackBtn = document.createElement("a");
+        goBackBtn.classList.add("btn");
+        goBackBtn.classList.add("btn-outline-secondary");
+        goBackBtn.classList.add("btn-lg");
+        goBackBtn.classList.add("my-3");
+        goBackBtn.href = "/gamePage";
+        goBackBtn.innerHTML = '<i class="bi bi-house"></i>';
 
-                rootDiv.appendChild(playAgainBtn);
-                rootDiv.appendChild(goBackBtn);
+        rootDiv.appendChild(playAgainBtn);
+        rootDiv.appendChild(goBackBtn);
     }
 
     const handleGuestUserChange = ({target: input}) => {
