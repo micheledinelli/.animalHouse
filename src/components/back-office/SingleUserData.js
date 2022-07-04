@@ -33,11 +33,7 @@ const SingleUserData = () => {
         setUserData(response.data, async (prevValue, newValue) => {
             
             try {
-                const scoreResponse = await axios.get(`http://localhost:8080/api/scores/`, {
-                    params: {
-                        userId: newValue.email
-                    }
-                });
+                const scoreResponse = await axios.get(`http://localhost:8080/api/scores/${newValue.email}`);
                 
                 if(scoreResponse.status == 200){ 
                     setScoreData(scoreResponse.data); 
