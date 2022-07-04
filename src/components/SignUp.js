@@ -6,14 +6,15 @@ import Auth from '../Auth';
 
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import registerImage from '../assets/undraw_welcome_cats_thqn.png';
 
 const SignUp = () => {
 
     const navigate = useNavigate();
     const auth = Auth.getInstance();
-
-    const [serverMessage, setServerMessage] = React.useState();
 
     const [data, setData] = React.useState({
         name: "",
@@ -31,7 +32,7 @@ const SignUp = () => {
         try {
             const url = "http://localhost:8080/api/users";
             const {data: res} = await axios.post(url, data);
-            setServerMessage(res.message);
+            toast.success(res.message);
 
             auth.login(data.email, res.role);
 
@@ -41,13 +42,16 @@ const SignUp = () => {
 
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setServerMessage(error.response.data.message);
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Conncetion refused");
             }
         }
     }
 
     return(
         <div className="container mt-2 text-center">
+            <ToastContainer />
             <h1 className="display-4">Sign Up!</h1>
             <div className="row container">
                 <div className="col-lg-6 align-self-center p-5">
@@ -111,9 +115,6 @@ const SignUp = () => {
                 </div>
                 <div className="col-lg-6">
                     <img src={registerImage} className="img-fluid" alt="loginImage"></img>
-                    {
-                        serverMessage && <p className="text-primary lead">{serverMessage}</p>
-                    }
                 </div>
             </div>
         </div>

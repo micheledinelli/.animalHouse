@@ -7,6 +7,9 @@ import Auth from '../Auth';
 import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import loginImage from '../assets/undraw_Login_re_4vu2.png';
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,8 +27,6 @@ const SignIn = () => {
         password: ""
     });
 
-    const [serverMessage, setServerMessage] = React.useState();
-
     const handleChange = ({currentTarget: input}) => {
         setData({...data, [input.name]: input.value});
     }
@@ -37,8 +38,7 @@ const SignIn = () => {
             const url = "http://localhost:8080/api/auth";
             const {data: res} = await axios.post(url, data);
             
-            setServerMessage(res.message);
-
+            toast(res.message);
             // Pass the email and the role to the login method
             // The role comes from the server
             auth.login(data.email, res.role);
@@ -47,14 +47,14 @@ const SignIn = () => {
             
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setServerMessage(error.response.data.message);
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Connection refused");
             }
         }
     }
 
-    const [emailToRecover, setEmailToRecover] = useState({
-        etr: ""
-    });
+    const [emailToRecover, setEmailToRecover] = useState({etr: ""});
 
     const handleRecoverEmail = ({currentTarget: input}) => {
         setEmailToRecover({...emailToRecover, [input.name]: input.value});
@@ -66,9 +66,14 @@ const SignIn = () => {
         try {
             const url = "http://localhost:8080/api/recoverpw";
             const res = await axios.post(url, emailToRecover);
-            console.log(res);
+            toast.success(res.data.message);
+
         } catch (error) {
-            
+            if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+               toast.error(error.response.data.message);
+            } else {
+                toast.error("Conncetion refused")
+            }
         }
     }
 
@@ -77,15 +82,11 @@ const SignIn = () => {
             <h1 className="display-4">Sign In!</h1>
             <div className="row container">
                 <div className="col-lg-6">
+                    <ToastContainer />
                     <img src={loginImage} className="img-fluid" alt="loginImage"></img>
                 </div>
                 <div className="col-lg-6 align-self-center p-5">
                     <form className="text-center" onSubmit={handleSubmit}>
-                        { serverMessage &&
-                            <p className="text-primary">
-                                { serverMessage }
-                            </p>
-                        }
                         <div className="form-floating mb-3">
                             <input 
                                 type="email" 
@@ -121,7 +122,7 @@ const SignIn = () => {
                             className="mx-2 text-black" 
                             data-bs-toggle="modal" 
                             data-bs-target="#recover-password-modal"
-                            href="">
+                            href="#">
                                 Recover password
                         </a>
                     </div>
@@ -151,7 +152,8 @@ const SignIn = () => {
                                 </div>
                                 <button 
                                     type="submit" 
-                                    className="btn btn-outline-secondary" 
+                                    className="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Send email
                                 </button>
