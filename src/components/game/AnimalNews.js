@@ -2,7 +2,6 @@ import React from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/animalNews.css'
-import NewsImage from '../../assets/undraw_my_feed_inj0.png';
 
 const AnimalNews = () => {
     let newsArray = connect();
