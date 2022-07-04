@@ -10,7 +10,7 @@ import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 const FrontOffice = () => {
 
-    const [dataHangman, setDataHangman] = useState(null);    
+    const [dataHangman, setDataHangman] = useState();    
     
     useEffect(() => {
 
@@ -29,11 +29,9 @@ const FrontOffice = () => {
     }, [])  
 
     const getUsersData = async function(){
-        const response = await axios.get("http://localhost:8080/api/scores/hangman", { 
-            params: {
-            userId: "awniyoussef3@gmail.com"
-        }});
+        const response = await axios.get("http://localhost:8080/api/scores/hangman");
          console.log(response.data);
+         setDataHangman(response.data);
     }
    
     return(
@@ -119,74 +117,84 @@ const FrontOffice = () => {
                  </div>
 
                 <div className="details">
-                    <div className="standings"> 
+                    <div className="standings-hangman"> 
                         <div className="cardHeader">
-                            <h2>Placing</h2>
+                            <h2>Placing Hangman <i className="bi bi-arrow-down-square-fill"></i></h2>
                             <a href="#" className="btn">View all</a>
                         </div>
                         <table>
                             <thead>
                                 <tr>
+                                    <td>Position</td>
                                     <td>Name</td>
                                     <td>Email</td>
                                     <td>Score</td>
-                                    <td>Status</td>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>1</td>
                                     <td>Pinaccio</td>
                                     <td>awniyoussef@gmail.com</td>
                                     <td>990</td>
-                                    <td><span className="status online">online</span></td>
+                                   
                                 </tr>
                                 <tr>
+                                    <td>2</td>
                                     <td>Mich</td>
                                     <td>micheledine@gmail.com</td>
                                     <td>910</td>
-                                    <td><span className="status offline">offline</span></td>
+                                    
                                 </tr>
                                 <tr>
+                                    <td>3</td>
                                     <td>Pippo</td>
                                     <td>pipfilippo44@gmail.com</td>
                                     <td>901</td>
-                                    <td><span className="status online">online</span></td>
+                                    
                                 </tr>
                                 <tr>
+                                    <td>4</td>
                                     <td>Pinaccio</td>
                                     <td>awniyoussef@gmail.com</td>
                                     <td>990</td>
-                                    <td><span className="status online">online</span></td>
+                                   
                                 </tr>
                                 <tr>
+                                    <td>5</td>
                                     <td>Mich</td>
                                     <td>micheledine@gmail.com</td>
                                     <td>910</td>
-                                    <td><span className="status offline">offline</span></td>
+                                   
                                 </tr>
                                 <tr>
+                                    <td>6</td>
                                     <td>Pippo</td>
                                     <td>pipfilippo44@gmail.com</td>
                                     <td>901</td>
-                                    <td><span className="status online">online</span></td>
+                                    
                                 </tr>
                                 <tr>
+                                    <td>7</td>
                                     <td>Pinaccio</td>
                                     <td>awniyoussef@gmail.com</td>
                                     <td>990</td>
-                                    <td><span className="status online">online</span></td>
+                                    
                                 </tr>
                                 <tr>
+                                    <td>8</td>
                                     <td>Mich</td>
                                     <td>micheledine@gmail.com</td>
                                     <td>910</td>
-                                    <td><span className="status offline">offline</span></td>
+                                    
                                 </tr>
                                 <tr>
+                                    <td>9</td>
                                     <td>Pippo</td>
                                     <td>pipfilippo44@gmail.com</td>
                                     <td>901</td>
-                                    <td><span className="status online">online</span></td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
