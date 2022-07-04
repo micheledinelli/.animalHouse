@@ -4,6 +4,7 @@ import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
+import "../../css/hangman.css"
 
 const Hangman = () => {
 
@@ -202,7 +203,7 @@ const Hangman = () => {
                         </button>
             }
             <div className="row mx-2 mt-5"> 
-                <div className="col-lg-5 bg-primary rounded-3">
+                <div className="col-lg-5 bg-primary rounded-3 p-2">
                     <img id="hangman-state" src={require('../../assets/hangman-states/0.png')} className="img-fluid hangman-img"></img>
                 </div>
                 <div className="col-lg-7 d-flex flex-column align-items-center justify-content-center" id="right-div">

@@ -2,34 +2,39 @@ import React from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/animalNews.css'
+import NewsImage from '../../assets/undraw_my_feed_inj0.png';
 
 const AnimalNews = () => {
     let newsArray = connect();
-
-    let cardList = newsArray.map((element) =>
-    <div className="card" key={element.url} id="newsCard">
-        <div className="card-body" id="newsBody">
-            <h5 className="card-title">{element.title}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{formatDate(element.publishedAt)}</h6>
-            <p className="card-text">{element.content}</p>
-            <a 
-                href={element.url} 
-                className="btn btn-outline-primary fs-5">
-                    Read full article
-            </a>
-        </div>
-        <div className="img-class" id="newsImgDiv">
-            <img 
-                src={element.urlToImage} 
-                id="newsImg"
-                className="card-img-right rounded float-end" 
-                alt="...">
-            </img>
-        </div>
-    </div>);
+    let cardList = 
+        newsArray
+        .slice(0,10)
+        .sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+        .map((element) =>
+            <div className="card" key={element.url} id="newsCard">
+                <div className="card-body" id="newsBody">
+                    <h5 className="card-title">{element.title}</h5>
+                    <h6 className="card-subtitle mb-2 text-muted">{formatDate(element.publishedAt)}</h6>
+                    <p className="card-text">{element.content}</p>
+                    <a 
+                        href={element.url} 
+                        className="btn btn-outline-primary fs-5">
+                            Read full article
+                    </a>
+                </div>
+                <div className="img-class" id="newsImgDiv">
+                    <img 
+                        src={element.urlToImage} 
+                        id="newsImg"
+                        className="card-img-right img-fluid rounded float-end animal-news-img" 
+                        alt="...">
+                    </img>
+                </div>
+            </div>);
 
     return(
-        <div id="News">
+        <div id="News" className="container">
+            <div></div>
             {/* <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
                 <button className="btn btn-outline-success" type="submit">Search</button>
