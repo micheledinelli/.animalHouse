@@ -270,7 +270,7 @@
      font-weight: 600;
      color: #6C63FF;
 }
-.btn
+/* .btn 
 {
     position: relative;
     padding: 5px 10px;
@@ -278,7 +278,7 @@
     text-decoration: none;
     color: white;
     border-radius: 6px;
-}
+} */
 .details .table
 {
     width: 100%;

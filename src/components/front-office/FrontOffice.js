@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 //style
 import "../../css/frontOffice.css";
@@ -6,7 +7,10 @@ import "../../css/frontOffice.css";
 //icons
 import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
+
 const FrontOffice = () => {
+
+    const [dataHangman, setDataHangman] = useState(null);    
     
     useEffect(() => {
 
@@ -24,8 +28,12 @@ const FrontOffice = () => {
 
     }, [])  
 
-    const getUsersData = function(){
-        
+    const getUsersData = async function(){
+        const response = await axios.get("http://localhost:8080/api/scores/hangman", { 
+            params: {
+            userId: "awniyoussef3@gmail.com"
+        }});
+         console.log(response.data);
     }
    
     return(
@@ -213,5 +221,6 @@ const FrontOffice = () => {
         </div>
     )
 }
+
 
 export default FrontOffice;
