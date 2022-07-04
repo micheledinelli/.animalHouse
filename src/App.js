@@ -46,12 +46,12 @@ function App() {
                     <Route index={true} element={<Game />}></Route>
                     <Route path="hangman" element={<Hangman />}></Route>
                     <Route path="quiz" element={<Quiz />}></Route>
+                    <Route path="memory" element={<MemoryGame />}></Route>
                 </Route>
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
                 <Route path="/user" element={<User />}></Route>
                 <Route path="/youtubeVideos" element={<Youtube />}></Route>
-                <Route path="/memory" element={<MemoryGame />}></Route>
                 <Route path="/" exact element={<Landing />}></Route>
                 
                 {/* catch unhandled routes */}
