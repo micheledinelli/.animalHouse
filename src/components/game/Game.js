@@ -1,8 +1,21 @@
+// React
 import React from "react";
+
+// Components
+import GameNavbar from "./GameNavbar";
+import AnimalNews from "./AnimalNews";
+import AnimalGames from "./AnimalGames";
+import Footer from "../Footer.js" 
+
 
 const GamePage = () => {
     return(
-        <div>hello im game page</div>
+        <div>
+            <GameNavbar />
+            <AnimalNews />
+            <AnimalGames />
+            <Footer />
+        </div>
     )
 }
 

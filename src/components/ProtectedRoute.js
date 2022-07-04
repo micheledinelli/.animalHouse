@@ -32,7 +32,7 @@ const ProtectedRoute = () => {
         if(isAuth) {
             return isAdmin ? 
                     <Outlet /> : 
-                    <Navigate to="/" replace state={{ from: location }} /> 
+                    <Navigate to="/" replace state={{ from: location, error: "not an admin" }} /> 
         } else {
             return <Navigate to="/signIn" replace state={{ from: location }} /> 
         }

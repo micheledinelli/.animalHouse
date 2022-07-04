@@ -1,0 +1,26 @@
+#News{
+    padding-left: 10vw;
+}
+
+#newsCard{
+    width: 80vw;
+    margin: 10px;
+    display: grid;
+    border: 2px solid black;
+}
+
+#newsBody{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#newsImgDiv{
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+}
