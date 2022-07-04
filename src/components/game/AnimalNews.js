@@ -34,13 +34,14 @@ const AnimalNews = () => {
 
     return(
         <div id="News" className="container">
-            <div></div>
             {/* <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
                 <button className="btn btn-outline-success" type="submit">Search</button>
             </form> */}
-            <h1>Animal News</h1>
-            {cardList}
+            <h1 className="mb-3">Latest news</h1>
+            <div className="d-flex flex-column flex-wrap">
+                {cardList}
+            </div>
         </div>
     )
 }
