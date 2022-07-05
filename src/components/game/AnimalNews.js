@@ -69,14 +69,14 @@ const AnimalNews = () => {
                 {
                     searchInput.length > 1 ? 
                         filteredResults
-                            .map((element) => (
-                                <NewsCard element={element} />
+                            .map((element, index) => (
+                                <NewsCard key={index} element={element} />
                             )) : 
                         newsArray
                             .slice(0,10)
                             .sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-                            .map((element) => (
-                                <NewsCard element={element} />
+                            .map((element, index) => (
+                                <NewsCard key={index} element={element} />
                             ))
                 }
                
