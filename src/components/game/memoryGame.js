@@ -39,10 +39,9 @@ function start() {
     let gameDiv = document.createElement("div");
     gameDiv.setAttribute("id","gameDiv");
     // let gameDiv = document.getElementById("gameDiv")
-    let i=0;
     let list = gameArray.map((element,index) =>
     <div className="memory-card" key={index} id={index}>
-        <img src={element.image_link} id="memory-img"></img>
+        <img src={element.image_link} id="memory-img" alt={element.name}></img>
     </div>
     )
 
@@ -95,7 +94,7 @@ function gameLogic() {
         
         divArray[j].addEventListener("click", () => {
             if(divArray.length >= 1){
-                if(a == 2){
+                if(a === 2){
                     document.getElementById(counter[0]).setAttribute("class","memory-card");
                     document.getElementById(counter[1]).setAttribute("class","memory-card");
                     a = 0;
@@ -103,12 +102,12 @@ function gameLogic() {
 
                 document.getElementById(j).setAttribute("class","card-selected")
                 
-                if(j != counter[a-1]){
+                if(j !== counter[a-1]){
                     counter[a] = j;
                     a++;
 
-                    if(a ==2 ){
-                        if(document.getElementById(counter[0]).innerHTML == document.getElementById(counter[1]).innerHTML){
+                    if(a === 2){
+                        if(document.getElementById(counter[0]).innerHTML === document.getElementById(counter[1]).innerHTML){
                             document.getElementById(counter[0]).setAttribute("class","card-guessed");
                             document.getElementById(counter[1]).setAttribute("class","card-guessed");
                             divArray.item[counter[0]] = null;
@@ -132,7 +131,7 @@ function startTimer(mydiv){
     let myTimer = setInterval(() => {
         document.getElementById("timer-div").innerHTML = TIME;
         TIME--;
-        if(TIME == -1){
+        if(TIME === -1){
             clearInterval(myTimer);
             clearDisplay();
             start()
@@ -145,7 +144,7 @@ function clearDisplay(){
 }
 
 function connect() {
-    let myRequest = new XMLHttpRequest;
+    let myRequest = new XMLHttpRequest();
     myRequest.open("GET", "https://zoo-animal-api.herokuapp.com/animals/rand/8",false);
     myRequest.send("null")
 
