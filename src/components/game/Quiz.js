@@ -116,7 +116,7 @@ const Quiz = () => {
         }
 
         let points = ( correctAnswers * 15 ) - ( errors * 5 );
-        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! you earned " + points);
+        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! considering errors you earned " + points + " ponints");
         postStats(points);
         reset();
     }

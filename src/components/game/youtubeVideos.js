@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GameNavbar from "./GameNavbar";
@@ -6,7 +6,6 @@ import GameNavbar from "./GameNavbar";
 const Youtube = () => {
     let videoList = connect();
     
-    const [searchExp, setSearchExp] = useState("");
     const [searchInput, setSearchInput] = useState("");
     const [filteredResults, setFilteredResults] = useState([]);
 
@@ -21,7 +20,6 @@ const Youtube = () => {
         } else {
             setFilteredResults(videoList);
         }
-    
     }
 
     if(videoList == "error"){
@@ -51,13 +49,26 @@ const Youtube = () => {
                 <button className="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div id="youtubeBody">
+        <div>
+            <GameNavbar />
+            <div id="youtubeBody" className="container">
                 <p className="fs-1 fw-bold" id="youtubeTitle">Funny Youtube Videos</p>
+                <form className="d-flex my-3" role="search" onSubmit={(e) => e.preventDefault()}>
+                    <input 
+                        className="form-control me-2" 
+                        type="search" 
+                        placeholder="Search" 
+                        aria-label="Search"
+                        onChange={(e) => searchItems(e.target.value)}
+                    />
+                    <button className="btn btn-outline-success" type="submit">Search</button>
+                </form>
                 <div className="row row-cols-1 row-cols-md-3 g-4">
                     {
                         searchInput.length > 1 ?
                             filteredResults.map((element) => (
                             <div className="col" key={element.id.videoId}>
-                                <div className="card border-dark mb-3" id="youtubeCard">
+                                <div className="card border-3 mb-3" id="youtubeCard">
                                     <img src={element.snippet.thumbnails.high.url} className="card-img-top" alt="..."></img>
                                     <div className="card-body">
                                         <h5 className="card-title">{element.snippet.title}</h5>
@@ -72,7 +83,7 @@ const Youtube = () => {
                             )) : 
                             videoList.map((element) => (
                             <div className="col" key={element.id.videoId}>
-                                <div className="card mb-3" id="youtubeCard">
+                                <div className="card mb-3 border-3" id="youtubeCard">
                                     <img src={element.snippet.thumbnails.high.url} className="card-img-top" alt="..."></img>
                                     <div className="card-body">
                                         <h5 className="card-title">{element.snippet.title}</h5>
@@ -100,7 +111,6 @@ function connect(){
 
     if(myRequest.status == 200){
         let response = myRequest.responseText; 
-        console.log(response)
         response = JSON.parse(response);
 
         return(
