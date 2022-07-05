@@ -3,21 +3,15 @@ import "../../css/memory-game.css"
 
 const MemoryGame = () => {
     return(
-        <div>
-            <h1>Memory Game!!!</h1>
-            <div>
-                {/* <div id="gameDiv"></div> */}
+        <div className="container-fluid bg-secondary position-relative">
+            <p className="display-4 text-center text-white">Memory Game!!!</p>
+            <div className="container-fluid position-relative">
                 {start()}
             </div>
             <h3 id="msg-box"></h3>
-            {/* <input type="button" value="START" id="start-button"></input> */}
         </div>
     )
 }
-
-
-
-//window.onload = start();
 
 function start() {
     let elements = connect();
@@ -38,51 +32,31 @@ function start() {
 
     let gameDiv = document.createElement("div");
     gameDiv.setAttribute("id","gameDiv");
-    // let gameDiv = document.getElementById("gameDiv")
+
     let list = gameArray.map((element,index) =>
     <div className="memory-card" key={index} id={index}>
         <img src={element.image_link} id="memory-img" alt={element.name}></img>
     </div>
     )
-
-    // for(let i=0; i<gameArray.length; i++){
-    //     let tmpDiv = document.createElement("div");
-    //     tmpDiv.className = "memory-card";
-    //     tmpDiv.setAttribute("id",i);
-
-    //     let tmp = document.createElement("img");
-    //     tmp.setAttribute("src",gameArray[i]);
-        
-    //     tmpDiv.appendChild(tmp);
-
-    //     console.log(i + " " + gameArray[i])
-    //     gameDiv.appendChild(tmpDiv);
-    // }
-
-    // let startbtn = document.createElement("input");
-    // startbtn.type = "button"
-    // startbtn.value = "START"
-    // startbtn.setAttribute("id","start-button")
     
     return(
-        <div id="gameDiv">
-            {list}
-            <input type="button" value="START" id="start-button" onClick={buttonscript}></input>
+        <div className="position-relative">
+            <div id="gameDiv" className="container">
+                {list}
+            </div>
+            <input type="button" className="btn btn-light position-absolute top-50 start-10" value="START" id="start-button" onClick={buttonscript}></input>
+            <p id="timer-div" className="display-4 position-absolute top-50 end-0 text-white">0</p>
         </div>
     )
-
-    // return(gameDiv)
 }   
 
 const buttonscript = () =>{ 
-        //document.getElementById("start-button").addEventListener("click", () => {
         gameLogic();
-        let timerDiv = document.createElement("div");
-        timerDiv.setAttribute("id","timer-div");
-        document.getElementsByTagName("body")[0].appendChild(timerDiv);
+        // let timerDiv = document.createElement("div");
+        // timerDiv.setAttribute("id","timer-div");
+        // document.getElementsByTagName("body")[0].appendChild(timerDiv);
         startTimer();
     }
-    //)
 
 function gameLogic() {
     let counter = [];
@@ -126,7 +100,7 @@ function gameLogic() {
     }
 }
 
-function startTimer(mydiv){
+function startTimer(){
     let TIME = 60;
     let myTimer = setInterval(() => {
         document.getElementById("timer-div").innerHTML = TIME;
