@@ -48,9 +48,6 @@ const Youtube = () => {
                 />
                 <button className="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <div id="youtubeBody">
-        <div>
-            <GameNavbar />
             <div id="youtubeBody" className="container">
                 <p className="fs-1 fw-bold" id="youtubeTitle">Funny Youtube Videos</p>
                 <form className="d-flex my-3" role="search" onSubmit={(e) => e.preventDefault()}>
