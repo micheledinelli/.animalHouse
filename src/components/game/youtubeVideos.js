@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../../css/youtube.css"
 import GameNavbar from "./GameNavbar";
 
 const Youtube = () => {
@@ -37,7 +36,7 @@ const Youtube = () => {
     let ytLink = "https://www.youtube.com/watch?v=";
 
     return(
-        <div>
+        <div className="container bg-primary">
             <div>
                 <GameNavbar />
             </div>
@@ -96,7 +95,7 @@ const Youtube = () => {
 function connect(){
     //API_KEY => AIzaSyC11EwTLWAtkam-iQP7tZ-zw-9HVAoeiKs
     let myRequest = new XMLHttpRequest();
-    myRequest.open("GET", "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=funny%20animals&maxResults=48&key=AIzaSyC11EwTLWAtkam-iQP7tZ-zw-9HVAoeiKs", false);
+    myRequest.open("GET", "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=funny%20animals&key=AIzaSyC11EwTLWAtkam-iQP7tZ-zw-9HVAoeiKs", false);
     myRequest.send("null");
 
     if(myRequest.status == 200){
