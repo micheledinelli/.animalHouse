@@ -186,6 +186,7 @@ const Quiz = () => {
 
     const imageContainerStyle = {
         height: "20rem",
+        textAlign: "center",
         width: "100%"
     }
 
