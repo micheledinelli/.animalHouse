@@ -70,7 +70,6 @@ const Quiz = () => {
     const getRandomAnimals = async () => {
         try {
             const response = await axios.get(`https://zoo-animal-api.herokuapp.com/animals/rand/${numberOfQuestions}`);        
-            console.log(response.data);
             setAnimals(response.data);
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
@@ -144,10 +143,10 @@ const Quiz = () => {
     }
 
     const imageLoaded = () => {
-        loadingCounter.current += 1;
-        if (loadingCounter.current >= numberOfQuestions) {
+        // loadingCounter.current += 1;
+        // if (loadingCounter.current >= numberOfQuestions) {
             setLoading(false);
-        }
+        // }
     }
 
     const reset = () => {
@@ -181,11 +180,12 @@ const Quiz = () => {
 
     const imageStyle = {
         height: "100%",
-        objectFit: "contain"
+        objectFit: "cover"
     }
 
     const imageContainerStyle = {
         height: "20rem",
+        textAlign: "center",
         width: "100%"
     }
 
@@ -315,6 +315,7 @@ const Quiz = () => {
                             <div style={{display: loading ? "none" : "block", height: "20rem", width: "100%"}}>
                                 <img 
                                     src={props.image_link}
+                                    className="img-fluid"
                                     style={imageStyle}
                                     onLoad={imageLoaded}
                                 />
