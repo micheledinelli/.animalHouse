@@ -1,13 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AnimalNews = () => {
     let newsArray = connect();
 
-    const [searchExp, setSearchExp] = useState("");
     const [searchInput, setSearchInput] = useState("");
     const [filteredResults, setFilteredResults] = useState([]);
+
+    const NewsCard = (props) => {
+        return(
+            <div className="card my-1 border-3 shadow-sm" key={props.element.url}>
+                <div className="card-body">
+                    <div className="float-end ms-5" style={imageContainerStyle}>
+                        <img src={props.element.urlToImage} style={imageStyle}></img>
+                    </div>
+                    <h5 className="card-title">{props.element.title}</h5>
+                    <h6 className="card-subtitle mb-2 text-muted">{formatDate(props.element.publishedAt)}</h6>
+                    <p className="card-text">{props.element.content}</p>
+                    <a 
+                        href={props.element.url} 
+                        className="btn btn-outline-primary fs-5">
+                            Read full article
+                    </a>
+                </div>
+            </div>
+        )
+    }
 
     const imageStyle = {
         width: "100%",
@@ -31,7 +50,6 @@ const AnimalNews = () => {
         } else {
             setFilteredResults(newsArray);
         }
-
     }
     
     return(
@@ -50,42 +68,15 @@ const AnimalNews = () => {
             <div className="d-flex flex-column flex-wrap">
                 {
                     searchInput.length > 1 ? 
-                        filteredResults.map((element) => (
-                            <div className="card my-1 border-3 shadow-sm" key={element.url}>
-                                <div className="card-body">
-                                    <div className="float-end ms-5" style={imageContainerStyle}>
-                                        <img src={element.urlToImage} style={imageStyle}></img>
-                                    </div>
-                                    <h5 className="card-title">{element.title}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">{formatDate(element.publishedAt)}</h6>
-                                    <p className="card-text">{element.content}</p>
-                                    <a 
-                                        href={element.url} 
-                                        className="btn btn-outline-primary fs-5">
-                                            Read full article
-                                    </a>
-                                </div>
-                            </div>
-                        )) : 
+                        filteredResults
+                            .map((element) => (
+                                <NewsCard element={element} />
+                            )) : 
                         newsArray
                             .slice(0,10)
                             .sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
                             .map((element) => (
-                                <div className="card my-1 border-3 shadow-sm" key={element.url}>
-                                    <div className="card-body">
-                                        <div className="float-end ms-5" style={imageContainerStyle}>
-                                            <img src={element.urlToImage} style={imageStyle}></img>
-                                        </div>
-                                        <h5 className="card-title">{element.title}</h5>
-                                        <h6 className="card-subtitle mb-2 text-muted">{formatDate(element.publishedAt)}</h6>
-                                        <p className="card-text">{element.content}</p>
-                                        <a 
-                                            href={element.url} 
-                                            className="btn btn-outline-primary fs-5">
-                                                Read full article
-                                        </a>
-                                    </div>
-                                </div>
+                                <NewsCard element={element} />
                             ))
                 }
                
