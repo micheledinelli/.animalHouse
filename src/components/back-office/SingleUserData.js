@@ -34,14 +34,13 @@ const SingleUserData = () => {
             
             try {
                 const scoreResponse = await axios.get(`http://localhost:8080/api/scores/${newValue.email}`);
-                
                 if(scoreResponse.status == 200){ 
                     setScoreData(scoreResponse.data); 
                 }
 
             } catch(error) {
                 if(error.response && error.response.status >= 400 && error.response.status <= 500) {
-                    toast.error(error.response.data.message);
+                    // toast.error(error.response.data.message);
                 } else {
                     toast.error("Conncetion refused");
                 }
@@ -191,7 +190,7 @@ const SingleUserData = () => {
                         </nav>
                     </div>
                     <div className="col-lg-5 d-flex align-items-center justify-content-center">
-                        <div className="card shadow-sm position-relative">
+                        <div className="card shadow-lg position-relative">
                             <div className="position-absolute top-0 start-100 translate-middle shadow-lg">
                                 <button
                                     onClick={copyToClipBoard}
@@ -214,54 +213,52 @@ const SingleUserData = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-5 text-center">
-                        <div className="container row">
-                            <div className="col-lg-12">
-                                <div>
-                                    <h1>Highscores</h1>
-                                    <ul className="list-group mt-3 mb-3">
-                                        {   
-                                            scoreData &&    
-                                                scoreData
-                                                    .sort((a,b) => b.points - a.points )
-                                                    .filter((elem) => elem.gameName == 'hangman')
-                                                    .slice(0, 1)
-                                                    .map((e) => (
-                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
-                                                            {e.gameName}
-                                                            <span className="badge bg-primary rounded-pill">{e.points} pts </span>
-                                                        </li>
-                                                    ))
-                                        }
-                                        {   
-                                            scoreData &&    
-                                                scoreData
-                                                    .sort((a,b) => b.points - a.points )
-                                                    .filter((elem) => elem.gameName == 'quiz')
-                                                    .slice(0, 1)
-                                                    .map((e) => (
-                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
-                                                            {e.gameName}
-                                                            <span className="badge bg-primary rounded-pill">{e.points} pts</span>
-                                                        </li>
-                                                    ))
-                                        }
-                                        {   
-                                            scoreData &&    
-                                                scoreData
-                                                    .sort((a,b) => b.points - a.points )
-                                                    .filter((elem) => elem.gameName == 'memory')
-                                                    .slice(0, 1)
-                                                    .map((e) => (
-                                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={e._id}>
-                                                            {e.gameName}
-                                                            <span className="badge bg-primary rounded-pill">{e.points} pts</span>
-                                                        </li>
-                                                    ))
-                                        }
-                                    </ul>
-                                    <h1>Preferences</h1>
-                                </div>
+                    <div className="col-lg-5 d-flex align-items-center flex-column justify-content-center gap-3">
+                        <div className="card shadow-lg">
+                            <div className="card-body">
+                                <p className="card-title display-3 my-4">Highscores</p>
+                                    {   
+                                        scoreData &&    
+                                            scoreData
+                                                .sort((a,b) => b.points - a.points )
+                                                .filter((elem) => elem.gameName == 'hangman')
+                                                .slice(0, 1)
+                                                .map((e) => (
+                                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3" key={e._id}>
+                                                        {e.gameName}
+                                                        <span className="badge bg-primary mx-3 rounded-pill">{e.points} pts </span>
+                                                    </li>
+                                                ))
+                                    }
+                                    {   
+                                        scoreData &&    
+                                            scoreData
+                                                .sort((a,b) => b.points - a.points )
+                                                .filter((elem) => elem.gameName == 'quiz')
+                                                .slice(0, 1)
+                                                .map((e) => (
+                                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3" key={e._id}>
+                                                        {e.gameName}
+                                                        <span className="badge bg-primary mx-3 rounded-pill">{e.points} pts </span>
+                                                    </li>
+                                                ))
+                                    }
+                                    {   
+                                        scoreData &&    
+                                            scoreData
+                                                .sort((a,b) => b.points - a.points )
+                                                .filter((elem) => elem.gameName == 'memory')
+                                                .slice(0, 1)
+                                                .map((e) => (
+                                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3" key={e._id}>
+                                                        {e.gameName}
+                                                        <span className="badge bg-primary mx-3 rounded-pill">{e.points} pts </span>
+                                                    </li>
+                                                ))
+                                    }
+                                    {
+                                        !scoreData && <p className="lead">No data available</p>
+                                    }
                             </div>
                         </div>
                     </div>
