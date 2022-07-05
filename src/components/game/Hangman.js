@@ -4,7 +4,7 @@ import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
-import "../../css/hangman.css"
+import "../../css/hangman.css";
 
 const Hangman = () => {
 
