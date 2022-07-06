@@ -30,7 +30,10 @@ function App() {
             <Routes>
                 { /* Protected route: authentication required */}
                 <Route path="/frontOffice" element={<ProtectedRoute />}>
-                    <Route path="/frontOffice" element={<FrontOffice />}></Route>
+                    <Route path="/frontOffice">
+                        <Route index={true} element={<FrontOffice />}></Route>
+                        <Route path="bacheca" element={<Bacheca />}></Route>
+                    </Route>
                 </Route>
 
                 { /* Protected route: authentication + authorization */}
