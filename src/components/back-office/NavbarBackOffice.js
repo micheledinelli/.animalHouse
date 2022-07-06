@@ -2,10 +2,6 @@ import React from "react";
 
 const NavbarBackOffice = () => {
 
-    const handleFindById = () => {
-        console.log(document.getElementsByTagName("table")[0]);
-    }
-
     return(
         <nav className="navbar navbar-expand-lg bg-primary">
             <div className="container">

@@ -13,6 +13,7 @@ import BackOffice from "./components/back-office/BackOffice.js";
 import FrontOffice from "./components/front-office/FrontOffice";
 import PersonalData from "./components/back-office/PersonalData.js";
 import SingleUserData from "./components/back-office/SingleUserData.js";
+import WallManager from "./components/back-office/WallManager.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
 import MemoryGame from "./components/game/memoryGame.js";
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/backOffice" element={<ProtectedRoute />}>
                     <Route path="/backOffice">
                         <Route index={true} element={<BackOffice />}></Route>
+                        <Route path="wallManager" element={<WallManager />}></Route>
                         <Route path="personalData" element={<PersonalData />}></Route>
                         <Route path="personalData/:id" element={<SingleUserData />}></Route>
                     </Route>

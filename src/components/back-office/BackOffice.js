@@ -23,11 +23,11 @@ const BackOffice = () => {
                     </Slide>
                 </div>
                 <div className="col-lg-6">
-                    <Link to="/">
+                    <Link to="/backOffice/wallManager">
                         <img src={Manage} className="img-fluid zoom"></img>
                     </Link>
                     <Slide direction="right" delay={600}>
-                        <p className="display-5 text-center">Showcase</p>
+                        <p className="display-5 text-center">Wall manager</p>
                     </Slide>
                 </div>
             </div>
