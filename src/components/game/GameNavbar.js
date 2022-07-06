@@ -32,7 +32,7 @@ const GameNavbar = () =>{
                                 className="nav-link active fs-4" 
                                 aria-current="page" 
                                 href="./gamePage#News">
-                                Notizie
+                                News
                             </a>
                         </li>
                         <li className="nav-item mx-4">
@@ -40,14 +40,14 @@ const GameNavbar = () =>{
                                 className="nav-link active fs-4" 
                                 aria-current="page" 
                                 href="./gamePage#Games">
-                                Giochi
+                                Games
                             </a>
                         </li>
                     </ul>
                     <ul className="navbar-nav d-flex ms-auto">
                         <li className="nav-item mx-3">
                             <a 
-                                className="btn nav-btn btn-warning fs-5" 
+                                className="btn nav-btn btn-primary text-white fs-5" 
                                 aria-current="page" 
                                 href="/frontOffice">
                                 Front Office
