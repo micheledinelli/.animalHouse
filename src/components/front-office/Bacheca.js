@@ -3,8 +3,10 @@ import NavigationFrontOffice from "./NavigationFrontOffice";
 
 const Bacheca = () => {
     return(
-        <div></div>
-        <NavigationFrontOffice/>
+        <div>
+            <NavigationFrontOffice/>
+            
+        </div>
     )
 }
 
