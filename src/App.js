@@ -11,6 +11,7 @@ import User from "./components/User.js";
 import Game from "./components/game/Game.js";
 import BackOffice from "./components/back-office/BackOffice.js";
 import FrontOffice from "./components/front-office/FrontOffice";
+import Bacheca from "./components/front-office/Bacheca.js";
 import PersonalData from "./components/back-office/PersonalData.js";
 import SingleUserData from "./components/back-office/SingleUserData.js";
 import WallManager from "./components/back-office/WallManager.js";
