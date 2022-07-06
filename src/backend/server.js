@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 const scoreRoutes = require('./routes/scores');
 const changePwRoutes = require('./routes/changepw');
 const recoverPwRoutes = require('./routes/recoverpw');
+const wallMessagesRoutes = require('./routes/wall');
 
 // Db connection
 connection();
@@ -24,6 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/scores', scoreRoutes);
 app.use('/api/changepw', changePwRoutes);
 app.use('/api/recoverpw', recoverPwRoutes);
+app.use('/api/wall', wallMessagesRoutes);
 
 const port = process.env.PORT || 8080;
 

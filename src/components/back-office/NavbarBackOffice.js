@@ -2,10 +2,6 @@ import React from "react";
 
 const NavbarBackOffice = () => {
 
-    const handleFindById = () => {
-        console.log(document.getElementsByTagName("table")[0]);
-    }
-
     return(
         <nav className="navbar navbar-expand-lg bg-primary">
             <div className="container">
@@ -18,15 +14,6 @@ const NavbarBackOffice = () => {
                 
                 <div className="collapse navbar-collapse" id="toggledDiv">
                     <ul className="navbar-nav d-flex ms-auto">
-                        <li className="nav-item mx-3">
-                            <a 
-                                className="btn nav-btn btn-outline-light fs-5" 
-                                href="#"
-                                onClick={handleFindById}    
-                            >
-                                findById
-                            </a>
-                        </li>
                         <li className="nav-item mx-3">
                             <a className="btn btn-outline-light fs-5 nav-btn" href="/">    
                                 <i className="bi bi-house"></i>
