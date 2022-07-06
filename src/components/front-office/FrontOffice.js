@@ -6,15 +6,25 @@ import "../../css/frontOffice.css";
 
 //icons
 import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+import NavigationFrontOffice from "./NavigationFrontOffice";
 
 
 const FrontOffice = () => {
 
+    //Scores of the hangman game
     const [dataHangman, setDataHangman] = useState();    
-    
+
+    //Scores of the memory game
+    const [dataMemory, setDataMemory] = useState();
+
+    //Scores of the quiz game
+    const [dataQuiz, setDataQuiz] = useState();    
+
     useEffect(() => {
 
-        getUsersData();
+        getUsersDataHangman();
+        getUsersDataMemory();
+        getUsersDataQuiz();
 
         //menuToggle
         let toggle = document.querySelector('.toggle');
@@ -28,36 +38,27 @@ const FrontOffice = () => {
 
     }, [])  
 
-    const getUsersData = async function(){
+    const getUsersDataHangman = async function(){
         const response = await axios.get("http://localhost:8080/api/scores/hangman");
          console.log(response.data);
          setDataHangman(response.data);
     }
+    const getUsersDataMemory = async function(){
+        const response = await axios.get("http://localhost:8080/api/scores/memory");
+         console.log(response.data);
+         setDataMemory(response.data);
+    }
+    const getUsersDataQuiz = async function(){
+        const response = await axios.get("http://localhost:8080/api/scores/quiz");
+         console.log(response.data);
+         setDataQuiz(response.data);
+    }
    
     return(
         <div className=" class-container">
-            <div className="navigation">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <span className="icon"><i className="bi bi-building"></i></span>
-                            <span className="title">  Front Office</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span className="icon"><i className="bi bi-controller"></i></span>
-                            <span className="title">  LeaderBoard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span className="icon"><i className="bi bi-chat-heart"></i></span>
-                            <span className="title"> Bacheca</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            
+           <NavigationFrontOffice />
+
             <div className="main">
                  <div className="topbar">
                     <div className="toggle">
@@ -70,7 +71,6 @@ const FrontOffice = () => {
                  </div>
                  
                  <div className="cardBox">
-                    
                     <div className="card">
                         <div>
                             <div className="email">awniyoussef@gmail.com</div>
@@ -117,113 +117,79 @@ const FrontOffice = () => {
                  </div>
 
                 <div className="details">
-                    <div className="standings-hangman"> 
+
+                    <div className="standings"> 
                         <div className="cardHeader">
                             <h2>Placing Hangman <i className="bi bi-arrow-down-square-fill"></i></h2>
-                            <a href="#" className="btn">View all</a>
                         </div>
-                        <table>
+                        <table className="tableGame">
                             <thead>
                                 <tr>
-                                    <td>Position</td>
-                                    <td>Name</td>
-                                    <td>Email</td>
-                                    <td>Score</td>
-                                    
+                                    <th>Position</th>
+                                    <th>UserName</th>
+                                    <th>Score</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {dataHangman && dataHangman.sort((a,b) => b.points - a.points).map((e, index) => (
+                                    <tr key={e._id}>
+                                        <td>{index +1 }</td>
+                                        <td>{e.userId}</td>
+                                        <td>{e.points}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                                
+                    <div className="standings"> 
+                        <div className="cardHeader">
+                            <h2>Placing Memory <i className="bi bi-arrow-down-square-fill"></i></h2>
+                        </div>
+                        <table className="tableGame">
+                            <thead>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Pinaccio</td>
-                                    <td>awniyoussef@gmail.com</td>
-                                    <td>990</td>
-                                   
+                                    <th>Position</th>
+                                    <th>UserName</th>
+                                    <th>Score</th>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Mich</td>
-                                    <td>micheledine@gmail.com</td>
-                                    <td>910</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Pippo</td>
-                                    <td>pipfilippo44@gmail.com</td>
-                                    <td>901</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Pinaccio</td>
-                                    <td>awniyoussef@gmail.com</td>
-                                    <td>990</td>
-                                   
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mich</td>
-                                    <td>micheledine@gmail.com</td>
-                                    <td>910</td>
-                                   
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Pippo</td>
-                                    <td>pipfilippo44@gmail.com</td>
-                                    <td>901</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Pinaccio</td>
-                                    <td>awniyoussef@gmail.com</td>
-                                    <td>990</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Mich</td>
-                                    <td>micheledine@gmail.com</td>
-                                    <td>910</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Pippo</td>
-                                    <td>pipfilippo44@gmail.com</td>
-                                    <td>901</td>
-                                    
-                                </tr>
+                            </thead>
+                            <tbody>
+                                {dataMemory && dataMemory.sort((a,b) => b.points - a.points).map((e, index) => (
+                                    <tr key={e._id}>
+                                        <td>{index +1 }</td>
+                                        <td>{e.userId}</td>
+                                        <td>{e.points}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
 
-                    <div className="recentOnline">
+                    
+                    <div className="standings"> 
                         <div className="cardHeader">
-                            <h2>Recent Online Players</h2>
+                            <h2>Placing Quiz <i className="bi bi-arrow-down-square-fill"></i></h2>
                         </div>
-                        <table>
-                           <tr>Mich</tr>
-                           <tr>Pippo</tr>
-                           <tr>Fede</tr>
-                           <tr>Pino</tr>
-                           <tr>Kica</tr>
-                           <tr>Mich</tr>
-                           <tr>Max</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
-                           <tr>Mich</tr>
+                        <table className="tableGame">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>UserName</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dataQuiz && dataQuiz.sort((a,b) => b.points - a.points).map((e, index) => (
+                                    <tr key={e._id}>
+                                        <td>{index +1 }</td>
+                                        <td>{e.userId}</td>
+                                        <td>{e.points}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>

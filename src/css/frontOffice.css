@@ -238,7 +238,7 @@
 {
     color: white;
 }
-.details
+/* .details
 {
     position: relative;
     width: 100%;
@@ -247,8 +247,18 @@
     grid-template-columns: 2fr 1fr;
     grid-gap: 30px;
     margin-top: 10px;
+} */
+
+.details
+{
+    width: 100%;
+    gap: 30px;
+    
+    
 }
-.details .standings-hangman
+
+
+.details .standings
 {
     position: relative;
     display: grid;
@@ -263,11 +273,13 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    
 }
 
 .cardHeader h2 
 {
      font-weight: 600;
+     margin: 0;
      color: #6C63FF;
 }
 /* .btn 
@@ -279,48 +291,62 @@
     color: white;
     border-radius: 6px;
 } */
-.details .table
+.details table
 {
     width: 100%;
     border-collapse:collapse;
     margin-top: 10px;
 }
-.details table thead td
+/* .details table thead td
 {
     font-weight: 600;
-}
-.details .standings-hangman table tr
+} */
+.details .standings table tr
 {
     color: black;
     /* border-bottom: 1px solid black; */
 }
-.details .standings-hangman table tr:last-child
+/* .details .standings table tr:last-child
 {
     border-bottom: none;
-}
-.details .standings-hangman table tbody tr:hover
+} */
+.details .standings table tbody tr:hover
 {
     background: #6C63FF;
     color: white;
 }
-.details .standings-hangman table tr td
+.details .standings table tr td
 {
     padding: 10px;
 }
-.details .standings-hangman table tr td:last-child
+.standings
 {
-    text-align: end;
-}
-.details .standings-hangman table tr td:nth-child(2)
-{
-    text-align: center;
-}
-.details .standings-hangman table tr td:nth-child(3)
-{
-    text-align: center;
+    position: relative;
+    display: grid;
+    width: 100%;
+    margin: 30px auto;
+    box-shadow: 0 7px 25px black;
+    border-radius: 20px;
 }
 
- .recentOnline
+.tableGame thead
+{  
+    text-align: center;
+}
+.tableGame tbody
+{   
+    text-align: center;
+    
+}
+
+.tableHangman 
+{
+    width: 100%;
+    margin: 10 auto;
+}
+
+
+ /* .recentOnline
  {
     position: relative;
     display: grid;
@@ -329,7 +355,7 @@
     background: white;
     box-shadow: 0 7px 25px black;
     border-radius: 20px;
- } 
+ }  */
 
 /* .status.online
 {
@@ -349,11 +375,11 @@
     font-size: 14px;
     font-weight: 500;
 } */
-.recentOnline table tr:hover
+/* .recentOnline table tr:hover
 {
     background: #6C63FF;
     color: white;
-}
+} */
 
 /* .titlePage
 {
