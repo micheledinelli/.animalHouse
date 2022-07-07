@@ -23,6 +23,12 @@ const NavigationFrontOffice = () => {
                         <span className="title"> Bacheca</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/frontOffice/services">
+                        <span className="icon"><i className="bi bi-chat-heart"></i></span>
+                        <span className="title">Our Services</span>
+                    </a>
+                </li>
             </ul>
         </div>
     )
