@@ -85,8 +85,10 @@ const WallManager = () => {
                 </div>
                 <div className="card-body">
                     <p className="lead">
-                        Written by: <b>{props.element.author}</b> on <b>{props.element.date}</b>
+                        Written by: <b>{props.element.author}</b> on <span className="text-small"> {props.element.date.slice(0,10)}</span>
                     </p>
+                   
+                    
                     <p className="lead display-6">{props.element.title}</p>
                     <p className="lead">{props.element.body}</p>
                     <AccordionComments key={props.element._id} id={props.index} comments={props.element.comments}/>

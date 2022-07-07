@@ -124,7 +124,7 @@ const Services = () => {
                     </div>
                     <div className="col-sm-4 align-self-center text-section">
                         <p className="display-4 text-secondary lh-1">Pet Adoption</p>
-                        <p className="display-4 text-secondary lh-1">Meet our expert who's gonna make you find an animal to help!</p>
+                        <p className="display-4 text-secondary lh-1">Meet our expert who'll find you an animal to help!</p>
                         <button 
                             className="mt-3 btn btn-lg btn-primary text-white"
                             onClick={(e) => { handleClick("adoption")}}
@@ -138,8 +138,8 @@ const Services = () => {
                 </div>
                 <div className="row mt-5" id="to-reverse-mobile">
                     <div className="col-sm-4 align-self-center text-section text-swap-on-bp">
-                        <p className="display-4 text-secondary lh-1">Ttime is never enough</p>
-                        <p className="display-4 text-secondary lh-1">We enjoy investing ours to make your animal happy</p>
+                        <p className="display-4 text-secondary lh-1">Time's never enough</p>
+                        <p className="display-4 text-secondary lh-1">We enjoy investing ours for your beloved</p>
                         <button 
                             className="mt-3 btn btn-lg btn-primary text-white"
                             onClick={(e) => { handleClick("lonely")}}
