@@ -197,11 +197,11 @@ const SingleUserData = () => {
                         </nav>
                     </div>
                     <div className="col-lg-5 d-flex align-items-center justify-content-center">
-                        <div className="card shadow-lg position-relative">
+                        <div className="card shadow-lg position-relative border-3">
                             <div className="position-absolute top-0 start-100 translate-middle shadow-lg">
                                 <button
                                     onClick={copyToClipBoard}
-                                    className="btn btn-light"
+                                    className="btn btn-light border-3"
                                     style={{fontSize:"1.8rem"}}
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="bottom"
@@ -220,8 +220,8 @@ const SingleUserData = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-5 d-flex align-items-center flex-column justify-content-center gap-3">
-                        <div className="card shadow-lg">
+                    <div className="col-lg-5 d-flex align-items-center flex-column justify-content-center gap-3 mt-3">
+                        <div className="card shadow-lg border-3">
                             <div className="card-body">
                                 <p className="card-title display-3 my-4">Highscores</p>
                                     {   
@@ -268,13 +268,13 @@ const SingleUserData = () => {
                                     }
                             </div>
                         </div>
-                        <div className="card shadow-lg">
+                        <div className="card shadow-lg border-3">
                             <div className="card-body">
-                                <p className="card-title display-5 my-4">Bookings coming soon</p>
+                                <p className="card-title display-5 my-4">Upcoming bookings</p>
                                     {   
                                         bookings &&    
                                             bookings
-                                                .sort((a, b) => Date.parse(b.booking.date) - Date.parse(a.booking.date))
+                                                .sort((a, b) => Date.parse(a.booking.date) - Date.parse(b.booking.date))
                                                 .slice(0, 3)
                                                 .map((e) => (
                                                     <li className="list-group-item d-flex justify-content-between align-items-center p-3" key={e._id}>
