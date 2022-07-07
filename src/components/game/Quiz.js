@@ -278,7 +278,6 @@ const Quiz = () => {
                                 <img 
                                     className="img-fluid"
                                     src={props.image_link}
-                                    className="img-fluid"
                                     style={imageStyle}
                                     onLoad={imageLoaded}
                                 />
