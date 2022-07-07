@@ -11,8 +11,11 @@ import User from "./components/User.js";
 import Game from "./components/game/Game.js";
 import BackOffice from "./components/back-office/BackOffice.js";
 import FrontOffice from "./components/front-office/FrontOffice";
+import Bacheca from "./components/front-office/Bacheca.js";
 import PersonalData from "./components/back-office/PersonalData.js";
 import SingleUserData from "./components/back-office/SingleUserData.js";
+import WallManager from "./components/back-office/WallManager.js";
+import Services from "./components/front-office/Services.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
 import MemoryGame from "./components/game/memoryGame.js";
@@ -29,13 +32,18 @@ function App() {
             <Routes>
                 { /* Protected route: authentication required */}
                 <Route path="/frontOffice" element={<ProtectedRoute />}>
-                    <Route path="/frontOffice" element={<FrontOffice />}></Route>
+                    <Route path="/frontOffice">
+                        <Route index={true} element={<FrontOffice />}></Route>
+                        <Route path="bacheca" element={<Bacheca />}></Route>
+                        <Route path="services" element={<Services />}></Route>
+                    </Route>
                 </Route>
 
                 { /* Protected route: authentication + authorization */}
                 <Route path="/backOffice" element={<ProtectedRoute />}>
                     <Route path="/backOffice">
                         <Route index={true} element={<BackOffice />}></Route>
+                        <Route path="wallManager" element={<WallManager />}></Route>
                         <Route path="personalData" element={<PersonalData />}></Route>
                         <Route path="personalData/:id" element={<SingleUserData />}></Route>
                     </Route>

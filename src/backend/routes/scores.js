@@ -7,7 +7,7 @@ router.get('/', async(req, res) => {
         if(scores && scores.length > 0) {
             res.send(scores);
         } else {
-            res.status(200).send({message: "No scores available"});
+            res.status(400).send({message: "No scores available"});
         }
 
     } catch (error) {
@@ -66,7 +66,7 @@ router.get('/:id', async(req, res) => {
             if(scores && scores.length > 0) {
                 res.send(scores);
             } else {
-                res.status(200).send({message: "No scores available"});
+                res.status(400).send({message: "No scores available"});
             }
         }
 
