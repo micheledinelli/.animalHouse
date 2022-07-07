@@ -12,7 +12,7 @@ const AnimalNews = () => {
         return(
             <div className="card my-1 border-3 shadow-sm" key={props.element.url}>
                 <div className="card-body">
-                    <div className="float-end ms-5" style={imageContainerStyle}>
+                    <div className="float-end ms-5 p-3" style={imageContainerStyle}>
                         <img src={props.element.urlToImage} style={imageStyle}></img>
                     </div>
                     <h5 className="card-title">{props.element.title}</h5>
@@ -36,7 +36,8 @@ const AnimalNews = () => {
     
     const imageContainerStyle = {
         width: "30%",
-        height: "100%"
+        height: "100%",
+        margin: "1rem"
     }
 
     const searchItems = (searchValue) => {
