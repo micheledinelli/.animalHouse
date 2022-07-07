@@ -42,6 +42,30 @@ router.get('/:serviceName', async (req, res) => {
     }
 })
 
+router.get('/userServices/:userId', async (req, res) => {
+    try {
+        const service = await Service.find({});
+        const servicesBookedByUser = [];
+        service.forEach((e) => {
+            e.bookings.forEach((booking) => {
+                if(booking.userId == req.params.userId) {
+                    servicesBookedByUser.push({booking: booking, serviceName: e.serviceName});
+                }   
+            })
+        })
+
+        if(servicesBookedByUser.length > 0) {
+            res.status(200).send(servicesBookedByUser);
+        } else {
+            res.status(400).send({message: "No services data available"})
+        }
+    
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message: "Internal server error"});
+    }
+})
+
 router.post('/:serviceName/bookings/', async (req, res) => {
     try {
         

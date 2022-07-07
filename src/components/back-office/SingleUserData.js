@@ -27,6 +27,8 @@ const SingleUserData = () => {
 
     const [jsonEdited, setJsonEdited] = useState('');
 
+    const [bookings, setBookings] = useState('');
+
     const getUserById = async () => {
         const response = await axios.get(`http://localhost:8080/api/users/${userId}`);
         
@@ -36,6 +38,11 @@ const SingleUserData = () => {
                 const scoreResponse = await axios.get(`http://localhost:8080/api/scores/${newValue.email}`);
                 if(scoreResponse.status == 200){ 
                     setScoreData(scoreResponse.data); 
+                }
+
+                const response = await axios.get(`http://localhost:8080/api/services/userServices/${newValue.email}`);
+                if(response.status == 200){ 
+                    setBookings(response.data); 
                 }
 
             } catch(error) {
@@ -258,6 +265,26 @@ const SingleUserData = () => {
                                     }
                                     {
                                         !scoreData && <p className="lead">No data available</p>
+                                    }
+                            </div>
+                        </div>
+                        <div className="card shadow-lg">
+                            <div className="card-body">
+                                <p className="card-title display-5 my-4">Bookings coming soon</p>
+                                    {   
+                                        bookings &&    
+                                            bookings
+                                                .sort((a, b) => Date.parse(b.booking.date) - Date.parse(a.booking.date))
+                                                .slice(0, 3)
+                                                .map((e) => (
+                                                    <li className="list-group-item d-flex justify-content-between align-items-center p-3" key={e._id}>
+                                                        {e.booking.date.slice(0,10)}
+                                                        <span className="badge bg-primary mx-3 rounded-pill">Service: {e.serviceName}</span>
+                                                    </li>
+                                                ))
+                                    }
+                                    {
+                                        !bookings && <p className="lead">No data available</p>
                                     }
                             </div>
                         </div>

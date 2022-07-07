@@ -57,8 +57,8 @@ const WallManager = () => {
                         <div id={id} className="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div className="accordion-body">
                                 {
-                                    props.comments.map((e) => (
-                                        <p className="lead" key={e.author}>
+                                    props.comments.map((e, index) => (
+                                        <p className="lead" key={index}>
                                             <b>{e.author}</b> says: {e.text}
                                         </p>
                                     ))
@@ -98,7 +98,10 @@ const WallManager = () => {
     return(
         <>
             <NavbarBackOffice />
-            <div className="container">
+            <div className="container my-3">    
+                <div className="d-flex my-3">
+                    <button className="btn btn-outline-secondary">look up for bad language</button>
+                </div>
                 <p className="display-4">Latest wall messages</p>
                 <div className="row">
                 {
