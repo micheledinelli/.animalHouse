@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 
 const Quiz = () => {
 
@@ -115,17 +114,7 @@ const Quiz = () => {
                     alts.push(alternatives[questionType][rand]);
                 }
         }
-        // for(let i = rand; i < alternatives[questionType].length - 1; i++) {         
-        //     if(alts.length < 4) {
-        //         if( i == alternatives.length - 1) { 
-        //             i = 0;
-        //         }  
-        //         if(alternatives[questionType][i] != answer) {
-        //             alts.push(alternatives[questionType][i]);
-        //         }
-        //     } 
-        // }
-    
+         
         return alts;
     }
 
