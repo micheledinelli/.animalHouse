@@ -1,35 +1,33 @@
-#gameDiv{
+.memory-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 3rem;
+}
+
+.memory-field-container {
+    width: 80vw;
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    border: 2px solid red;
-    column-gap: 10px;
-    row-gap: 10px;
-    padding: 20px;
-    width: 50%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 1em;
 }
 
-.memory-card{
-    background-color: blue;
-    color: blue;
-    border: 5px solid red;
+.memory-card {
+    background-color: rgba(32, 41, 63, 0.9);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
 }
 
-#memory-img{
+.memory-card img, .memory-card span {
+    height: 10rem;
+    width: 100%;
     object-fit: cover;
-    width: 150px;
-    height: 150px;
-}
-
-.memory-card img{
-    visibility: collapse;
-}
-
-.card-selected{
-    border: 5px solid yellow;
-    background-color: yellowgreen;
-}
-
-.card-guessed{
-    border: 5px solid lightgreen;
-    background-color: yellowgreen;
+    cursor: pointer;
+    border-radius: 5px;
 }

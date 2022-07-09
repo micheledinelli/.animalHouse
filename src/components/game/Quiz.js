@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 
 const Quiz = () => {
 
@@ -115,17 +114,7 @@ const Quiz = () => {
                     alts.push(alternatives[questionType][rand]);
                 }
         }
-        // for(let i = rand; i < alternatives[questionType].length - 1; i++) {         
-        //     if(alts.length < 4) {
-        //         if( i == alternatives.length - 1) { 
-        //             i = 0;
-        //         }  
-        //         if(alternatives[questionType][i] != answer) {
-        //             alts.push(alternatives[questionType][i]);
-        //         }
-        //     } 
-        // }
-    
+         
         return alts;
     }
 
@@ -159,7 +148,7 @@ const Quiz = () => {
 
         setRecap(recap);
         let points = ( correctAnswers * 15 ) - ( errors * 5 );
-        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! you earned " + points);
+        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! considering errors you earned " + points + " ponints");
         postStats(points);
     }
 
@@ -195,11 +184,12 @@ const Quiz = () => {
 
     const imageStyle = {
         height: "100%",
-        objectFit: "contain"
+        objectFit: "cover"
     }
 
     const imageContainerStyle = {
         height: "20rem",
+        textAlign: "center",
         width: "100%"
     }
 
