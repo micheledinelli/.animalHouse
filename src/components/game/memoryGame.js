@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import "../../css/memory-game.css";
 import axios from "axios";
@@ -12,10 +12,27 @@ const MemoryGame = () => {
     const [matches, setMatches] = useStateWithCallback(0);
     const [guestUsername, setGuestUsername] = useState('');
     const [win, setWin] = useState(false);
+    const [fisrtClick, setFisrtClick] = useState(true);
+    const elapsed = useRef(0);
 
     useEffect(() => {
         getData();
     }, [])
+
+    useEffect(() => {
+        if(!win) {
+            let timer;
+            if(!fisrtClick) {
+                timer = setInterval(() => {
+                    elapsed.current = elapsed.current + 1;
+                }, 1000);
+            }
+
+            return () => {
+                clearInterval(timer);
+            }
+        }
+    }, [fisrtClick, win])
 
     const getData = async () => {
         try {
@@ -89,6 +106,9 @@ const MemoryGame = () => {
 
     const handleClick = (value, index) => {
         if(cards[index].blocked) { return; }
+        if(fisrtClick) {
+            setFisrtClick(false);
+        }
         
         let cardsCopy = JSON.parse(JSON.stringify(cards)); ;
         cardsCopy[index].flipped = !cardsCopy[index].flipped;
@@ -130,7 +150,8 @@ const MemoryGame = () => {
         if(matches === cards.length / 2) {
             setWin(true);
             toast.success("YOU WON !");
-            postStats(100);
+            let points = 150 - (elapsed.current * 0.5);
+            postStats(points);
         }
     }
 
@@ -153,6 +174,8 @@ const MemoryGame = () => {
             {
                 win && 
                     <div className="container text-center my-3">
+                        <p className="lead display-6">Time elapsed: {elapsed.current}</p>
+                        <p className="lead">Points: {150 - (elapsed.current * 0.5)}</p>
                         <button 
                             className="btn btn-primary btn-lg my-3 mx-3"
                             onClick={(e) => { window.location.href = window.location.href }}
