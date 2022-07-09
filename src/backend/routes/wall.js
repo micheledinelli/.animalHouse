@@ -60,10 +60,15 @@ router.get('/',  async (req, res) => {
 router.post('/posts', upload.single('photo'), async (req, res) => {
     try {
         const wm = new WallMessage();
-        wm.image.data = fs.readFileSync('uploads/' + req.file.filename);
-        wm.image.contentType = "image/png";
+        if(req.file) {
+            wm.image.data = fs.readFileSync('uploads/' + req.file.filename);
+            wm.image.contentType = "image/png";
+        }
+        
         wm.author = req.body.author;
         wm.body = req.body.body;
+        wm.title = req.body.title;
+        wm.category = req.body.category;
 
         const doc = await wm.save();
         if(doc) {

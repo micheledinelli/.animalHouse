@@ -22,7 +22,7 @@ const NavbarFrontOffice = () => {
                     </ul>
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
 
