@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { useStateWithCallback } from "../../hooks/useStateWithCallback";
 
 const Quiz = () => {
 
     const [animals, setAnimals] = useState([]);
     const [guestUsername, setGuestUsername] = useState('');
     const [loading, setLoading] = useState(true);
+    const [recap, setRecap] = useState();
 
     const answerMap = {
         1: "",
@@ -27,11 +27,11 @@ const Quiz = () => {
         "name": "What is the animal's name?",
         "latin_name": "What is the animal's latin name?",
         "animal_type": "What is its animal type?",
-        "weight_max": "Does it look heavy? guess its max weight!",
-        "weight_min": "Does it look heavy? guess its min weight!",
+        "weight_max": "Does it look heavy? guess its max weight! (kg)",
+        "weight_min": "Does it look heavy? guess its min weight! (kg)",
         "active_time": "Do you think it enjoys light?",
-        "length_max": "Do you think it grows much? Try to guess its max length",
-        "length_min": "Guess its minimum length!",
+        "length_max": "Do you think it grows much? Try to guess its max length (m)",
+        "length_min": "Guess its minimum length! (m)",
         "diet": "What does it eat?",
         "lifespan": "Hoping for the best... try to guess its lifespan!",
         "geo_range": "Guess its geo-range!",
@@ -39,22 +39,27 @@ const Quiz = () => {
     });
        
     const alternatives = {
-        "name": ["Octopus", "Leopard", "Cat", "Dog", "Elephant", "Tiger", "African Painted Dog"]  ,
+        "name": ["Octopus", "Leopard", "Cat", "Dog", "Elephant", "Tiger", "African Painted Dog", 
+                "Buff-Cheeked Gibbon", "Cougar"],
         "latin_name": 
             ["Geoemyda spengleri", "Varanus ornatus", "Vicugna pacos", 
             "Trichechus manatus latirostris", "Fratercula corniculata",
             "Crotalus horridus", "Otidiphaps nobilis aruensis", "Choloepus didactylus"
             ],
-        "animal_type": ["Mammal", "Bird"] ,
-        "weight_max": [50, 12.2, 18, 120, 0.6, 3, 31, 1]  ,
-        "weight_min": [0.1, 0.01, 0.05, 0.5, 3, 15, 7, 29] ,
+        "animal_type": ["Mammal", "Bird", "Fish", "Anphibian", "Insect"] ,
+        "weight_max": [50, 12.2, 18, 120, 0.6, 3, 31, 1, 5, 8, 12, 10, 4, 2]  ,
+        "weight_min": [0.1, 0.01, 0.05, 0.5, 3, 15, 7, 29, 5, 8, 12, 10, 4, 2] ,
         "active_time": ["Diurnal", "Nocturnal", "Both"] , 
-        "length_max": [50, 12.2, 18, 120, 0.6, 3, 31, 1] ,
-        "length_min": [0.1, 0.01, 0.05, 0.5, 3, 15, 7, 29] ,
-        "diet": ["Grass", "Small animals, such as insects and frogs, and eggs", "Mosquito larva"] ,
-        "lifespan": [1, 2, 5, 10, 15, 20, 27, 30, 50, 75] ,
-        "geo_range": ["Southern Moluccas, Indonesia", "Bali, Indonesia", "South America"] ,
-        "habitat": ["Savannah", "Grasslands and rainforest", "Mountain and forest"] ,
+        "length_max": [50, 12.2, 18, 120, 0.6, 3, 31, 1, 29, 5, 8, 12, 10, 4, 2] ,
+        "length_min": [0.1, 0.01, 0.05, 0.5, 3, 15, 7, 29, 5, 8, 12, 10, 4, 2] ,
+        "diet": ["Grass", "Small animals, such as insects and frogs, and eggs", "Mosquito larva",
+                "Fruit and berries; some insects", "Variety of aquatic and terrestrial vegetation, insects, fish, frogs and worms"] ,
+        "lifespan": [1, 2, 5, 10, 15, 20, 27, 30, 50, 75, 11, 2, 9, 18, 26] ,
+        "geo_range": ["Southern Moluccas, Indonesia", "Bali, Indonesia", "South America", 
+                    "Southeastern United States", "Ocean and rocky coastal cliffs"] ,
+        "habitat": ["Savannah", "Grasslands and rainforest", "Mountain and forest", 
+            "Andes Mountains of South America", "Rocky areas, woodland, and grassland",
+            "Southern Moluccas, Indonesia"] ,
     }
 
     const loadingCounter = useRef(0);
@@ -70,7 +75,6 @@ const Quiz = () => {
     const getRandomAnimals = async () => {
         try {
             const response = await axios.get(`https://zoo-animal-api.herokuapp.com/animals/rand/${numberOfQuestions}`);        
-            console.log(response.data);
             setAnimals(response.data);
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
@@ -95,31 +99,57 @@ const Quiz = () => {
         return {question: question, answer: answer, questionType: attribute}; 
     }
 
-    const generateRandomAlt = (questionType) => {
+    const generateRandomAlt = (questionType, answer) => {
+
+        if(questionType === 'active_time') { return ["Diurnal", "Nocturnal", "Both"] }
+        
+
+        let alts = [];
         let rand = Math.round(Math.random() * ( alternatives[questionType].length - 1));
-        return alternatives[questionType][rand];
+        
+        while(alts.length < 4) {
+            rand = Math.round(Math.random() * ( alternatives[questionType].length - 1));
+            if(!alts.includes(alternatives[questionType][rand]) 
+                && alternatives[questionType][rand] != answer) {
+                    alts.push(alternatives[questionType][rand]);
+                }
+        }
+         
+        return alts;
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        document.getElementById("recap").scrollIntoView();
         const data = new FormData(e.target);
         
         let correctAnswers = 0;
         let errors = 0;
+        let recap = [];
         for(const [name,value] of data) {
             
             // Correct Answer
             if(answerMap[name] === value) {
                 correctAnswers += 1;
+                recap.push({
+                    question: name,
+                    correctAnswer: value,
+                    guessed: "true"
+                })
             } else {
                 errors += 1;
+                recap.push({
+                    question: name,
+                    correctAnswer: answerMap[name],
+                    guessed: "false"
+                })
             }
         }
 
+        setRecap(recap);
         let points = ( correctAnswers * 15 ) - ( errors * 5 );
-        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! you earned " + points);
+        toast.success("Congrats, you answerd at " + correctAnswers + " correctly! considering errors you earned " + points + " ponints");
         postStats(points);
-        reset();
     }
 
     const postStats = async (points) => {
@@ -144,48 +174,22 @@ const Quiz = () => {
     }
 
     const imageLoaded = () => {
-        loadingCounter.current += 1;
-        if (loadingCounter.current >= numberOfQuestions) {
-            setLoading(false);
-        }
-    }
+        setLoading(false);
 
-    const reset = () => {
-        const rootDiv = document.querySelector(".root-div-quiz");
-        rootDiv.classList.add("text-center");
-        rootDiv.innerHTML = '';
-
-        let playAgainBtn = document.createElement("button");
-        playAgainBtn.classList.add("btn");
-        playAgainBtn.classList.add("btn-light");
-        playAgainBtn.classList.add("btn-lg");
-        playAgainBtn.classList.add("mx-3");
-        playAgainBtn.classList.add("my-3");
-        playAgainBtn.onclick = () => {
-            window.location.href = window.location.href;
-        }
-        playAgainBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
-
-        let goBackBtn = document.createElement("a");
-        goBackBtn.classList.add("btn");
-        goBackBtn.classList.add("btn-light");
-        goBackBtn.classList.add("btn-lg");
-        goBackBtn.classList.add("mx-3");
-        goBackBtn.classList.add("my-3");
-        goBackBtn.href = "/gamePage";
-        goBackBtn.innerHTML = '<i class="bi bi-house"></i>';
-
-        rootDiv.appendChild(playAgainBtn);
-        rootDiv.appendChild(goBackBtn);
+        // loadingCounter.current += 1;
+        // if (loadingCounter.current >= numberOfQuestions) {
+        //     setLoading(false);
+        // }
     }
 
     const imageStyle = {
         height: "100%",
-        objectFit: "contain"
+        objectFit: "cover"
     }
 
     const imageContainerStyle = {
         height: "20rem",
+        textAlign: "center",
         width: "100%"
     }
 
@@ -203,102 +207,49 @@ const Quiz = () => {
             answerPostion = 3;
         }
 
-        if(props.questionType == "active_time") {
-            let alt = "";
-            if(props.answer == "Diurnal") {
-                alt = "Nocturnal"
-            } else {
-                alt = "Diurnal"
-            }
-            
-            return(
-                <>
-                    <div className="form-check mb-2">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name={`${props.index}`} 
-                            id={`inlineRadio1-${props.index}`} 
-                            value={props.answer} 
-                        />
-                        <label className="form-check-label" htmlFor={`inlineRadio1-${props.index}`}>
-                            {props.answer} 
-                        </label>
-                    </div>
-                    <div className="form-check mb-2">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name={`${props.index}`} 
-                            id={`inlineRadio2-${props.index}`} 
-                            value={alt} 
-                        />
-                        <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
-                            {alt}  
-                        </label>
-                    </div>
-                    <div className="form-check mb-2">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name={`${props.index}`} 
-                            id={`inlineRadio3-${props.index}`} 
-                            value={"Both"} 
-                        />
-                        <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
-                            {"Both"}  
-                        </label>
-                    </div>
-                </>
-            )
+        let [alt1, alt2, alt3] = generateRandomAlt(props.questionType, props.answer);
 
-        } else {
-            
-            let alt1 = generateRandomAlt(props.questionType);
-            let alt2 = generateRandomAlt(props.questionType);
-            let alt3 = generateRandomAlt(props.questionType);
-            
-            return(
-                <> 
-                    <div className="form-check mb-2">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name={`${props.index}`} 
-                            id={`inlineRadio1-${props.index}`} 
-                            value={answerPostion == 1 ? props.answer : alt1} 
-                        />
-                        <label className="form-check-label" htmlFor={`inlineRadio1-${props.index}`}>
-                            {answerPostion == 1 ? props.answer : alt1} 
-                        </label>
-                    </div>
-                    <div className="form-check mb-2">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name={`${props.index}`} 
-                            id={`inlineRadio2-${props.index}`} 
-                            value={answerPostion == 2 ? props.answer : alt2} 
-                        />
-                        <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
-                            {answerPostion == 2 ? props.answer : alt2}  
-                        </label>
-                    </div>
-                    <div className="form-check mb-2">
-                        <input 
-                            className="form-check-input" 
-                            type="radio" 
-                            name={`${props.index}`} 
-                            id={`inlineRadio3-${props.index}`} 
-                            value={answerPostion == 3 ? props.answer : alt3}  
-                        />
-                        <label className="form-check-label"htmlFor={`inlineRadio3-${props.index}`}>
-                            {answerPostion == 3 ? props.answer : alt3} 
-                        </label>
-                    </div>
-                </>
-            )
-        }
+        return(
+            <> 
+                <div className="form-check mb-2">
+                    <input 
+                        className="form-check-input" 
+                        type="radio" 
+                        name={`${props.index}`} 
+                        id={`inlineRadio1-${props.index}`} 
+                        value={answerPostion == 1 ? props.answer : alt1} 
+                    />
+                    <label className="form-check-label" htmlFor={`inlineRadio1-${props.index}`}>
+                        {answerPostion == 1 ? props.answer : alt1} 
+                    </label>
+                </div>
+                <div className="form-check mb-2">
+                    <input 
+                        className="form-check-input" 
+                        type="radio" 
+                        name={`${props.index}`} 
+                        id={`inlineRadio2-${props.index}`} 
+                        value={answerPostion == 2 ? props.answer : alt2} 
+                    />
+                    <label className="form-check-label" htmlFor={`inlineRadio3-${props.index}`}>
+                        {answerPostion == 2 ? props.answer : alt2}  
+                    </label>
+                </div>
+                <div className="form-check mb-2">
+                    <input 
+                        className="form-check-input" 
+                        type="radio" 
+                        name={`${props.index}`} 
+                        id={`inlineRadio3-${props.index}`} 
+                        value={answerPostion == 3 ? props.answer : alt3}  
+                    />
+                    <label className="form-check-label"htmlFor={`inlineRadio3-${props.index}`}>
+                        {answerPostion == 3 ? props.answer : alt3} 
+                    </label>
+                </div>
+            </>
+        )
+        
     }
 
     const QuestionCard = (props) => {
@@ -312,8 +263,9 @@ const Quiz = () => {
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </div>
-                            <div style={{display: loading ? "none" : "block", height: "20rem", width: "100%"}}>
+                            <div className="text-center" style={{display: loading ? "none" : "block", height: "20rem", width: "100%"}}>
                                 <img 
+                                    className="img-fluid"
                                     src={props.image_link}
                                     style={imageStyle}
                                     onLoad={imageLoaded}
@@ -342,6 +294,38 @@ const Quiz = () => {
         )
     }
 
+    const Recap = () => {
+        return(
+            <div className="container">
+                <div className="table-responsive mt-5 text-white">
+                    <table className="table text-white text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Correct answer</th>
+                                <th>Guessed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                recap && recap.map((e) => (
+                                    <tr key={e.question}>
+                                        <td>{e.question}</td>
+                                        <td>{e.correctAnswer}</td>
+                                        <td>{e.guessed}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>        
+                </div>
+                <div className="text-left">
+                    <a href="/gamePage" className="btn btn-light">Go back</a>
+                </div>
+            </div>
+        )
+    }
+
     return(
         <div className="container-fluid bg-secondary position-relative">
             <ToastContainer />
@@ -358,7 +342,10 @@ const Quiz = () => {
                             add info
                         </button>
             }
-            <div className="root-div-quiz">
+            <div className="root-div-quiz" id="recap">
+                {
+                    recap && <Recap />
+                }
                 <form onSubmit={handleSubmit} style={{padding:"0"}} >
                     <div className="row mt-5">
                             {

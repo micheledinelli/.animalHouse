@@ -15,9 +15,10 @@ import Bacheca from "./components/front-office/Bacheca.js";
 import PersonalData from "./components/back-office/PersonalData.js";
 import SingleUserData from "./components/back-office/SingleUserData.js";
 import WallManager from "./components/back-office/WallManager.js";
+import Services from "./components/front-office/Services.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
-import MemoryGame from "./components/game/memoryGame.js";
+import MemoryGame from "./components/game/MemoryGame.js";
 import Hangman from "./components/game/Hangman.js";
 import Quiz from "./components/game/Quiz.js";
 
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/frontOffice">
                         <Route index={true} element={<FrontOffice />}></Route>
                         <Route path="bacheca" element={<Bacheca />}></Route>
+                        <Route path="services" element={<Services />}></Route>
                     </Route>
                 </Route>
 

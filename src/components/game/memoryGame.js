@@ -1,159 +1,245 @@
-import React from "react"
-import "../../css/memory-game.css"
+import React, { useEffect, useRef } from "react";
+import { useState } from "react";
+import "../../css/memory-game.css";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import {useStateWithCallback} from '../../hooks/useStateWithCallback';
 
 const MemoryGame = () => {
-    return(
-        <div>
-            <h1>Memory Game!!!</h1>
-            <div>
-                {/* <div id="gameDiv"></div> */}
-                {start()}
-            </div>
-            <h3 id="msg-box"></h3>
-            {/* <input type="button" value="START" id="start-button"></input> */}
-        </div>
-    )
-}
 
+    const [cards, setCards] = useState();
+    const [lastCard, setLastCard] = useState(null);
+    const [matches, setMatches] = useStateWithCallback(0);
+    const [guestUsername, setGuestUsername] = useState('');
+    const [win, setWin] = useState(false);
+    const [fisrtClick, setFisrtClick] = useState(true);
+    const elapsed = useRef(0);
 
+    useEffect(() => {
+        getData();
+    }, [])
 
-//window.onload = start();
+    useEffect(() => {
+        if(!win) {
+            let timer;
+            if(!fisrtClick) {
+                timer = setInterval(() => {
+                    elapsed.current = elapsed.current + 1;
+                }, 1000);
+            }
 
-function start() {
-    let elements = connect();
-    let gameArray = [];
+            return () => {
+                clearInterval(timer);
+            }
+        }
+    }, [fisrtClick, win])
 
-    for(let i=0; i<elements.length; i++){
-        let counter = 0;
-        while(counter < 2){
-            let index = Math.floor(Math.random() * 16);
-            if(!gameArray[index]){
-                gameArray[index] = elements[i]
-                counter++;
+    const getData = async () => {
+        try {
+            const response = await axios.get(`https://zoo-animal-api.herokuapp.com/animals/rand/8`);        
+            
+            const mapArr = response.data.map((e, index) => {
+                return { e, value: index, flipped: false, matched: false, blocked: false, wrong: false }
+            });
+
+            const dupArr = [...mapArr, ...mapArr];
+
+            // Shuffle
+            dupArr.sort(() => Math.random() - 0.5);
+            setCards(dupArr);
+
+        } catch (error) {
+            if(error.response && error.response.status >= 400 && error.response.status <= 500) {
+                toast.error(error.response.data.message);
+            } 
+        }
+    }
+
+    const postStats = async (points) => {
+        if(window.localStorage.getItem("authenticator") || guestUsername != '') {
+            let userIdentifier = window.localStorage.getItem("user_email") || guestUsername + " (guest)";
+            let body = {
+                userId: userIdentifier,
+                points: points,
+                gameName: 'memory'
+            }
+            try {
+                const response = await axios.post("http://localhost:8080/api/scores", body);
+                toast.success(response.data.message); 
+            } catch (error) {
+                toast.error(error.data.message);
             }
         }
     }
 
-    console.log(gameArray)
+    const handleGuestUserChange = ({target: input}) => {
+        setGuestUsername(input.value);
+    }
 
-    let gameDiv = document.createElement("div");
-    gameDiv.setAttribute("id","gameDiv");
-    // let gameDiv = document.getElementById("gameDiv")
-    let i=0;
-    let list = gameArray.map((element,index) =>
-    <div className="memory-card" key={index} id={index}>
-        <img src={element.image_link} id="memory-img"></img>
-    </div>
-    )
+    const Card = (props) => {
 
-    // for(let i=0; i<gameArray.length; i++){
-    //     let tmpDiv = document.createElement("div");
-    //     tmpDiv.className = "memory-card";
-    //     tmpDiv.setAttribute("id",i);
+        if(props.flipped) {
 
-    //     let tmp = document.createElement("img");
-    //     tmp.setAttribute("src",gameArray[i]);
+            return(
+                <div className="memory-card">
+                    <img
+                        className="img-fluid" 
+                        onClick={(e) => handleClick(props.value, props.index)}
+                        src={props.src}>
+                    </img>
+                </div>
+            )
+        } else {
+            return(
+                <div 
+                    className="memory-card" 
+                    style={{cursor:"pointer"}}
+                    onClick={(e) => handleClick(props.value, props.index)}
+                >
+                    <span>
+
+                    </span>
+                </div>
+            )
+        }
+    }
+
+    const handleClick = (value, index) => {
+        if(cards[index].blocked) { return; }
+        if(fisrtClick) {
+            setFisrtClick(false);
+        }
         
-    //     tmpDiv.appendChild(tmp);
+        let cardsCopy = JSON.parse(JSON.stringify(cards)); ;
+        cardsCopy[index].flipped = !cardsCopy[index].flipped;
+        cardsCopy[index].blocked = true;
+        
+        if(lastCard && lastCard.card.value === cardsCopy[index].value) {
+            cardsCopy[index].matched = true;
+            cardsCopy[lastCard.index].matched = true;
+            
+            setMatches(matches + 1, (prevValue, newValue) => {
+                checkWin(newValue);
+            });
 
-    //     console.log(i + " " + gameArray[i])
-    //     gameDiv.appendChild(tmpDiv);
-    // }
+            setLastCard(null);
 
-    // let startbtn = document.createElement("input");
-    // startbtn.type = "button"
-    // startbtn.value = "START"
-    // startbtn.setAttribute("id","start-button")
+        } else if(lastCard && lastCard.value !== cardsCopy[index].value) {
+            setTimeout(() => {
+                cardsCopy[index].flipped = !cardsCopy[index].flipped;
+                cardsCopy[lastCard.index].flipped = !cardsCopy[lastCard.index].flipped;
+                cardsCopy[index].wrong = true;
+                cardsCopy[lastCard.index].wrong = true;
     
+                cardsCopy[index].blocked = false;
+                cardsCopy[lastCard.index].blocked = false;
+            }, 1000);
+            setLastCard(null);
+        } else if(!lastCard) {
+            let last = {
+                card: cardsCopy[index],
+                index: index
+            }
+            setLastCard(last);
+        }
+
+        setCards(cardsCopy);
+    }
+
+    const checkWin = (matches) => {
+        if(matches === cards.length / 2) {
+            setWin(true);
+            toast.success("YOU WON !");
+            let points = 150 - (elapsed.current * 0.5);
+            postStats(points);
+        }
+    }
+
     return(
-        <div id="gameDiv">
-            {list}
-            <input type="button" value="START" id="start-button" onClick={buttonscript}></input>
+        <div className="container-fluid position-relative">
+            <ToastContainer />
+            <p className="display-4 text-center lead">Memory</p>
+            {
+                !window.localStorage.getItem("authenticator") 
+                    && guestUsername == ''
+                    &&
+                        <button 
+                            className="position-absolute mt-3 me-3 top-0 end-0 btn btn-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#guestInfoModal"
+                        >
+                            add info
+                        </button>
+            }
+            {
+                win && 
+                    <div className="container text-center my-3">
+                        <p className="lead display-6">Time elapsed: {elapsed.current}</p>
+                        <p className="lead">Points: {150 - (elapsed.current * 0.5)}</p>
+                        <button 
+                            className="btn btn-primary btn-lg my-3 mx-3"
+                            onClick={(e) => { window.location.href = window.location.href }}
+                        >
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                        <a href="/gamePage" className="btn btn-light btn-lg my-3 mx-3">Go back</a>
+                    </div>
+            }
+            <div className="memory-main-container">
+                <div className="memory-field-container">
+                    {
+                        cards && cards.map((e, index) => (
+                            <Card 
+                                key={index}
+                                src={e.e.image_link} 
+                                handleClick={handleClick}
+                                value={e.value}
+                                index={index}
+                                flipped={e.flipped}
+                                wrong={e.wrong}
+                            />
+                        ))
+                    }
+                </div>
+            </div>
+            {/* Guest user modal */}
+            <div className="modal fade" id="guestInfoModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Guest info</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body text-center">
+                            <p>Help us to save your performance: choose a username</p>
+                            <p>or</p>
+                            <p><a href="/signIn">sign in</a></p>
+                            <div className="form-floating mb-3">
+                                <input
+                                    type="text"
+                                    name="guestUsername"
+                                    className="form-control"
+                                    placeholder="(guest)"
+                                    autoComplete="off"
+                                    onChange={handleGuestUserChange}
+                                    required
+                                />
+                                <label htmlFor="guestUsername">(guest)</label>
+                            </div>
+                            <button
+                                className="btn btn-outline-secondary"
+                                data-bs-dismiss="modal"
+                                onClick={(e) => {e.preventDefault(); toast.success("your guest username is: " + guestUsername)}}
+                            >
+                                confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 
-    // return(gameDiv)
-}   
-
-const buttonscript = () =>{ 
-        //document.getElementById("start-button").addEventListener("click", () => {
-        gameLogic();
-        let timerDiv = document.createElement("div");
-        timerDiv.setAttribute("id","timer-div");
-        document.getElementsByTagName("body")[0].appendChild(timerDiv);
-        startTimer();
-    }
-    //)
-
-function gameLogic() {
-    let counter = [];
-    let a=0;
-
-    let divArray = document.getElementsByClassName("memory-card");
-    for(let i=0; i<divArray.length; i++){
-        let j = i;
-        
-        divArray[j].addEventListener("click", () => {
-            if(divArray.length >= 1){
-                if(a == 2){
-                    document.getElementById(counter[0]).setAttribute("class","memory-card");
-                    document.getElementById(counter[1]).setAttribute("class","memory-card");
-                    a = 0;
-                }
-
-                document.getElementById(j).setAttribute("class","card-selected")
-                
-                if(j != counter[a-1]){
-                    counter[a] = j;
-                    a++;
-
-                    if(a ==2 ){
-                        if(document.getElementById(counter[0]).innerHTML == document.getElementById(counter[1]).innerHTML){
-                            document.getElementById(counter[0]).setAttribute("class","card-guessed");
-                            document.getElementById(counter[1]).setAttribute("class","card-guessed");
-                            divArray.item[counter[0]] = null;
-                            divArray.item[counter[1]] = null;
-                            document.getElementById("msg-box").innerHTML = "DONE!!!";
-                            a = 0;
-                        }else{
-                            document.getElementById("msg-box").innerHTML = "RETRY!!!";               
-                        }
-                    }
-                }
-            }else{
-                document.getElementById("msg-box").innerHTML = "YOU WIN!!!";
-            }
-        })
-    }
-}
-
-function startTimer(mydiv){
-    let TIME = 60;
-    let myTimer = setInterval(() => {
-        document.getElementById("timer-div").innerHTML = TIME;
-        TIME--;
-        if(TIME == -1){
-            clearInterval(myTimer);
-            clearDisplay();
-            start()
-        }
-    },1000)
-}
-
-function clearDisplay(){
-    document.getElementById("gameDiv").innerHTML = " ";
-}
-
-function connect() {
-    let myRequest = new XMLHttpRequest;
-    myRequest.open("GET", "https://zoo-animal-api.herokuapp.com/animals/rand/8",false);
-    myRequest.send("null")
-
-    let rawData = myRequest.responseText;
-    let data = JSON.parse(rawData);
-    console.log(data)
-
-    return(data)
 }
 
 export default MemoryGame;
