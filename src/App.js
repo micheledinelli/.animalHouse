@@ -18,7 +18,7 @@ import WallManager from "./components/back-office/WallManager.js";
 import Services from "./components/front-office/Services.js";
 
 import Youtube from "./components/game/youtubeVideos.js";
-import MemoryGame from "./components/game/memoryGame.js";
+import MemoryGame from "./components/game/MemoryGame.js";
 import Hangman from "./components/game/Hangman.js";
 import Quiz from "./components/game/Quiz.js";
 
