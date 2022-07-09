@@ -70,50 +70,50 @@ const FrontOffice = () => {
                     <h2 data-text="LeaderBoard" className="titleLeaderBoard" >LeaderBoard</h2>
                  </div>
                  
+
+
                  <div className="cardBox">
-                    <div className="card">
-                        <div>
-                            <div className="email">awniyoussef@gmail.com</div>
-                            <div className="numbers">990</div>
-                            <div className="cardName">Score</div>
-                        </div>
-                        <div className="iconBox">
-                            <i className="bi bi-joystick"></i>
-                        </div>
-                    </div>
 
-                    <div className="card">
-                        <div>
-                            <div className="email">micheledine@gmail.com</div>
-                            <div className="numbers">910</div>
-                            <div className="cardName">Score</div>
+                 
+                    {dataHangman && dataHangman.sort((a,b) => b.points - a.points).slice(0,1).map((e, index) => (
+                        <div className="card">
+                            <div>
+                            <div className="email">{e.userId}</div>
+                            <div className="numbers">{e.points}</div>
+                            <div className="cardName"> Hangman Score</div>
                         </div>
                         <div className="iconBox">
-                            <i className="bi bi-joystick"></i>
+                            <i className="bi bi-trophy"></i>
                         </div>
-                    </div>
+                        </div>
+                    ))} 
 
-                    <div className="card">
-                        <div>
-                            <div className="email">pipfilippo44@gmail.com</div>
-                            <div className="numbers">901</div>
-                            <div className="cardName">Score</div>
+                    {dataQuiz && dataQuiz.sort((a,b) => b.points - a.points).slice(0,1).map((e, index) => (
+                        <div className="card">
+                            <div>
+                            <div className="email">{e.userId}</div>
+                            <div className="numbers">{e.points}</div>
+                            <div className="cardName">Quiz Score</div>
                         </div>
                         <div className="iconBox">
-                            <i className="bi bi-joystick"></i>
+                            <i className="bi bi-trophy"></i>
                         </div>
-                    </div>
+                        </div>
+                    ))} 
 
-                    <div className="card">
-                        <div>
-                            <div className="email">fede@gmail.com</div>
-                            <div className="numbers">120</div>
-                            <div className="cardName">Score</div>
+
+                    {dataMemory && dataMemory.sort((a,b) => b.points - a.points).slice(0,1).map((e, index) => (
+                        <div className="card">
+                            <div>
+                            <div className="email">{e.userId}</div>
+                            <div className="numbers">{e.points}</div>
+                            <div className="cardName">Memory Score</div>
                         </div>
                         <div className="iconBox">
-                            <i className="bi bi-joystick"></i>
+                            <i className="bi bi-trophy"></i>
                         </div>
-                    </div>
+                        </div>
+                    ))} 
                  </div>
 
                 <div className="details">

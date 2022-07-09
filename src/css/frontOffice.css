@@ -83,7 +83,7 @@
     margin-bottom: 40px;
     pointer-events: none;
 }
-.navigation ul li a .title
+.navigation ul li a .title 
 {
     position: relative;
     display: block;
@@ -181,7 +181,9 @@
 {
     position: relative;
     width: 100%;
-    padding: 20px;
+    
+    justify-content: space-between;
+    
     display: grid;
     grid-template-columns: repeat(4,1fr);
     grid-gap: 30px;

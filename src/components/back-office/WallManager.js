@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import NavbarBackOffice from "./NavbarBackOffice";
-import FormData from 'form-data';
-import {Buffer} from 'buffer';
-import TmpSchemaForImages from "../front-office/TmpSchemaForImages.js"
 
 const WallManager = () => {
 
@@ -92,9 +89,6 @@ const WallManager = () => {
                     </p>
                     <p className="lead display-6">{props.element.title}</p>
                     <p className="lead">{props.element.body}</p>
-                    {
-                        props.element.image?.data.data && <p>image</p>
-                    }
                     <AccordionComments key={props.element._id} id={props.index} comments={props.element.comments}/>
                 </div>
             </div>
@@ -120,7 +114,6 @@ const WallManager = () => {
                 }
                 </div>
                 <ToastContainer />
-                <TmpSchemaForImages />
             </div>
         </>
     )

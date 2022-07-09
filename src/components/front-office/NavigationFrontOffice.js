@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavigationFrontOffice = () => {
     
@@ -12,15 +13,15 @@ const NavigationFrontOffice = () => {
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/frontOffice">
                         <span className="icon"><i className="bi bi-controller"></i></span>
-                        <span className="title">  LeaderBoard</span>
+                        <span className="title">LeaderBoard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/frontOffice/bacheca">
                         <span className="icon"><i className="bi bi-chat-heart"></i></span>
-                        <span className="title"> Bacheca</span>
+                        <span className="title"> Bacheca </span>
                     </a>
                 </li>
             </ul>
