@@ -34,23 +34,39 @@ const Youtube = () => {
     let ytLink = "https://www.youtube.com/watch?v=";
 
     return(
-        <div className="container bg-primary">
-            <div>
-                <GameNavbar />
-            </div>
-            <form className="d-flex my-3" role="search" onSubmit={(e) => e.preventDefault()}>
-                <input 
-                    className="form-control me-2" 
-                    type="search" 
-                    placeholder="Search" 
-                    aria-label="Search"
-                    onChange={(e) => searchItems(e.target.value)}
-                />
-                <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <div id="youtubeBody" className="container">
-                <p className="fs-1 fw-bold" id="youtubeTitle">Funny Youtube Videos</p>
-                <form className="d-flex my-3" role="search" onSubmit={(e) => e.preventDefault()}>
+        <div>
+            <GameNavbar />
+            
+            <div id="youtubeBody" className="container mt-5">
+                <p className="lead display-5" id="youtubeTitle">Our choices</p>
+                <div className="d-flex justify-content-evenly align-items-center flex-wrap gap-3 my-5">
+                        <iframe 
+                            height="200"
+                            src="https://www.youtube.com/embed/2Gw4K7oqK08" 
+                            title="YouTube video player" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen>    
+                        </iframe>
+                        <iframe 
+                            height="200"
+                            src="https://www.youtube.com/embed/GiTLCqT8pL4" 
+                            title="YouTube video player" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen>
+                        </iframe>
+                        <iframe 
+                            height="200"
+                            src="https://www.youtube.com/embed/jenVMnOi2uA"
+                            title="YouTube video player" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen>
+                        </iframe>
+                </div>
+                <p className="lead display-5" id="youtubeTitle">Funny Youtube Videos</p>
+                <form className="d-flex my-5" role="search" onSubmit={(e) => e.preventDefault()}>
                     <input 
                         className="form-control me-2" 
                         type="search" 
@@ -65,7 +81,7 @@ const Youtube = () => {
                         searchInput.length > 1 ?
                             filteredResults.map((element) => (
                             <div className="col" key={element.id.videoId}>
-                                <div className="card border-3 mb-3" id="youtubeCard">
+                                <div className="card border-3 mb-3">
                                     <img src={element.snippet.thumbnails.high.url} className="card-img-top" alt="..."></img>
                                     <div className="card-body">
                                         <h5 className="card-title">{element.snippet.title}</h5>
