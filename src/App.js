@@ -56,6 +56,7 @@ function App() {
                     <Route path="quiz" element={<Quiz />}></Route>
                     <Route path="memory" element={<MemoryGame />}></Route>
                 </Route>
+                
                 <Route path="/signIn" element={<SignIn />}></Route>
                 <Route path="/signUp" element={<SignUp />}></Route>
                 <Route path="/user" element={<User />}></Route>

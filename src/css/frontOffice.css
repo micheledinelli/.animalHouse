@@ -137,6 +137,7 @@
 
 .main
 {
+    padding: 2rem;
     position: absolute;
     width: calc(100% - 300px);
     left: 300px;
@@ -145,11 +146,13 @@
     transition: 0.5s;
     overflow: hidden;
 }
+
 .main.active
 {
     width: calc(100% - 100px);
     left: 100px;
 }
+
 .topbar
 {
     width: 100%;

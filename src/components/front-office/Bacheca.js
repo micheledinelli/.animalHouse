@@ -61,6 +61,7 @@ const Bacheca = () => {
             })
             .then((response) => {
                 toast.success(response.data.message);
+                getWallMessages();
             }).catch((error) => {
                 console.log(error);
             });
@@ -110,6 +111,7 @@ const Bacheca = () => {
                 const response = await axios.post(`http://localhost:8080/api/wall/${wallId}`, body);
                 if(response.status == 201) {
                     toast.success(response.data.message);
+                    getWallMessages();
                 }
             }
         } catch (error) {
@@ -229,12 +231,14 @@ const Bacheca = () => {
                     <div className="col-lg-7 mt-5">
                         {
                             messagesData && 
-                                messagesData.map((elem, index) => {
-                                    return (
-                                        <div className="col-lg-12 col-sm-12" key={index}>
-                                            <WallCard element={elem} index={index}/>
-                                        </div>
-                                    )
+                                messagesData
+                                    .sort((a,b) => Date.parse(b.date) - Date.parse(a.date))
+                                    .map((elem, index) => {
+                                        return (
+                                            <div className="col-lg-12 col-sm-12" key={index}>
+                                                <WallCard element={elem} index={index}/>
+                                            </div>
+                                        )
                             })
                         }
 

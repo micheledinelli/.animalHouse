@@ -79,7 +79,6 @@ const WallManager = () => {
 
     const handleDelete = async (wallId) => {
 
-        console.log("im in");
         try {
             const response = await axios.delete(`http://localhost:8080/api/wall/${wallId}`);
             toast.success(response.data.message);

@@ -17,7 +17,6 @@ router.get('/', async(req, res) => {
 
 router.get('/hangman', async (req, res) => {
     try{
-        console.log("Im here");
 
         const scores = await Score.find({gameName: "hangman"}).sort({points: "asc"});
         if(scores && scores.length > 0) {

@@ -36,6 +36,7 @@ const Services = () => {
             const response = await axios.post(`http://localhost:8080/api/services/${service}/bookings/`, body);
             if(response.status == 200) {
                 toast.success(response.data.message + " you'll receive a confirmation email");
+                getData();
             }
         } catch (error) {
             if(error.response && error.response.status >= 400 && error.response.status <= 500) {
