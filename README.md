@@ -74,12 +74,8 @@ We are **Awni Youssef**, **Filippo Brajucha** and **Michele Dinelli**, and we ar
 
 Here are ours accademical contacts.
 
-<youssefawni.hanna@studio.unibo.it>
+<youssefawni.hanna@studio.unibo.it> 0000948195
 
-<michele.dinelli5@studio.unibo.it>
+<michele.dinelli5@studio.unibo.it>  0000934209
 
-<filippo.brajucha@studio.unibo.it>
-
-
-
-
+<filippo.brajucha@studio.unibo.it>  0000920975
