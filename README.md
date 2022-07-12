@@ -42,7 +42,7 @@ Once the server is running just go back to the root directory of the project and
 
 This project has been developed following this [specfication document](https://virtuale.unibo.it/pluginfile.php/1209586/mod_resource/content/0/ProgettoAnimalHouse-a.a.2122.pdf).
 
-It's a university project aiming to validate the skills acquired during the university course "Web Technologies".
+It's a university project which aims to validate the skills acquired during the university course "Web Technologies".
 
 Animal House is divided in three main "views": the back office, the front office and the game page.
 
