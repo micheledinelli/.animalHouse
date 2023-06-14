@@ -2,6 +2,14 @@
 
 Uni project developed and mantained by sayonara team.
 
+![Home Page](https://github.com/micheledinelli/AnimalHouse/blob/main/src/assets/home.png)
+
+Here is what the home page look like
+
+![News](https://github.com/micheledinelli/AnimalHouse/blob/main/src/assets/news.png)
+
+And here are some news!
+
 ## SETUP .ENV FILE
 
 The env file contains all the info used by the backend to handle database connection, password encryption and salting.
