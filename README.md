@@ -22,10 +22,6 @@ It is also possible to change the SALT applied to user password encryption and t
 
 Fork / clone this repo.
 
-Given the following project structure
-
-![Project Structure](https://github.com/micheledinelli/AnimalHouse/blob/main/src/assets/project-structure.png)
-
 Open a terminal and install the dependencies of the src code with
 
 `npm install`.
